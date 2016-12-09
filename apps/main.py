@@ -1,7 +1,9 @@
 import urllib2, urllib, json
 import functions.openweather as OW
 import datetime, time
+import functions.database as DB
 
+DB.getDb();
 
 print "Start"
 now = datetime.datetime.now();
@@ -24,6 +26,5 @@ while (1):
         str_ow_data = OW.getForecast();
         #print OW.getForecast();
         #print "Request at: ",now.hour,":",now.minute,":",now.second
-    print timeRequest + '\t' + OW.getCityName(str_ow_data)+'\t' + str(OW.getCityLatitude(str_ow_data))+'\t'+ str(OW.getCityLongitude(str_ow_data))+ '\t' + str(OW.getForecastNext(str_ow_data)['dt_txt'])+'\t' + str(OW.getForecastNext(str_ow_data)['weather'][0]['description'])+'\t' + str(OW.getForecastNext(str_ow_data)['weather'][0]['id']);
+    #print timeRequest + '\t' + OW.getCityName(str_ow_data)+'\t' + str(OW.getCityLatitude(str_ow_data))+'\t'+ str(OW.getCityLongitude(str_ow_data))+ '\t' + str(OW.getForecastNext(str_ow_data)['dt_txt'])+'\t' + str(OW.getForecastNext(str_ow_data)['weather'][0]['description'])+'\t' + str(OW.getForecastNext(str_ow_data)['weather'][0]['id']);
     #time.sleep(1)
-    
