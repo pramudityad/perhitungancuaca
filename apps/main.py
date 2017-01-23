@@ -6,26 +6,59 @@ import functions.database as DB
 
 DB.getDb();
 
+timeRequest = 'N/A';
+str_ow_data = 'N/A';
+location    = 'N/A';
+latitude    = 'N/A';
+longitude   = 'N/A';
+timeForcast = 'N/A';
+weather     = 'N/A';
+code        = 'N/A';
+
+def requestData():
+    now = datetime.datetime.now();
+    timeRequest = now.strftime('%Y-%m-%d %H:%M:%S');
+    print 'Request Data';
+    try:
+        global str_ow_data;
+        global location;   
+        global latitude;   
+        global longitude;  
+        global timeForcast;
+        global weather;    
+        global code;       
+
+        str_ow_data = OW.getForecast();
+        location    = OW.getCityName(str_ow_data);
+        latitude    = str(OW.getCityLatitude(str_ow_data));
+        longitude   = str(OW.getCityLongitude(str_ow_data));
+        timeForcast = str(OW.getForecastNext(str_ow_data)['dt_txt']);
+        weather     = str(OW.getForecastNext(str_ow_data)['weather'][0]['description']);
+        code        = str(OW.getForecastNext(str_ow_data)['weather'][0]['id']);
+        print 'Request Success';
+    except Exception as e:
+        print 'Error Connection';
+
 print "Start"
-now = datetime.datetime.now();
-timeRequest = now.strftime('%Y-%m-%d %H:%M:%S');
-str_ow_data = OW.getForecast();
+requestData();
+print str_ow_data;
 print 'Time      : ' + timeRequest;
-print 'Lokasi    : ' + OW.getCityName(str_ow_data);
-print 'Latitude  : ' + str(OW.getCityLatitude(str_ow_data));
-print 'Longitude : ' + str(OW.getCityLongitude(str_ow_data));
-print 'Prediksi  : Jam      :' + str(OW.getForecastNext(str_ow_data)['dt_txt']);
-print '            Cuaca    :' + str(OW.getForecastNext(str_ow_data)['weather'][0]['description']);
-print '            Code     :' + str(OW.getForecastNext(str_ow_data)['weather'][0]['id']);
+print 'Lokasi    : ' + location;
+print 'Latitude  : ' + latitude;
+print 'Longitude : ' + longitude;
+print 'Prediksi  : Jam      :' + timeForcast;
+print '            Cuaca    :' + weather;
+print '            Code     :' + code;
 
 while (1):
     now = datetime.datetime.now()
     timeRequest = now.strftime('%Y-%m-%d %H:%M:%S');
     #print now.year, now.hour, now.minute, now.second
     if(now.hour%1==0 and now.minute%2==0 and now.second==0):
-        print 'Request New Data';
-        str_ow_data = OW.getForecast();
+        requestData();
         #print OW.getForecast();
         #print "Request at: ",now.hour,":",now.minute,":",now.second
-    print timeRequest + '\t' + OW.getCityName(str_ow_data)+'\t' + str(OW.getCityLatitude(str_ow_data))+'\t'+ str(OW.getCityLongitude(str_ow_data))+ '\t' + str(OW.getForecastNext(str_ow_data)['dt_txt'])+'\t' + str(OW.getForecastNext(str_ow_data)['weather'][0]['description'])+'\t' + str(OW.getForecastNext(str_ow_data)['weather'][0]['id']);
-    #time.sleep(1);
+    print timeRequest + '\t' + location +'\t' + latitude +'\t'+ longitude + '\t' + timeForcast +'\t' + weather +'\t' + code;
+    time.sleep(1);
+
+

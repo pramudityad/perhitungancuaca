@@ -5,8 +5,8 @@ from datetime import timedelta
 def getForecast():
     appid  = 'ab09346d9a9123104405c6a84ad48c19';
     host   = 'http://api.openweathermap.org/';
-    lat    = '-6.9416521';
-    lon    = '107.6629672';
+    lat    = '-6.973588';
+    lon    = '107.630425';
     units  = 'metric';
     #url    = 'http://api.openweathermap.org/data/2.5/forecast?q=Bandung&appid=ab09346d9a9123104405c6a84ad48c19'
     url    = host+'data/2.5/forecast?lat='+lat+'&lon='+lon+'&appid='+appid+'&units='+units;
