@@ -3,6 +3,7 @@ import functions.openweather as OW
 import datetime, time
 import RPi.GPIO as GPIO
 import functions.database as DB
+import functions.fuzzy as fuzzy;
 
 DB.getDb();
 
@@ -50,15 +51,17 @@ print 'Prediksi  : Jam      :' + timeForcast;
 print '            Cuaca    :' + weather;
 print '            Code     :' + code;
 
-while (1):
-    now = datetime.datetime.now()
-    timeRequest = now.strftime('%Y-%m-%d %H:%M:%S');
-    #print now.year, now.hour, now.minute, now.second
-    if(now.hour%1==0 and now.minute%2==0 and now.second==0):
-        requestData();
-        #print OW.getForecast();
-        #print "Request at: ",now.hour,":",now.minute,":",now.second
-    print timeRequest + '\t' + location +'\t' + latitude +'\t'+ longitude + '\t' + timeForcast +'\t' + weather +'\t' + code;
-    time.sleep(1);
+print fuzzy.calculate(220,0,0,0,0);
+
+# while (1):
+#     now = datetime.datetime.now()
+#     timeRequest = now.strftime('%Y-%m-%d %H:%M:%S');
+#     #print now.year, now.hour, now.minute, now.second
+#     if(now.hour%1==0 and now.minute%2==0 and now.second==0):
+#         requestData();
+#         #print OW.getForecast();
+#         #print "Request at: ",now.hour,":",now.minute,":",now.second
+#     print timeRequest + '\t' + location +'\t' + latitude +'\t'+ longitude + '\t' + timeForcast +'\t' + weather +'\t' + code;
+#     time.sleep(1);
 
 
