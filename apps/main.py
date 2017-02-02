@@ -51,7 +51,7 @@ print 'Prediksi  : Jam      :' + timeForcast;
 print '            Cuaca    :' + weather;
 print '            Code     :' + code;
 
-print fuzzy.calculate(220,0,0,0,0);
+print fuzzy.calculate(220,31,1,0,0,0);
 
 # while (1):
 #     now = datetime.datetime.now()
