@@ -133,7 +133,7 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
 	rendah=0;
 	tinggi=0;
 
-	for i in range(324):
+	for i in range(486):
  		nkRendah.append(0);
  		nkTinggi.append(0);
 
@@ -1110,6 +1110,494 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
 
  	if sedang and dingin and tdk_hujan and w_hujan and f_hujan and f2_hujan:
  		nkRendah[323]=min(sedang,dingin,tdk_hujan,w_hujan,f_hujan,f2_hujan);
+	
+	
+
+ 	if kering and panas and hujan and w_cerah and f_cerah and f2_cerah:
+ 		nkRendah[324]=min(kering,panas,hujan,w_cerah,f_cerah,f2_cerah);
+
+ 	if kering and panas and hujan and w_cerah and f_cerah and f2_mendung:
+ 		nkRendah[325]=min(kering,panas,hujan,w_cerah,f_cerah,f2_mendung);
+
+ 	if kering and panas and hujan and w_cerah and f_cerah and f2_hujan:
+ 		nkRendah[326]=min(kering,panas,hujan,w_cerah,f_cerah,f2_hujan);
+
+ 	if kering and panas and hujan and w_cerah and f_mendung and f2_cerah:
+ 		nkRendah[327]=min(kering,panas,hujan,w_cerah,f_mendung,f2_cerah);
+ 	
+ 	if kering and panas and hujan and w_cerah and f_mendung and f2_mendung:
+ 		nkRendah[328]=min(kering,panas,hujan,w_cerah,f_mendung,f2_mendung);
+ 	
+ 	if kering and panas and hujan and w_cerah and f_mendung and f2_hujan:
+ 		nkRendah[329]=min(kering,panas,hujan,w_cerah,f_mendung,f2_hujan);
+
+ 	if kering and panas and hujan and w_cerah and f_hujan and f2_cerah:
+ 		nkRendah[330]=min(kering,panas,hujan,w_cerah,f_hujan,f2_cerah);
+
+ 	if kering and panas and hujan and w_cerah and f_hujan and f2_mendung:
+ 		nkRendah[331]=min(kering,panas,hujan,w_cerah,f_hujan,f2_mendung);
+ 	
+ 	if kering and panas and hujan and w_cerah and f_hujan and f2_huan:
+ 		nkRendah[332]=min(kering,panas,hujan,w_cerah,f_hujan,f2_hujan);
+
+ 	if kering and panas and hujan and w_mendung and f_cerah and f2_cerah:
+ 		nkRendah[333]=min(kering,panas,hujan,w_mendung,f_cerah,f2_cerah);
+
+ 	if kering and panas and hujan and w_mendung and f_cerah and f2_mendung:
+ 		nkRendah[334]=min(kering,panas,hujan,w_mendung,f_cerah,f2_mendung);
+
+ 	if kering and panas and hujan and w_mendung and f_cerah and f2_hujan:
+ 		nkRendah[335]=min(kering,panas,hujan,w_mendung,f_cerah,f2_hujan);
+
+ 	if kering and panas and hujan and w_mendung and f_mendung and f2_cerah:
+ 		nkRendah[336]=min(kering,panas,hujan,w_mendung,f_mendung,f2_cerah);
+
+ 	if kering and panas and hujan and w_mendung and f_mendung and f2_mendung:
+ 		nkRendah[337]=min(kering,panas,hujan,w_mendung,f_mendung,f2_mendung);
+
+ 	if kering and panas and hujan and w_mendung and f_mendung and f2_hujan:
+ 		nkRendah[338]=min(kering,panas,hujan,w_mendung,f_mendung,f2_hujan);
+
+ 	if kering and panas and hujan and w_mendung and f_hujan and f2_cerah:
+ 		nkRendah[339]=min(kering,panas,hujan,w_mendung,f_hujan,f2_cerah);
+
+ 	if kering and panas and hujan and w_mendung and f_hujan and f2_mendung:
+ 		nkRendah[340]=min(kering,panas,hujan,w_mendung,f_hujan,f2_mendung);
+
+ 	if kering and panas and hujan and w_mendung and f_hujan and f2_hujan:
+ 		nkRendah[341]=min(kering,panas,hujan,w_mendung,f_hujan,f2_hujan);
+
+ 	if kering and panas and hujan and w_hujan and f_cerah and f2_cerah:
+ 		nkRendah[342]=min(kering,panas,hujan,w_hujan,f_cerah,f2_cerah);
+
+ 	if kering and panas and hujan and w_hujan and f_cerah and f2_mendung:
+ 		nkRendah[343]=min(kering,panas,hujan,w_hujan,f_cerah,f2_mendung);
+
+ 	if kering and panas and hujan and w_hujan and f_cerah and f2_hujan:
+ 		nkRendah[344]=min(kering,panas,hujan,w_hujan,f_cerah,f2_hujan);
+
+ 	if kering and panas and hujan and w_hujan and f_mendung and f2_cerah:
+ 		nkRendah[345]=min(kering,panas,hujan,w_hujan,f_mendung,f2_cerah);
+
+ 	if kering and panas and hujan and w_hujan and f_mendung and f2_mendung:
+ 		nkRendah[346]=min(kering,panas,hujan,w_hujan,f_mendung,f2_mendung);
+
+ 	if kering and panas and hujan and w_hujan and f_mendung and f2_hujan:
+ 		nkRendah[347]=min(kering,panas,hujan,w_hujan,f_mendung,f2_hujan);
+
+ 	if kering and panas and hujan and w_hujan and f_hujan and f2_cerah:
+ 		nkRendah[348]=min(kering,panas,hujan,w_hujan,f_hujan,f2_cerah);
+
+ 	if kering and panas and hujan and w_hujan and f_hujan and f2_mendung:
+ 		nkRendah[349]=min(kering,panas,hujan,w_hujan,f_hujan,f2_mendung);
+
+ 	if kering and panas and hujan and w_hujan and f_hujan and f2_hujan:
+ 		nkRendah[350]=min(kering,panas,hujan,w_hujan,f_hujan,f2_hujan);
+
+ 	if kering and panas and tdk_hujan and w_cerah and f_cerah and f2_cerah:
+ 		nkRendah[351]=min(kering,panas,tdk_hujan,w_cerah,f_cerah,f2_cerah);
+
+ 	if kering and panas and tdk_hujan and w_cerah and f_cerah and f2_mendung:
+ 		nkRendah[352]=min(kering,panas,tdk_hujan,w_cerah,f_cerah,f2_mendung);
+
+ 	if kering and panas and tdk_hujan and w_cerah and f_cerah and f2_hujan:
+ 		nkRendah[353]=min(kering,panas,tdk_hujan,w_cerah,f_cerah,f2_hujan);
+
+ 	if kering and panas and tdk_hujan and w_cerah and f_mendung and f2_cerah:
+ 		nkRendah[354]=min(kering,panas,tdk_hujan,w_cerah,f_mendung,f2_cerah);
+ 	
+ 	if kering and panas and tdk_hujan and w_cerah and f_mendung and f2_mendung:
+ 		nkRendah[355]=min(kering,panas,tdk_hujan,w_cerah,f_mendung,f2_mendung);
+ 	
+ 	if kering and panas and tdk_hujan and w_cerah and f_mendung and f2_hujan:
+ 		nkRendah[356]=min(kering,panas,tdk_hujan,w_cerah,f_mendung,f2_hujan);
+
+ 	if kering and panas and tdk_hujan and w_cerah and f_hujan and f2_cerah:
+ 		nkRendah[357]=min(kering,panas,tdk_hujan,w_cerah,f_hujan,f2_cerah);
+
+ 	if kering and panas and tdk_hujan and w_cerah and f_hujan and f2_mendung:
+ 		nkRendah[358]=min(kering,panas,tdk_hujan,w_cerah,f_hujan,f2_mendung);
+ 	
+ 	if kering and panas and tdk_hujan and w_cerah and f_hujan and f2_huan:
+ 		nkRendah[359]=min(kering,panas,tdk_hujan,w_cerah,f_hujan,f2_hujan);
+
+ 	if kering and panas and tdk_hujan and w_mendung and f_cerah and f2_cerah:
+ 		nkRendah[360]=min(kering,panas,tdk_hujan,w_mendung,f_cerah,f2_cerah);
+
+ 	if kering and panas and tdk_hujan and w_mendung and f_cerah and f2_mendung:
+ 		nkRendah[361]=min(kering,panas,tdk_hujan,w_mendung,f_cerah,f2_mendung);
+
+ 	if kering and panas and tdk_hujan and w_mendung and f_cerah and f2_hujan:
+ 		nkRendah[362]=min(kering,panas,tdk_hujan,w_mendung,f_cerah,f2_hujan);
+
+ 	if kering and panas and tdk_hujan and w_mendung and f_mendung and f2_cerah:
+ 		nkRendah[363]=min(kering,panas,tdk_hujan,w_mendung,f_mendung,f2_cerah);
+
+ 	if kering and panas and tdk_hujan and w_mendung and f_mendung and f2_mendung:
+ 		nkRendah[364]=min(kering,panas,tdk_hujan,w_mendung,f_mendung,f2_mendung);
+
+ 	if kering and panas and tdk_hujan and w_mendung and f_mendung and f2_hujan:
+ 		nkRendah[365]=min(kering,panas,tdk_hujan,w_mendung,f_mendung,f2_hujan);
+
+ 	if kering and panas and tdk_hujan and w_mendung and f_hujan and f2_cerah:
+ 		nkRendah[366]=min(kering,panas,tdk_hujan,w_mendung,f_hujan,f2_cerah);
+
+ 	if kering and panas and tdk_hujan and w_mendung and f_hujan and f2_mendung:
+ 		nkRendah[367]=min(kering,panas,tdk_hujan,w_mendung,f_hujan,f2_mendung);
+
+ 	if kering and panas and tdk_hujan and w_mendung and f_hujan and f2_hujan:
+ 		nkRendah[368]=min(kering,panas,tdk_hujan,w_mendung,f_hujan,f2_hujan);
+
+ 	if kering and panas and tdk_hujan and w_hujan and f_cerah and f2_cerah:
+ 		nkRendah[369]=min(kering,panas,tdk_hujan,w_hujan,f_cerah,f2_cerah);
+
+ 	if kering and panas and tdk_hujan and w_hujan and f_cerah and f2_mendung:
+ 		nkRendah[370]=min(kering,panas,tdk_hujan,w_hujan,f_cerah,f2_mendung);
+
+ 	if kering and panas and tdk_hujan and w_hujan and f_cerah and f2_hujan:
+ 		nkRendah[371]=min(kering,panas,tdk_hujan,w_hujan,f_cerah,f2_hujan);
+
+ 	if kering and panas and tdk_hujan and w_hujan and f_mendung and f2_cerah:
+ 		nkRendah[372]=min(kering,panas,tdk_hujan,w_hujan,f_mendung,f2_cerah);
+
+ 	if kering and panas and tdk_hujan and w_hujan and f_mendung and f2_mendung:
+ 		nkRendah[373]=min(kering,panas,tdk_hujan,w_hujan,f_mendung,f2_mendung);
+
+ 	if kering and panas and tdk_hujan and w_hujan and f_mendung and f2_hujan:
+ 		nkRendah[374]=min(kering,panas,tdk_hujan,w_hujan,f_mendung,f2_hujan);
+
+ 	if kering and panas and tdk_hujan and w_hujan and f_hujan and f2_cerah:
+ 		nkRendah[375]=min(kering,panas,tdk_hujan,w_hujan,f_hujan,f2_cerah);
+
+ 	if kering and panas and tdk_hujan and w_hujan and f_hujan and f2_mendung:
+ 		nkRendah[376]=min(kering,panas,tdk_hujan,w_hujan,f_hujan,f2_mendung);
+
+ 	if kering and panas and tdk_hujan and w_hujan and f_hujan and f2_hujan:
+ 		nkRendah[377]=min(kering,panas,tdk_hujan,w_hujan,f_hujan,f2_hujan);
+	
+	if kering and sejuk and hujan and w_cerah and f_cerah and f2_cerah:
+ 		nkRendah[378]=min(kering,sejuk,hujan,w_cerah,f_cerah,f2_cerah);
+
+ 	if kering and sejuk and hujan and w_cerah and f_cerah and f2_mendung:
+ 		nkRendah[379]=min(kering,sejuk,hujan,w_cerah,f_cerah,f2_mendung);
+
+ 	if kering and sejuk and hujan and w_cerah and f_cerah and f2_hujan:
+ 		nkRendah[380]=min(kering,sejuk,hujan,w_cerah,f_cerah,f2_hujan);
+
+ 	if kering and sejuk and hujan and w_cerah and f_mendung and f2_cerah:
+ 		nkRendah[381]=min(kering,sejuk,hujan,w_cerah,f_mendung,f2_cerah);
+ 	
+ 	if kering and sejuk and hujan and w_cerah and f_mendung and f2_mendung:
+ 		nkRendah[382]=min(kering,sejuk,hujan,w_cerah,f_mendung,f2_mendung);
+ 	
+ 	if kering and sejuk and hujan and w_cerah and f_mendung and f2_hujan:
+ 		nkRendah[383]=min(kering,sejuk,hujan,w_cerah,f_mendung,f2_hujan);
+
+ 	if kering and sejuk and hujan and w_cerah and f_hujan and f2_cerah:
+ 		nkRendah[384]=min(kering,sejuk,hujan,w_cerah,f_hujan,f2_cerah);
+
+ 	if kering and sejuk and hujan and w_cerah and f_hujan and f2_mendung:
+ 		nkRendah[385]=min(kering,sejuk,hujan,w_cerah,f_hujan,f2_mendung);
+ 	
+ 	if kering and sejuk and hujan and w_cerah and f_hujan and f2_huan:
+ 		nkRendah[386]=min(kering,sejuk,hujan,w_cerah,f_hujan,f2_hujan);
+
+ 	if kering and sejuk and hujan and w_mendung and f_cerah and f2_cerah:
+ 		nkRendah[387]=min(kering,sejuk,hujan,w_mendung,f_cerah,f2_cerah);
+
+ 	if kering and sejuk and hujan and w_mendung and f_cerah and f2_mendung:
+ 		nkRendah[388]=min(kering,sejuk,hujan,w_mendung,f_cerah,f2_mendung);
+
+ 	if kering and sejuk and hujan and w_mendung and f_cerah and f2_hujan:
+ 		nkRendah[389]=min(kering,sejuk,hujan,w_mendung,f_cerah,f2_hujan);
+
+ 	if kering and sejuk and hujan and w_mendung and f_mendung and f2_cerah:
+ 		nkRendah[390]=min(kering,sejuk,hujan,w_mendung,f_mendung,f2_cerah);
+
+ 	if kering and sejuk and hujan and w_mendung and f_mendung and f2_mendung:
+ 		nkRendah[391]=min(kering,sejuk,hujan,w_mendung,f_mendung,f2_mendung);
+
+ 	if kering and sejuk and hujan and w_mendung and f_mendung and f2_hujan:
+ 		nkRendah[392]=min(kering,sejuk,hujan,w_mendung,f_mendung,f2_hujan);
+
+ 	if kering and sejuk and hujan and w_mendung and f_hujan and f2_cerah:
+ 		nkRendah[393]=min(kering,sejuk,hujan,w_mendung,f_hujan,f2_cerah);
+
+ 	if kering and sejuk and hujan and w_mendung and f_hujan and f2_mendung:
+ 		nkRendah[394]=min(kering,sejuk,hujan,w_mendung,f_hujan,f2_mendung);
+
+ 	if kering and sejuk and hujan and w_mendung and f_hujan and f2_hujan:
+ 		nkRendah[395]=min(kering,sejuk,hujan,w_mendung,f_hujan,f2_hujan);
+
+ 	if kering and sejuk and hujan and w_hujan and f_cerah and f2_cerah:
+ 		nkRendah[396]=min(kering,sejuk,hujan,w_hujan,f_cerah,f2_cerah);
+
+ 	if kering and sejuk and hujan and w_hujan and f_cerah and f2_mendung:
+ 		nkRendah[397]=min(kering,sejuk,hujan,w_hujan,f_cerah,f2_mendung);
+
+ 	if kering and sejuk and hujan and w_hujan and f_cerah and f2_hujan:
+ 		nkRendah[398]=min(kering,sejuk,hujan,w_hujan,f_cerah,f2_hujan);
+
+ 	if kering and sejuk and hujan and w_hujan and f_mendung and f2_cerah:
+ 		nkRendah[399]=min(kering,sejuk,hujan,w_hujan,f_mendung,f2_cerah);
+
+ 	if kering and sejuk and hujan and w_hujan and f_mendung and f2_mendung:
+ 		nkRendah[400]=min(kering,sejuk,hujan,w_hujan,f_mendung,f2_mendung);
+
+ 	if kering and sejuk and hujan and w_hujan and f_mendung and f2_hujan:
+ 		nkRendah[401]=min(kering,sejuk,hujan,w_hujan,f_mendung,f2_hujan);
+
+ 	if kering and sejuk and hujan and w_hujan and f_hujan and f2_cerah:
+ 		nkRendah[402]=min(kering,sejuk,hujan,w_hujan,f_hujan,f2_cerah);
+
+ 	if kering and sejuk and hujan and w_hujan and f_hujan and f2_mendung:
+ 		nkRendah[403]=min(kering,sejuk,hujan,w_hujan,f_hujan,f2_mendung);
+
+ 	if kering and sejuk and hujan and w_hujan and f_hujan and f2_hujan:
+ 		nkRendah[404]=min(kering,sejuk,hujan,w_hujan,f_hujan,f2_hujan);
+
+ 	if kering and sejuk and tdk_hujan and w_cerah and f_cerah and f2_cerah:
+ 		nkRendah[405]=min(kering,sejuk,tdk_hujan,w_cerah,f_cerah,f2_cerah);
+
+ 	if kering and sejuk and tdk_hujan and w_cerah and f_cerah and f2_mendung:
+ 		nkRendah[406]=min(kering,sejuk,tdk_hujan,w_cerah,f_cerah,f2_mendung);
+
+ 	if kering and sejuk and tdk_hujan and w_cerah and f_cerah and f2_hujan:
+ 		nkRendah[407]=min(kering,sejuk,tdk_hujan,w_cerah,f_cerah,f2_hujan);
+
+ 	if kering and sejuk and tdk_hujan and w_cerah and f_mendung and f2_cerah:
+ 		nkRendah[408]=min(kering,sejuk,tdk_hujan,w_cerah,f_mendung,f2_cerah);
+ 	
+ 	if kering and sejuk and tdk_hujan and w_cerah and f_mendung and f2_mendung:
+ 		nkRendah[409]=min(kering,sejuk,tdk_hujan,w_cerah,f_mendung,f2_mendung);
+ 	
+ 	if kering and sejuk and tdk_hujan and w_cerah and f_mendung and f2_hujan:
+ 		nkRendah[410]=min(kering,sejuk,tdk_hujan,w_cerah,f_mendung,f2_hujan);
+
+ 	if kering and sejuk and tdk_hujan and w_cerah and f_hujan and f2_cerah:
+ 		nkRendah[411]=min(kering,sejuk,tdk_hujan,w_cerah,f_hujan,f2_cerah);
+
+ 	if kering and sejuk and tdk_hujan and w_cerah and f_hujan and f2_mendung:
+ 		nkRendah[412]=min(kering,sejuk,tdk_hujan,w_cerah,f_hujan,f2_mendung);
+ 	
+ 	if kering and sejuk and tdk_hujan and w_cerah and f_hujan and f2_huan:
+ 		nkRendah[413]=min(kering,sejuk,tdk_hujan,w_cerah,f_hujan,f2_hujan);
+
+ 	if kering and sejuk and tdk_hujan and w_mendung and f_cerah and f2_cerah:
+ 		nkRendah[414]=min(kering,sejuk,tdk_hujan,w_mendung,f_cerah,f2_cerah);
+
+ 	if kering and sejuk and tdk_hujan and w_mendung and f_cerah and f2_mendung:
+ 		nkRendah[415]=min(kering,sejuk,tdk_hujan,w_mendung,f_cerah,f2_mendung);
+
+ 	if kering and sejuk and tdk_hujan and w_mendung and f_cerah and f2_hujan:
+ 		nkRendah[416]=min(kering,sejuk,tdk_hujan,w_mendung,f_cerah,f2_hujan);
+
+ 	if kering and sejuk and tdk_hujan and w_mendung and f_mendung and f2_cerah:
+ 		nkRendah[417]=min(kering,sejuk,tdk_hujan,w_mendung,f_mendung,f2_cerah);
+
+ 	if kering and sejuk and tdk_hujan and w_mendung and f_mendung and f2_mendung:
+ 		nkRendah[418]=min(kering,sejuk,tdk_hujan,w_mendung,f_mendung,f2_mendung);
+
+ 	if kering and sejuk and tdk_hujan and w_mendung and f_mendung and f2_hujan:
+ 		nkRendah[419]=min(kering,sejuk,tdk_hujan,w_mendung,f_mendung,f2_hujan);
+
+ 	if kering and sejuk and tdk_hujan and w_mendung and f_hujan and f2_cerah:
+ 		nkRendah[420]=min(kering,sejuk,tdk_hujan,w_mendung,f_hujan,f2_cerah);
+
+ 	if kering and sejuk and tdk_hujan and w_mendung and f_hujan and f2_mendung:
+ 		nkRendah[421]=min(kering,sejuk,tdk_hujan,w_mendung,f_hujan,f2_mendung);
+
+ 	if kering and sejuk and tdk_hujan and w_mendung and f_hujan and f2_hujan:
+ 		nkRendah[422]=min(kering,sejuk,tdk_hujan,w_mendung,f_hujan,f2_hujan);
+
+ 	if kering and sejuk and tdk_hujan and w_hujan and f_cerah and f2_cerah:
+ 		nkRendah[423]=min(kering,sejuk,tdk_hujan,w_hujan,f_cerah,f2_cerah);
+
+ 	if kering and sejuk and tdk_hujan and w_hujan and f_cerah and f2_mendung:
+ 		nkRendah[424]=min(kering,sejuk,tdk_hujan,w_hujan,f_cerah,f2_mendung);
+
+ 	if kering and sejuk and tdk_hujan and w_hujan and f_cerah and f2_hujan:
+ 		nkRendah[425]=min(kering,sejuk,tdk_hujan,w_hujan,f_cerah,f2_hujan);
+
+ 	if kering and sejuk and tdk_hujan and w_hujan and f_mendung and f2_cerah:
+ 		nkRendah[426]=min(kering,sejuk,tdk_hujan,w_hujan,f_mendung,f2_cerah);
+
+ 	if kering and sejuk and tdk_hujan and w_hujan and f_mendung and f2_mendung:
+ 		nkRendah[427]=min(kering,sejuk,tdk_hujan,w_hujan,f_mendung,f2_mendung);
+
+ 	if kering and sejuk and tdk_hujan and w_hujan and f_mendung and f2_hujan:
+ 		nkRendah[428]=min(kering,sejuk,tdk_hujan,w_hujan,f_mendung,f2_hujan);
+
+ 	if kering and sejuk and tdk_hujan and w_hujan and f_hujan and f2_cerah:
+ 		nkRendah[429]=min(kering,sejuk,tdk_hujan,w_hujan,f_hujan,f2_cerah);
+
+ 	if kering and sejuk and tdk_hujan and w_hujan and f_hujan and f2_mendung:
+ 		nkRendah[430]=min(kering,sejuk,tdk_hujan,w_hujan,f_hujan,f2_mendung);
+
+ 	if kering and sejuk and tdk_hujan and w_hujan and f_hujan and f2_hujan:
+ 		nkRendah[431]=min(kering,sejuk,tdk_hujan,w_hujan,f_hujan,f2_hujan);
+
+ 	if kering and dingin and hujan and w_cerah and f_cerah and f2_cerah:
+ 		nkRendah[432]=min(kering,dingin,hujan,w_cerah,f_cerah,f2_cerah);
+
+ 	if kering and dingin and hujan and w_cerah and f_cerah and f2_mendung:
+ 		nkRendah[433]=min(kering,dingin,hujan,w_cerah,f_cerah,f2_mendung);
+
+ 	if kering and dingin and hujan and w_cerah and f_cerah and f2_hujan:
+ 		nkRendah[434]=min(kering,dingin,hujan,w_cerah,f_cerah,f2_hujan);
+
+ 	if kering and dingin and hujan and w_cerah and f_mendung and f2_cerah:
+ 		nkRendah[435]=min(kering,dingin,hujan,w_cerah,f_mendung,f2_cerah);
+ 	
+ 	if kering and dingin and hujan and w_cerah and f_mendung and f2_mendung:
+ 		nkRendah[436]=min(kering,dingin,hujan,w_cerah,f_mendung,f2_mendung);
+ 	
+ 	if kering and dingin and hujan and w_cerah and f_mendung and f2_hujan:
+ 		nkRendah[437]=min(kering,dingin,hujan,w_cerah,f_mendung,f2_hujan);
+
+ 	if kering and dingin and hujan and w_cerah and f_hujan and f2_cerah:
+ 		nkRendah[438]=min(kering,dingin,hujan,w_cerah,f_hujan,f2_cerah);
+
+ 	if kering and dingin and hujan and w_cerah and f_hujan and f2_mendung:
+ 		nkRendah[439]=min(kering,dingin,hujan,w_cerah,f_hujan,f2_mendung);
+ 	
+ 	if kering and dingin and hujan and w_cerah and f_hujan and f2_huan:
+ 		nkRendah[440]=min(kering,dingin,hujan,w_cerah,f_hujan,f2_hujan);
+
+ 	if kering and dingin and hujan and w_mendung and f_cerah and f2_cerah:
+ 		nkRendah[441]=min(kering,dingin,hujan,w_mendung,f_cerah,f2_cerah);
+
+ 	if kering and dingin and hujan and w_mendung and f_cerah and f2_mendung:
+ 		nkRendah[442]=min(kering,dingin,hujan,w_mendung,f_cerah,f2_mendung);
+
+ 	if kering and dingin and hujan and w_mendung and f_cerah and f2_hujan:
+ 		nkRendah[443]=min(kering,dingin,hujan,w_mendung,f_cerah,f2_hujan);
+
+ 	if kering and dingin and hujan and w_mendung and f_mendung and f2_cerah:
+ 		nkRendah[444]=min(kering,dingin,hujan,w_mendung,f_mendung,f2_cerah);
+
+ 	if kering and dingin and hujan and w_mendung and f_mendung and f2_mendung:
+ 		nkRendah[445]=min(kering,dingin,hujan,w_mendung,f_mendung,f2_mendung);
+
+ 	if kering and dingin and hujan and w_mendung and f_mendung and f2_hujan:
+ 		nkRendah[446]=min(kering,dingin,hujan,w_mendung,f_mendung,f2_hujan);
+
+ 	if kering and dingin and hujan and w_mendung and f_hujan and f2_cerah:
+ 		nkRendah[447]=min(kering,dingin,hujan,w_mendung,f_hujan,f2_cerah);
+
+ 	if kering and dingin and hujan and w_mendung and f_hujan and f2_mendung:
+ 		nkRendah[448]=min(kering,dingin,hujan,w_mendung,f_hujan,f2_mendung);
+
+ 	if kering and dingin and hujan and w_mendung and f_hujan and f2_hujan:
+ 		nkRendah[449]=min(kering,dingin,hujan,w_mendung,f_hujan,f2_hujan);
+
+ 	if kering and dingin and hujan and w_hujan and f_cerah and f2_cerah:
+ 		nkRendah[450]=min(kering,dingin,hujan,w_hujan,f_cerah,f2_cerah);
+
+ 	if kering and dingin and hujan and w_hujan and f_cerah and f2_mendung:
+ 		nkRendah[451]=min(kering,dingin,hujan,w_hujan,f_cerah,f2_mendung);
+
+ 	if kering and dingin and hujan and w_hujan and f_cerah and f2_hujan:
+ 		nkRendah[452]=min(kering,dingin,hujan,w_hujan,f_cerah,f2_hujan);
+
+ 	if kering and dingin and hujan and w_hujan and f_mendung and f2_cerah:
+ 		nkRendah[453]=min(kering,dingin,hujan,w_hujan,f_mendung,f2_cerah);
+
+ 	if kering and dingin and hujan and w_hujan and f_mendung and f2_mendung:
+ 		nkRendah[454]=min(kering,dingin,hujan,w_hujan,f_mendung,f2_mendung);
+
+ 	if kering and dingin and hujan and w_hujan and f_mendung and f2_hujan:
+ 		nkRendah[455]=min(kering,dingin,hujan,w_hujan,f_mendung,f2_hujan);
+
+ 	if kering and dingin and hujan and w_hujan and f_hujan and f2_cerah:
+ 		nkRendah[456]=min(kering,dingin,hujan,w_hujan,f_hujan,f2_cerah);
+
+ 	if kering and dingin and hujan and w_hujan and f_hujan and f2_mendung:
+ 		nkRendah[457]=min(kering,dingin,hujan,w_hujan,f_hujan,f2_mendung);
+
+ 	if kering and dingin and hujan and w_hujan and f_hujan and f2_hujan:
+ 		nkRendah[458]=min(kering,dingin,hujan,w_hujan,f_hujan,f2_hujan);
+
+ 	if kering and dingin and tdk_hujan and w_cerah and f_cerah and f2_cerah:
+ 		nkRendah[459]=min(kering,dingin,tdk_hujan,w_cerah,f_cerah,f2_cerah);
+
+ 	if kering and dingin and tdk_hujan and w_cerah and f_cerah and f2_mendung:
+ 		nkRendah[460]=min(kering,dingin,tdk_hujan,w_cerah,f_cerah,f2_mendung);
+
+ 	if kering and dingin and tdk_hujan and w_cerah and f_cerah and f2_hujan:
+ 		nkRendah[461]=min(kering,dingin,tdk_hujan,w_cerah,f_cerah,f2_hujan);
+
+ 	if kering and dingin and tdk_hujan and w_cerah and f_mendung and f2_cerah:
+ 		nkRendah[462]=min(kering,dingin,tdk_hujan,w_cerah,f_mendung,f2_cerah);
+ 	
+ 	if kering and dingin and tdk_hujan and w_cerah and f_mendung and f2_mendung:
+ 		nkRendah[463]=min(kering,dingin,tdk_hujan,w_cerah,f_mendung,f2_mendung);
+ 	
+ 	if kering and dingin and tdk_hujan and w_cerah and f_mendung and f2_hujan:
+ 		nkRendah[464]=min(kering,dingin,tdk_hujan,w_cerah,f_mendung,f2_hujan);
+
+ 	if kering and dingin and tdk_hujan and w_cerah and f_hujan and f2_cerah:
+ 		nkRendah[465]=min(kering,dingin,tdk_hujan,w_cerah,f_hujan,f2_cerah);
+
+ 	if kering and dingin and tdk_hujan and w_cerah and f_hujan and f2_mendung:
+ 		nkRendah[466]=min(kering,dingin,tdk_hujan,w_cerah,f_hujan,f2_mendung);
+ 	
+ 	if kering and dingin and tdk_hujan and w_cerah and f_hujan and f2_huan:
+ 		nkRendah[467]=min(kering,dingin,tdk_hujan,w_cerah,f_hujan,f2_hujan);
+
+ 	if kering and dingin and tdk_hujan and w_mendung and f_cerah and f2_cerah:
+ 		nkRendah[468]=min(kering,dingin,tdk_hujan,w_mendung,f_cerah,f2_cerah);
+
+ 	if kering and dingin and tdk_hujan and w_mendung and f_cerah and f2_mendung:
+ 		nkRendah[469]=min(kering,dingin,tdk_hujan,w_mendung,f_cerah,f2_mendung);
+
+ 	if kering and dingin and tdk_hujan and w_mendung and f_cerah and f2_hujan:
+ 		nkRendah[470]=min(kering,dingin,tdk_hujan,w_mendung,f_cerah,f2_hujan);
+
+ 	if kering and dingin and tdk_hujan and w_mendung and f_mendung and f2_cerah:
+ 		nkRendah[471]=min(kering,dingin,tdk_hujan,w_mendung,f_mendung,f2_cerah);
+
+ 	if kering and dingin and tdk_hujan and w_mendung and f_mendung and f2_mendung:
+ 		nkRendah[472]=min(kering,dingin,tdk_hujan,w_mendung,f_mendung,f2_mendung);
+
+ 	if kering and dingin and tdk_hujan and w_mendung and f_mendung and f2_hujan:
+ 		nkRendah[473]=min(kering,dingin,tdk_hujan,w_mendung,f_mendung,f2_hujan);
+
+ 	if kering and dingin and tdk_hujan and w_mendung and f_hujan and f2_cerah:
+ 		nkRendah[474]=min(kering,dingin,tdk_hujan,w_mendung,f_hujan,f2_cerah);
+
+ 	if kering and dingin and tdk_hujan and w_mendung and f_hujan and f2_mendung:
+ 		nkRendah[475]=min(kering,dingin,tdk_hujan,w_mendung,f_hujan,f2_mendung);
+
+ 	if kering and dingin and tdk_hujan and w_mendung and f_hujan and f2_hujan:
+ 		nkRendah[476]=min(kering,dingin,tdk_hujan,w_mendung,f_hujan,f2_hujan);
+
+ 	if kering and dingin and tdk_hujan and w_hujan and f_cerah and f2_cerah:
+ 		nkRendah[477]=min(kering,dingin,tdk_hujan,w_hujan,f_cerah,f2_cerah);
+
+ 	if kering and dingin and tdk_hujan and w_hujan and f_cerah and f2_mendung:
+ 		nkRendah[478]=min(kering,dingin,tdk_hujan,w_hujan,f_cerah,f2_mendung);
+
+ 	if kering and dingin and tdk_hujan and w_hujan and f_cerah and f2_hujan:
+ 		nkRendah[479]=min(kering,dingin,tdk_hujan,w_hujan,f_cerah,f2_hujan);
+
+ 	if kering and dingin and tdk_hujan and w_hujan and f_mendung and f2_cerah:
+ 		nkRendah[480]=min(kering,dingin,tdk_hujan,w_hujan,f_mendung,f2_cerah);
+
+ 	if kering and dingin and tdk_hujan and w_hujan and f_mendung and f2_mendung:
+ 		nkRendah[481]=min(kering,dingin,tdk_hujan,w_hujan,f_mendung,f2_mendung);
+
+ 	if kering and dingin and tdk_hujan and w_hujan and f_mendung and f2_hujan:
+ 		nkRendah[482]=min(kering,dingin,tdk_hujan,w_hujan,f_mendung,f2_hujan);
+
+ 	if kering and dingin and tdk_hujan and w_hujan and f_hujan and f2_cerah:
+ 		nkRendah[483]=min(kering,dingin,tdk_hujan,w_hujan,f_hujan,f2_cerah);
+
+ 	if kering and dingin and tdk_hujan and w_hujan and f_hujan and f2_mendung:
+ 		nkRendah[484]=min(kering,dingin,tdk_hujan,w_hujan,f_hujan,f2_mendung);
+
+ 	if kering and dingin and tdk_hujan and w_hujan and f_hujan and f2_hujan:
+ 		nkRendah[485]=min(kering,dingin,tdk_hujan,w_hujan,f_hujan,f2_hujan);
 	
 	
 	#nkRendah.append(5);
