@@ -127,6 +127,8 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
 	print "CERAH  : "+str(f2_cerah);
 	print "MENDUNG: "+str(f2_mendung);
 	print "HUJAN  : "+str(f2_hujan);
+
+
 	#Inferensi
 	nkRendah=[];
 	nkTinggi=[];
@@ -707,19 +709,19 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[188]=min(sedang,panas,hujan,w_hujan,f_hujan,f2_hujan);
 
  	if sedang and panas and tdk_hujan and w_cerah and f_cerah and f2_cerah:
- 		nkRendah[189]=min(sedang,panas,tdk_hujan,w_cerah,f_cerah,f2_cerah);
+ 		nkTinggi[189]=min(sedang,panas,tdk_hujan,w_cerah,f_cerah,f2_cerah);
 
  	if sedang and panas and tdk_hujan and w_cerah and f_cerah and f2_mendung:
- 		nkRendah[190]=min(sedang,panas,tdk_hujan,w_cerah,f_cerah,f2_mendung);
+ 		nkTinggi[190]=min(sedang,panas,tdk_hujan,w_cerah,f_cerah,f2_mendung);
 
  	if sedang and panas and tdk_hujan and w_cerah and f_cerah and f2_hujan:
  		nkRendah[191]=min(sedang,panas,tdk_hujan,w_cerah,f_cerah,f2_hujan);
 
  	if sedang and panas and tdk_hujan and w_cerah and f_mendung and f2_cerah:
- 		nkRendah[192]=min(sedang,panas,tdk_hujan,w_cerah,f_mendung,f2_cerah);
+ 		nkTinggi[192]=min(sedang,panas,tdk_hujan,w_cerah,f_mendung,f2_cerah);
  	
  	if sedang and panas and tdk_hujan and w_cerah and f_mendung and f2_mendung:
- 		nkRendah[193]=min(sedang,panas,tdk_hujan,w_cerah,f_mendung,f2_mendung);
+ 		nkTinggi[193]=min(sedang,panas,tdk_hujan,w_cerah,f_mendung,f2_mendung);
  	
  	if sedang and panas and tdk_hujan and w_cerah and f_mendung and f2_hujan:
  		nkRendah[194]=min(sedang,panas,tdk_hujan,w_cerah,f_mendung,f2_hujan);
@@ -734,19 +736,19 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[197]=min(sedang,panas,tdk_hujan,w_cerah,f_hujan,f2_hujan);
 
  	if sedang and panas and tdk_hujan and w_mendung and f_cerah and f2_cerah:
- 		nkRendah[198]=min(sedang,panas,tdk_hujan,w_mendung,f_cerah,f2_cerah);
+ 		nkTinggi[198]=min(sedang,panas,tdk_hujan,w_mendung,f_cerah,f2_cerah);
 
  	if sedang and panas and tdk_hujan and w_mendung and f_cerah and f2_mendung:
- 		nkRendah[199]=min(sedang,panas,tdk_hujan,w_mendung,f_cerah,f2_mendung);
+ 		nkTinggi[199]=min(sedang,panas,tdk_hujan,w_mendung,f_cerah,f2_mendung);
 
  	if sedang and panas and tdk_hujan and w_mendung and f_cerah and f2_hujan:
  		nkRendah[200]=min(sedang,panas,tdk_hujan,w_mendung,f_cerah,f2_hujan);
 
  	if sedang and panas and tdk_hujan and w_mendung and f_mendung and f2_cerah:
- 		nkRendah[201]=min(sedang,panas,tdk_hujan,w_mendung,f_mendung,f2_cerah);
+ 		nkTinggi[201]=min(sedang,panas,tdk_hujan,w_mendung,f_mendung,f2_cerah);
 
  	if sedang and panas and tdk_hujan and w_mendung and f_mendung and f2_mendung:
- 		nkRendah[202]=min(sedang,panas,tdk_hujan,w_mendung,f_mendung,f2_mendung);
+ 		nkTinggi[202]=min(sedang,panas,tdk_hujan,w_mendung,f_mendung,f2_mendung);
 
  	if sedang and panas and tdk_hujan and w_mendung and f_mendung and f2_hujan:
  		nkRendah[203]=min(sedang,panas,tdk_hujan,w_mendung,f_mendung,f2_hujan);
@@ -755,7 +757,7 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[204]=min(sedang,panas,tdk_hujan,w_mendung,f_hujan,f2_cerah);
 
  	if sedang and panas and tdk_hujan and w_mendung and f_hujan and f2_mendung:
- 		nkRendah[205]=min(sedang,panas,tdk_hujan,w_mendung,f_hujan,f2_mendung);
+ 		nkTinggi[205]=min(sedang,panas,tdk_hujan,w_mendung,f_hujan,f2_mendung);
 
  	if sedang and panas and tdk_hujan and w_mendung and f_hujan and f2_hujan:
  		nkRendah[206]=min(sedang,panas,tdk_hujan,w_mendung,f_hujan,f2_hujan);
@@ -869,19 +871,19 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[242]=min(sedang,sejuk,hujan,w_hujan,f_hujan,f2_hujan);
 
  	if sedang and sejuk and tdk_hujan and w_cerah and f_cerah and f2_cerah:
- 		nkRendah[243]=min(sedang,sejuk,tdk_hujan,w_cerah,f_cerah,f2_cerah);
+ 		nkTinggi[243]=min(sedang,sejuk,tdk_hujan,w_cerah,f_cerah,f2_cerah);
 
  	if sedang and sejuk and tdk_hujan and w_cerah and f_cerah and f2_mendung:
- 		nkRendah[244]=min(sedang,sejuk,tdk_hujan,w_cerah,f_cerah,f2_mendung);
+ 		nkTinggi[244]=min(sedang,sejuk,tdk_hujan,w_cerah,f_cerah,f2_mendung);
 
  	if sedang and sejuk and tdk_hujan and w_cerah and f_cerah and f2_hujan:
  		nkRendah[245]=min(sedang,sejuk,tdk_hujan,w_cerah,f_cerah,f2_hujan);
 
  	if sedang and sejuk and tdk_hujan and w_cerah and f_mendung and f2_cerah:
- 		nkRendah[246]=min(sedang,sejuk,tdk_hujan,w_cerah,f_mendung,f2_cerah);
+ 		nkTinggi[246]=min(sedang,sejuk,tdk_hujan,w_cerah,f_mendung,f2_cerah);
  	
  	if sedang and sejuk and tdk_hujan and w_cerah and f_mendung and f2_mendung:
- 		nkRendah[247]=min(sedang,sejuk,tdk_hujan,w_cerah,f_mendung,f2_mendung);
+ 		nkTinggi[247]=min(sedang,sejuk,tdk_hujan,w_cerah,f_mendung,f2_mendung);
  	
  	if sedang and sejuk and tdk_hujan and w_cerah and f_mendung and f2_hujan:
  		nkRendah[248]=min(sedang,sejuk,tdk_hujan,w_cerah,f_mendung,f2_hujan);
@@ -896,19 +898,19 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[251]=min(sedang,sejuk,tdk_hujan,w_cerah,f_hujan,f2_hujan);
 
  	if sedang and sejuk and tdk_hujan and w_mendung and f_cerah and f2_cerah:
- 		nkRendah[252]=min(sedang,sejuk,tdk_hujan,w_mendung,f_cerah,f2_cerah);
+ 		nkTinggi[252]=min(sedang,sejuk,tdk_hujan,w_mendung,f_cerah,f2_cerah);
 
  	if sedang and sejuk and tdk_hujan and w_mendung and f_cerah and f2_mendung:
- 		nkRendah[253]=min(sedang,sejuk,tdk_hujan,w_mendung,f_cerah,f2_mendung);
+ 		nkTinggi[253]=min(sedang,sejuk,tdk_hujan,w_mendung,f_cerah,f2_mendung);
 
  	if sedang and sejuk and tdk_hujan and w_mendung and f_cerah and f2_hujan:
  		nkRendah[254]=min(sedang,sejuk,tdk_hujan,w_mendung,f_cerah,f2_hujan);
 
  	if sedang and sejuk and tdk_hujan and w_mendung and f_mendung and f2_cerah:
- 		nkRendah[255]=min(sedang,sejuk,tdk_hujan,w_mendung,f_mendung,f2_cerah);
+ 		nkTinggi[255]=min(sedang,sejuk,tdk_hujan,w_mendung,f_mendung,f2_cerah);
 
  	if sedang and sejuk and tdk_hujan and w_mendung and f_mendung and f2_mendung:
- 		nkRendah[256]=min(sedang,sejuk,tdk_hujan,w_mendung,f_mendung,f2_mendung);
+ 		nkTinggi[256]=min(sedang,sejuk,tdk_hujan,w_mendung,f_mendung,f2_mendung);
 
  	if sedang and sejuk and tdk_hujan and w_mendung and f_mendung and f2_hujan:
  		nkRendah[257]=min(sedang,sejuk,tdk_hujan,w_mendung,f_mendung,f2_hujan);
@@ -950,19 +952,19 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[269]=min(sedang,sejuk,tdk_hujan,w_hujan,f_hujan,f2_hujan);
 
  	if sedang and dingin and hujan and w_cerah and f_cerah and f2_cerah:
- 		nkRendah[270]=min(sedang,dingin,hujan,w_cerah,f_cerah,f2_cerah);
+ 		nkTinggi[270]=min(sedang,dingin,hujan,w_cerah,f_cerah,f2_cerah);
 
  	if sedang and dingin and hujan and w_cerah and f_cerah and f2_mendung:
- 		nkRendah[271]=min(sedang,dingin,hujan,w_cerah,f_cerah,f2_mendung);
+ 		nkTinggi[271]=min(sedang,dingin,hujan,w_cerah,f_cerah,f2_mendung);
 
  	if sedang and dingin and hujan and w_cerah and f_cerah and f2_hujan:
  		nkRendah[272]=min(sedang,dingin,hujan,w_cerah,f_cerah,f2_hujan);
 
  	if sedang and dingin and hujan and w_cerah and f_mendung and f2_cerah:
- 		nkRendah[273]=min(sedang,dingin,hujan,w_cerah,f_mendung,f2_cerah);
+ 		nkTinggi[273]=min(sedang,dingin,hujan,w_cerah,f_mendung,f2_cerah);
  	
  	if sedang and dingin and hujan and w_cerah and f_mendung and f2_mendung:
- 		nkRendah[274]=min(sedang,dingin,hujan,w_cerah,f_mendung,f2_mendung);
+ 		nkTinggi[274]=min(sedang,dingin,hujan,w_cerah,f_mendung,f2_mendung);
  	
  	if sedang and dingin and hujan and w_cerah and f_mendung and f2_hujan:
  		nkRendah[275]=min(sedang,dingin,hujan,w_cerah,f_mendung,f2_hujan);
@@ -977,19 +979,19 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[278]=min(sedang,dingin,hujan,w_cerah,f_hujan,f2_hujan);
 
  	if sedang and dingin and hujan and w_mendung and f_cerah and f2_cerah:
- 		nkRendah[279]=min(sedang,dingin,hujan,w_mendung,f_cerah,f2_cerah);
+ 		nkTinggi[279]=min(sedang,dingin,hujan,w_mendung,f_cerah,f2_cerah);
 
  	if sedang and dingin and hujan and w_mendung and f_cerah and f2_mendung:
- 		nkRendah[280]=min(sedang,dingin,hujan,w_mendung,f_cerah,f2_mendung);
+ 		nkTinggi[280]=min(sedang,dingin,hujan,w_mendung,f_cerah,f2_mendung);
 
  	if sedang and dingin and hujan and w_mendung and f_cerah and f2_hujan:
  		nkRendah[281]=min(sedang,dingin,hujan,w_mendung,f_cerah,f2_hujan);
 
  	if sedang and dingin and hujan and w_mendung and f_mendung and f2_cerah:
- 		nkRendah[282]=min(sedang,dingin,hujan,w_mendung,f_mendung,f2_cerah);
+ 		nkTinggi[282]=min(sedang,dingin,hujan,w_mendung,f_mendung,f2_cerah);
 
  	if sedang and dingin and hujan and w_mendung and f_mendung and f2_mendung:
- 		nkRendah[283]=min(sedang,dingin,hujan,w_mendung,f_mendung,f2_mendung);
+ 		nkTinggi[283]=min(sedang,dingin,hujan,w_mendung,f_mendung,f2_mendung);
 
  	if sedang and dingin and hujan and w_mendung and f_mendung and f2_hujan:
  		nkRendah[284]=min(sedang,dingin,hujan,w_mendung,f_mendung,f2_hujan);
@@ -1004,10 +1006,10 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[287]=min(sedang,dingin,hujan,w_mendung,f_hujan,f2_hujan);
 
  	if sedang and dingin and hujan and w_hujan and f_cerah and f2_cerah:
- 		nkRendah[288]=min(sedang,dingin,hujan,w_hujan,f_cerah,f2_cerah);
+ 		nkTinggi[288]=min(sedang,dingin,hujan,w_hujan,f_cerah,f2_cerah);
 
  	if sedang and dingin and hujan and w_hujan and f_cerah and f2_mendung:
- 		nkRendah[289]=min(sedang,dingin,hujan,w_hujan,f_cerah,f2_mendung);
+ 		nkTinggi[289]=min(sedang,dingin,hujan,w_hujan,f_cerah,f2_mendung);
 
  	if sedang and dingin and hujan and w_hujan and f_cerah and f2_hujan:
  		nkRendah[290]=min(sedang,dingin,hujan,w_hujan,f_cerah,f2_hujan);
@@ -1016,10 +1018,10 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[291]=min(sedang,dingin,hujan,w_hujan,f_mendung,f2_cerah);
 
  	if sedang and dingin and hujan and w_hujan and f_mendung and f2_mendung:
- 		nkRendah[292]=min(sedang,dingin,hujan,w_hujan,f_mendung,f2_mendung);
+ 		nkTinggi[292]=min(sedang,dingin,hujan,w_hujan,f_mendung,f2_mendung);
 
  	if sedang and dingin and hujan and w_hujan and f_mendung and f2_hujan:
- 		nkRendah[293]=min(sedang,dingin,hujan,w_hujan,f_mendung,f2_hujan);
+ 		nkTinggi[293]=min(sedang,dingin,hujan,w_hujan,f_mendung,f2_hujan);
 
  	if sedang and dingin and hujan and w_hujan and f_hujan and f2_cerah:
  		nkRendah[294]=min(sedang,dingin,hujan,w_hujan,f_hujan,f2_cerah);
@@ -1031,19 +1033,19 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[296]=min(sedang,dingin,hujan,w_hujan,f_hujan,f2_hujan);
 
  	if sedang and dingin and tdk_hujan and w_cerah and f_cerah and f2_cerah:
- 		nkRendah[297]=min(sedang,dingin,tdk_hujan,w_cerah,f_cerah,f2_cerah);
+ 		nkTinggi[297]=min(sedang,dingin,tdk_hujan,w_cerah,f_cerah,f2_cerah);
 
  	if sedang and dingin and tdk_hujan and w_cerah and f_cerah and f2_mendung:
- 		nkRendah[298]=min(sedang,dingin,tdk_hujan,w_cerah,f_cerah,f2_mendung);
+ 		nkTinggi[298]=min(sedang,dingin,tdk_hujan,w_cerah,f_cerah,f2_mendung);
 
  	if sedang and dingin and tdk_hujan and w_cerah and f_cerah and f2_hujan:
  		nkRendah[299]=min(sedang,dingin,tdk_hujan,w_cerah,f_cerah,f2_hujan);
 
  	if sedang and dingin and tdk_hujan and w_cerah and f_mendung and f2_cerah:
- 		nkRendah[300]=min(sedang,dingin,tdk_hujan,w_cerah,f_mendung,f2_cerah);
+ 		nkTinggi[300]=min(sedang,dingin,tdk_hujan,w_cerah,f_mendung,f2_cerah);
  	
  	if sedang and dingin and tdk_hujan and w_cerah and f_mendung and f2_mendung:
- 		nkRendah[301]=min(sedang,dingin,tdk_hujan,w_cerah,f_mendung,f2_mendung);
+ 		nkTinggi[301]=min(sedang,dingin,tdk_hujan,w_cerah,f_mendung,f2_mendung);
  	
  	if sedang and dingin and tdk_hujan and w_cerah and f_mendung and f2_hujan:
  		nkRendah[302]=min(sedang,dingin,tdk_hujan,w_cerah,f_mendung,f2_hujan);
@@ -1058,19 +1060,19 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[305]=min(sedang,dingin,tdk_hujan,w_cerah,f_hujan,f2_hujan);
 
  	if sedang and dingin and tdk_hujan and w_mendung and f_cerah and f2_cerah:
- 		nkRendah[306]=min(sedang,dingin,tdk_hujan,w_mendung,f_cerah,f2_cerah);
+ 		nkTinggi[306]=min(sedang,dingin,tdk_hujan,w_mendung,f_cerah,f2_cerah);
 
  	if sedang and dingin and tdk_hujan and w_mendung and f_cerah and f2_mendung:
- 		nkRendah[307]=min(sedang,dingin,tdk_hujan,w_mendung,f_cerah,f2_mendung);
+ 		nkTinggi[307]=min(sedang,dingin,tdk_hujan,w_mendung,f_cerah,f2_mendung);
 
  	if sedang and dingin and tdk_hujan and w_mendung and f_cerah and f2_hujan:
  		nkRendah[308]=min(sedang,dingin,tdk_hujan,w_mendung,f_cerah,f2_hujan);
 
  	if sedang and dingin and tdk_hujan and w_mendung and f_mendung and f2_cerah:
- 		nkRendah[309]=min(sedang,dingin,tdk_hujan,w_mendung,f_mendung,f2_cerah);
+ 		nkTinggi[309]=min(sedang,dingin,tdk_hujan,w_mendung,f_mendung,f2_cerah);
 
  	if sedang and dingin and tdk_hujan and w_mendung and f_mendung and f2_mendung:
- 		nkRendah[310]=min(sedang,dingin,tdk_hujan,w_mendung,f_mendung,f2_mendung);
+ 		nkTinggi[310]=min(sedang,dingin,tdk_hujan,w_mendung,f_mendung,f2_mendung);
 
  	if sedang and dingin and tdk_hujan and w_mendung and f_mendung and f2_hujan:
  		nkRendah[311]=min(sedang,dingin,tdk_hujan,w_mendung,f_mendung,f2_hujan);
@@ -1085,19 +1087,19 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[314]=min(sedang,dingin,tdk_hujan,w_mendung,f_hujan,f2_hujan);
 
  	if sedang and dingin and tdk_hujan and w_hujan and f_cerah and f2_cerah:
- 		nkRendah[315]=min(sedang,dingin,tdk_hujan,w_hujan,f_cerah,f2_cerah);
+ 		nkTinggi[315]=min(sedang,dingin,tdk_hujan,w_hujan,f_cerah,f2_cerah);
 
  	if sedang and dingin and tdk_hujan and w_hujan and f_cerah and f2_mendung:
- 		nkRendah[316]=min(sedang,dingin,tdk_hujan,w_hujan,f_cerah,f2_mendung);
+ 		nkTinggi[316]=min(sedang,dingin,tdk_hujan,w_hujan,f_cerah,f2_mendung);
 
  	if sedang and dingin and tdk_hujan and w_hujan and f_cerah and f2_hujan:
  		nkRendah[317]=min(sedang,dingin,tdk_hujan,w_hujan,f_cerah,f2_hujan);
 
  	if sedang and dingin and tdk_hujan and w_hujan and f_mendung and f2_cerah:
- 		nkRendah[318]=min(sedang,dingin,tdk_hujan,w_hujan,f_mendung,f2_cerah);
+ 		nkTinggi[318]=min(sedang,dingin,tdk_hujan,w_hujan,f_mendung,f2_cerah);
 
  	if sedang and dingin and tdk_hujan and w_hujan and f_mendung and f2_mendung:
- 		nkRendah[319]=min(sedang,dingin,tdk_hujan,w_hujan,f_mendung,f2_mendung);
+ 		nkTinggi[319]=min(sedang,dingin,tdk_hujan,w_hujan,f_mendung,f2_mendung);
 
  	if sedang and dingin and tdk_hujan and w_hujan and f_mendung and f2_hujan:
  		nkRendah[320]=min(sedang,dingin,tdk_hujan,w_hujan,f_mendung,f2_hujan);
@@ -1112,21 +1114,20 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[323]=min(sedang,dingin,tdk_hujan,w_hujan,f_hujan,f2_hujan);
 	
 	
-
  	if kering and panas and hujan and w_cerah and f_cerah and f2_cerah:
- 		nkRendah[324]=min(kering,panas,hujan,w_cerah,f_cerah,f2_cerah);
+ 		nkTinggi[324]=min(kering,panas,hujan,w_cerah,f_cerah,f2_cerah);
 
  	if kering and panas and hujan and w_cerah and f_cerah and f2_mendung:
- 		nkRendah[325]=min(kering,panas,hujan,w_cerah,f_cerah,f2_mendung);
+ 		nkTinggi[325]=min(kering,panas,hujan,w_cerah,f_cerah,f2_mendung);
 
  	if kering and panas and hujan and w_cerah and f_cerah and f2_hujan:
  		nkRendah[326]=min(kering,panas,hujan,w_cerah,f_cerah,f2_hujan);
 
  	if kering and panas and hujan and w_cerah and f_mendung and f2_cerah:
- 		nkRendah[327]=min(kering,panas,hujan,w_cerah,f_mendung,f2_cerah);
+ 		nkTinggi[327]=min(kering,panas,hujan,w_cerah,f_mendung,f2_cerah);
  	
  	if kering and panas and hujan and w_cerah and f_mendung and f2_mendung:
- 		nkRendah[328]=min(kering,panas,hujan,w_cerah,f_mendung,f2_mendung);
+ 		nkTinggi[328]=min(kering,panas,hujan,w_cerah,f_mendung,f2_mendung);
  	
  	if kering and panas and hujan and w_cerah and f_mendung and f2_hujan:
  		nkRendah[329]=min(kering,panas,hujan,w_cerah,f_mendung,f2_hujan);
@@ -1141,19 +1142,19 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[332]=min(kering,panas,hujan,w_cerah,f_hujan,f2_hujan);
 
  	if kering and panas and hujan and w_mendung and f_cerah and f2_cerah:
- 		nkRendah[333]=min(kering,panas,hujan,w_mendung,f_cerah,f2_cerah);
+ 		nkTinggi[333]=min(kering,panas,hujan,w_mendung,f_cerah,f2_cerah);
 
  	if kering and panas and hujan and w_mendung and f_cerah and f2_mendung:
- 		nkRendah[334]=min(kering,panas,hujan,w_mendung,f_cerah,f2_mendung);
+ 		nkTinggi[334]=min(kering,panas,hujan,w_mendung,f_cerah,f2_mendung);
 
  	if kering and panas and hujan and w_mendung and f_cerah and f2_hujan:
  		nkRendah[335]=min(kering,panas,hujan,w_mendung,f_cerah,f2_hujan);
 
  	if kering and panas and hujan and w_mendung and f_mendung and f2_cerah:
- 		nkRendah[336]=min(kering,panas,hujan,w_mendung,f_mendung,f2_cerah);
+ 		nkTinggi[336]=min(kering,panas,hujan,w_mendung,f_mendung,f2_cerah);
 
  	if kering and panas and hujan and w_mendung and f_mendung and f2_mendung:
- 		nkRendah[337]=min(kering,panas,hujan,w_mendung,f_mendung,f2_mendung);
+ 		nkTinggi[337]=min(kering,panas,hujan,w_mendung,f_mendung,f2_mendung);
 
  	if kering and panas and hujan and w_mendung and f_mendung and f2_hujan:
  		nkRendah[338]=min(kering,panas,hujan,w_mendung,f_mendung,f2_hujan);
@@ -1165,22 +1166,22 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[340]=min(kering,panas,hujan,w_mendung,f_hujan,f2_mendung);
 
  	if kering and panas and hujan and w_mendung and f_hujan and f2_hujan:
- 		nkRendah[341]=min(kering,panas,hujan,w_mendung,f_hujan,f2_hujan);
+ 		nkTinggi[341]=min(kering,panas,hujan,w_mendung,f_hujan,f2_hujan);
 
  	if kering and panas and hujan and w_hujan and f_cerah and f2_cerah:
- 		nkRendah[342]=min(kering,panas,hujan,w_hujan,f_cerah,f2_cerah);
+ 		nkTinggi[342]=min(kering,panas,hujan,w_hujan,f_cerah,f2_cerah);
 
  	if kering and panas and hujan and w_hujan and f_cerah and f2_mendung:
- 		nkRendah[343]=min(kering,panas,hujan,w_hujan,f_cerah,f2_mendung);
+ 		nkTinggi[343]=min(kering,panas,hujan,w_hujan,f_cerah,f2_mendung);
 
  	if kering and panas and hujan and w_hujan and f_cerah and f2_hujan:
  		nkRendah[344]=min(kering,panas,hujan,w_hujan,f_cerah,f2_hujan);
 
  	if kering and panas and hujan and w_hujan and f_mendung and f2_cerah:
- 		nkRendah[345]=min(kering,panas,hujan,w_hujan,f_mendung,f2_cerah);
+ 		nkTinggi[345]=min(kering,panas,hujan,w_hujan,f_mendung,f2_cerah);
 
  	if kering and panas and hujan and w_hujan and f_mendung and f2_mendung:
- 		nkRendah[346]=min(kering,panas,hujan,w_hujan,f_mendung,f2_mendung);
+ 		nkTinggi[346]=min(kering,panas,hujan,w_hujan,f_mendung,f2_mendung);
 
  	if kering and panas and hujan and w_hujan and f_mendung and f2_hujan:
  		nkRendah[347]=min(kering,panas,hujan,w_hujan,f_mendung,f2_hujan);
@@ -1195,19 +1196,19 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[350]=min(kering,panas,hujan,w_hujan,f_hujan,f2_hujan);
 
  	if kering and panas and tdk_hujan and w_cerah and f_cerah and f2_cerah:
- 		nkRendah[351]=min(kering,panas,tdk_hujan,w_cerah,f_cerah,f2_cerah);
+ 		nkTinggi[351]=min(kering,panas,tdk_hujan,w_cerah,f_cerah,f2_cerah);
 
  	if kering and panas and tdk_hujan and w_cerah and f_cerah and f2_mendung:
- 		nkRendah[352]=min(kering,panas,tdk_hujan,w_cerah,f_cerah,f2_mendung);
+ 		nkTinggi[352]=min(kering,panas,tdk_hujan,w_cerah,f_cerah,f2_mendung);
 
  	if kering and panas and tdk_hujan and w_cerah and f_cerah and f2_hujan:
  		nkRendah[353]=min(kering,panas,tdk_hujan,w_cerah,f_cerah,f2_hujan);
 
  	if kering and panas and tdk_hujan and w_cerah and f_mendung and f2_cerah:
- 		nkRendah[354]=min(kering,panas,tdk_hujan,w_cerah,f_mendung,f2_cerah);
+ 		nkTinggi[354]=min(kering,panas,tdk_hujan,w_cerah,f_mendung,f2_cerah);
  	
  	if kering and panas and tdk_hujan and w_cerah and f_mendung and f2_mendung:
- 		nkRendah[355]=min(kering,panas,tdk_hujan,w_cerah,f_mendung,f2_mendung);
+ 		nkTinggi[355]=min(kering,panas,tdk_hujan,w_cerah,f_mendung,f2_mendung);
  	
  	if kering and panas and tdk_hujan and w_cerah and f_mendung and f2_hujan:
  		nkRendah[356]=min(kering,panas,tdk_hujan,w_cerah,f_mendung,f2_hujan);
@@ -1222,19 +1223,19 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[359]=min(kering,panas,tdk_hujan,w_cerah,f_hujan,f2_hujan);
 
  	if kering and panas and tdk_hujan and w_mendung and f_cerah and f2_cerah:
- 		nkRendah[360]=min(kering,panas,tdk_hujan,w_mendung,f_cerah,f2_cerah);
+ 		nkTinggi[360]=min(kering,panas,tdk_hujan,w_mendung,f_cerah,f2_cerah);
 
  	if kering and panas and tdk_hujan and w_mendung and f_cerah and f2_mendung:
- 		nkRendah[361]=min(kering,panas,tdk_hujan,w_mendung,f_cerah,f2_mendung);
+ 		nkTinggi[361]=min(kering,panas,tdk_hujan,w_mendung,f_cerah,f2_mendung);
 
  	if kering and panas and tdk_hujan and w_mendung and f_cerah and f2_hujan:
  		nkRendah[362]=min(kering,panas,tdk_hujan,w_mendung,f_cerah,f2_hujan);
 
  	if kering and panas and tdk_hujan and w_mendung and f_mendung and f2_cerah:
- 		nkRendah[363]=min(kering,panas,tdk_hujan,w_mendung,f_mendung,f2_cerah);
+ 		nkTinggi[363]=min(kering,panas,tdk_hujan,w_mendung,f_mendung,f2_cerah);
 
  	if kering and panas and tdk_hujan and w_mendung and f_mendung and f2_mendung:
- 		nkRendah[364]=min(kering,panas,tdk_hujan,w_mendung,f_mendung,f2_mendung);
+ 		nkTinggi[364]=min(kering,panas,tdk_hujan,w_mendung,f_mendung,f2_mendung);
 
  	if kering and panas and tdk_hujan and w_mendung and f_mendung and f2_hujan:
  		nkRendah[365]=min(kering,panas,tdk_hujan,w_mendung,f_mendung,f2_hujan);
@@ -1249,19 +1250,19 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[368]=min(kering,panas,tdk_hujan,w_mendung,f_hujan,f2_hujan);
 
  	if kering and panas and tdk_hujan and w_hujan and f_cerah and f2_cerah:
- 		nkRendah[369]=min(kering,panas,tdk_hujan,w_hujan,f_cerah,f2_cerah);
+ 		nkTinggi[369]=min(kering,panas,tdk_hujan,w_hujan,f_cerah,f2_cerah);
 
  	if kering and panas and tdk_hujan and w_hujan and f_cerah and f2_mendung:
- 		nkRendah[370]=min(kering,panas,tdk_hujan,w_hujan,f_cerah,f2_mendung);
+ 		nkTinggi[370]=min(kering,panas,tdk_hujan,w_hujan,f_cerah,f2_mendung);
 
  	if kering and panas and tdk_hujan and w_hujan and f_cerah and f2_hujan:
  		nkRendah[371]=min(kering,panas,tdk_hujan,w_hujan,f_cerah,f2_hujan);
 
  	if kering and panas and tdk_hujan and w_hujan and f_mendung and f2_cerah:
- 		nkRendah[372]=min(kering,panas,tdk_hujan,w_hujan,f_mendung,f2_cerah);
+ 		nkTinggi[372]=min(kering,panas,tdk_hujan,w_hujan,f_mendung,f2_cerah);
 
  	if kering and panas and tdk_hujan and w_hujan and f_mendung and f2_mendung:
- 		nkRendah[373]=min(kering,panas,tdk_hujan,w_hujan,f_mendung,f2_mendung);
+ 		nkTinggi[373]=min(kering,panas,tdk_hujan,w_hujan,f_mendung,f2_mendung);
 
  	if kering and panas and tdk_hujan and w_hujan and f_mendung and f2_hujan:
  		nkRendah[374]=min(kering,panas,tdk_hujan,w_hujan,f_mendung,f2_hujan);
@@ -1276,19 +1277,19 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[377]=min(kering,panas,tdk_hujan,w_hujan,f_hujan,f2_hujan);
 	
 	if kering and sejuk and hujan and w_cerah and f_cerah and f2_cerah:
- 		nkRendah[378]=min(kering,sejuk,hujan,w_cerah,f_cerah,f2_cerah);
+ 		nkTinggi[378]=min(kering,sejuk,hujan,w_cerah,f_cerah,f2_cerah);
 
  	if kering and sejuk and hujan and w_cerah and f_cerah and f2_mendung:
- 		nkRendah[379]=min(kering,sejuk,hujan,w_cerah,f_cerah,f2_mendung);
+ 		nkTinggi[379]=min(kering,sejuk,hujan,w_cerah,f_cerah,f2_mendung);
 
  	if kering and sejuk and hujan and w_cerah and f_cerah and f2_hujan:
  		nkRendah[380]=min(kering,sejuk,hujan,w_cerah,f_cerah,f2_hujan);
 
  	if kering and sejuk and hujan and w_cerah and f_mendung and f2_cerah:
- 		nkRendah[381]=min(kering,sejuk,hujan,w_cerah,f_mendung,f2_cerah);
+ 		nkTinggi[381]=min(kering,sejuk,hujan,w_cerah,f_mendung,f2_cerah);
  	
  	if kering and sejuk and hujan and w_cerah and f_mendung and f2_mendung:
- 		nkRendah[382]=min(kering,sejuk,hujan,w_cerah,f_mendung,f2_mendung);
+ 		nkTinggi[382]=min(kering,sejuk,hujan,w_cerah,f_mendung,f2_mendung);
  	
  	if kering and sejuk and hujan and w_cerah and f_mendung and f2_hujan:
  		nkRendah[383]=min(kering,sejuk,hujan,w_cerah,f_mendung,f2_hujan);
@@ -1303,19 +1304,19 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[386]=min(kering,sejuk,hujan,w_cerah,f_hujan,f2_hujan);
 
  	if kering and sejuk and hujan and w_mendung and f_cerah and f2_cerah:
- 		nkRendah[387]=min(kering,sejuk,hujan,w_mendung,f_cerah,f2_cerah);
+ 		nkTinggi[387]=min(kering,sejuk,hujan,w_mendung,f_cerah,f2_cerah);
 
  	if kering and sejuk and hujan and w_mendung and f_cerah and f2_mendung:
- 		nkRendah[388]=min(kering,sejuk,hujan,w_mendung,f_cerah,f2_mendung);
+ 		nkTinggi[388]=min(kering,sejuk,hujan,w_mendung,f_cerah,f2_mendung);
 
  	if kering and sejuk and hujan and w_mendung and f_cerah and f2_hujan:
  		nkRendah[389]=min(kering,sejuk,hujan,w_mendung,f_cerah,f2_hujan);
 
  	if kering and sejuk and hujan and w_mendung and f_mendung and f2_cerah:
- 		nkRendah[390]=min(kering,sejuk,hujan,w_mendung,f_mendung,f2_cerah);
+ 		nkTinggi[390]=min(kering,sejuk,hujan,w_mendung,f_mendung,f2_cerah);
 
  	if kering and sejuk and hujan and w_mendung and f_mendung and f2_mendung:
- 		nkRendah[391]=min(kering,sejuk,hujan,w_mendung,f_mendung,f2_mendung);
+ 		nkTinggi[391]=min(kering,sejuk,hujan,w_mendung,f_mendung,f2_mendung);
 
  	if kering and sejuk and hujan and w_mendung and f_mendung and f2_hujan:
  		nkRendah[392]=min(kering,sejuk,hujan,w_mendung,f_mendung,f2_hujan);
@@ -1330,19 +1331,19 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[395]=min(kering,sejuk,hujan,w_mendung,f_hujan,f2_hujan);
 
  	if kering and sejuk and hujan and w_hujan and f_cerah and f2_cerah:
- 		nkRendah[396]=min(kering,sejuk,hujan,w_hujan,f_cerah,f2_cerah);
+ 		nkTinggi[396]=min(kering,sejuk,hujan,w_hujan,f_cerah,f2_cerah);
 
  	if kering and sejuk and hujan and w_hujan and f_cerah and f2_mendung:
- 		nkRendah[397]=min(kering,sejuk,hujan,w_hujan,f_cerah,f2_mendung);
+ 		nkTinggi[397]=min(kering,sejuk,hujan,w_hujan,f_cerah,f2_mendung);
 
  	if kering and sejuk and hujan and w_hujan and f_cerah and f2_hujan:
  		nkRendah[398]=min(kering,sejuk,hujan,w_hujan,f_cerah,f2_hujan);
 
  	if kering and sejuk and hujan and w_hujan and f_mendung and f2_cerah:
- 		nkRendah[399]=min(kering,sejuk,hujan,w_hujan,f_mendung,f2_cerah);
+ 		nkTinggi[399]=min(kering,sejuk,hujan,w_hujan,f_mendung,f2_cerah);
 
  	if kering and sejuk and hujan and w_hujan and f_mendung and f2_mendung:
- 		nkRendah[400]=min(kering,sejuk,hujan,w_hujan,f_mendung,f2_mendung);
+ 		nkTinggi[400]=min(kering,sejuk,hujan,w_hujan,f_mendung,f2_mendung);
 
  	if kering and sejuk and hujan and w_hujan and f_mendung and f2_hujan:
  		nkRendah[401]=min(kering,sejuk,hujan,w_hujan,f_mendung,f2_hujan);
@@ -1357,19 +1358,19 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[404]=min(kering,sejuk,hujan,w_hujan,f_hujan,f2_hujan);
 
  	if kering and sejuk and tdk_hujan and w_cerah and f_cerah and f2_cerah:
- 		nkRendah[405]=min(kering,sejuk,tdk_hujan,w_cerah,f_cerah,f2_cerah);
+ 		nkTinggi[405]=min(kering,sejuk,tdk_hujan,w_cerah,f_cerah,f2_cerah);
 
  	if kering and sejuk and tdk_hujan and w_cerah and f_cerah and f2_mendung:
- 		nkRendah[406]=min(kering,sejuk,tdk_hujan,w_cerah,f_cerah,f2_mendung);
+ 		nkTinggi[406]=min(kering,sejuk,tdk_hujan,w_cerah,f_cerah,f2_mendung);
 
  	if kering and sejuk and tdk_hujan and w_cerah and f_cerah and f2_hujan:
  		nkRendah[407]=min(kering,sejuk,tdk_hujan,w_cerah,f_cerah,f2_hujan);
 
  	if kering and sejuk and tdk_hujan and w_cerah and f_mendung and f2_cerah:
- 		nkRendah[408]=min(kering,sejuk,tdk_hujan,w_cerah,f_mendung,f2_cerah);
+ 		nkTinggi[408]=min(kering,sejuk,tdk_hujan,w_cerah,f_mendung,f2_cerah);
  	
  	if kering and sejuk and tdk_hujan and w_cerah and f_mendung and f2_mendung:
- 		nkRendah[409]=min(kering,sejuk,tdk_hujan,w_cerah,f_mendung,f2_mendung);
+ 		nkTinggi[409]=min(kering,sejuk,tdk_hujan,w_cerah,f_mendung,f2_mendung);
  	
  	if kering and sejuk and tdk_hujan and w_cerah and f_mendung and f2_hujan:
  		nkRendah[410]=min(kering,sejuk,tdk_hujan,w_cerah,f_mendung,f2_hujan);
@@ -1384,19 +1385,19 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[413]=min(kering,sejuk,tdk_hujan,w_cerah,f_hujan,f2_hujan);
 
  	if kering and sejuk and tdk_hujan and w_mendung and f_cerah and f2_cerah:
- 		nkRendah[414]=min(kering,sejuk,tdk_hujan,w_mendung,f_cerah,f2_cerah);
+ 		nkTinggi[414]=min(kering,sejuk,tdk_hujan,w_mendung,f_cerah,f2_cerah);
 
  	if kering and sejuk and tdk_hujan and w_mendung and f_cerah and f2_mendung:
- 		nkRendah[415]=min(kering,sejuk,tdk_hujan,w_mendung,f_cerah,f2_mendung);
+ 		nkTinggi[415]=min(kering,sejuk,tdk_hujan,w_mendung,f_cerah,f2_mendung);
 
  	if kering and sejuk and tdk_hujan and w_mendung and f_cerah and f2_hujan:
  		nkRendah[416]=min(kering,sejuk,tdk_hujan,w_mendung,f_cerah,f2_hujan);
 
  	if kering and sejuk and tdk_hujan and w_mendung and f_mendung and f2_cerah:
- 		nkRendah[417]=min(kering,sejuk,tdk_hujan,w_mendung,f_mendung,f2_cerah);
+ 		nkTinggi[417]=min(kering,sejuk,tdk_hujan,w_mendung,f_mendung,f2_cerah);
 
  	if kering and sejuk and tdk_hujan and w_mendung and f_mendung and f2_mendung:
- 		nkRendah[418]=min(kering,sejuk,tdk_hujan,w_mendung,f_mendung,f2_mendung);
+ 		nkTinggi[418]=min(kering,sejuk,tdk_hujan,w_mendung,f_mendung,f2_mendung);
 
  	if kering and sejuk and tdk_hujan and w_mendung and f_mendung and f2_hujan:
  		nkRendah[419]=min(kering,sejuk,tdk_hujan,w_mendung,f_mendung,f2_hujan);
@@ -1411,19 +1412,19 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[422]=min(kering,sejuk,tdk_hujan,w_mendung,f_hujan,f2_hujan);
 
  	if kering and sejuk and tdk_hujan and w_hujan and f_cerah and f2_cerah:
- 		nkRendah[423]=min(kering,sejuk,tdk_hujan,w_hujan,f_cerah,f2_cerah);
+ 		nkTinggi[423]=min(kering,sejuk,tdk_hujan,w_hujan,f_cerah,f2_cerah);
 
  	if kering and sejuk and tdk_hujan and w_hujan and f_cerah and f2_mendung:
- 		nkRendah[424]=min(kering,sejuk,tdk_hujan,w_hujan,f_cerah,f2_mendung);
+ 		nkTinggi[424]=min(kering,sejuk,tdk_hujan,w_hujan,f_cerah,f2_mendung);
 
  	if kering and sejuk and tdk_hujan and w_hujan and f_cerah and f2_hujan:
  		nkRendah[425]=min(kering,sejuk,tdk_hujan,w_hujan,f_cerah,f2_hujan);
 
  	if kering and sejuk and tdk_hujan and w_hujan and f_mendung and f2_cerah:
- 		nkRendah[426]=min(kering,sejuk,tdk_hujan,w_hujan,f_mendung,f2_cerah);
+ 		nkTinggi[426]=min(kering,sejuk,tdk_hujan,w_hujan,f_mendung,f2_cerah);
 
  	if kering and sejuk and tdk_hujan and w_hujan and f_mendung and f2_mendung:
- 		nkRendah[427]=min(kering,sejuk,tdk_hujan,w_hujan,f_mendung,f2_mendung);
+ 		nkTinggi[427]=min(kering,sejuk,tdk_hujan,w_hujan,f_mendung,f2_mendung);
 
  	if kering and sejuk and tdk_hujan and w_hujan and f_mendung and f2_hujan:
  		nkRendah[428]=min(kering,sejuk,tdk_hujan,w_hujan,f_mendung,f2_hujan);
@@ -1438,19 +1439,19 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[431]=min(kering,sejuk,tdk_hujan,w_hujan,f_hujan,f2_hujan);
 
  	if kering and dingin and hujan and w_cerah and f_cerah and f2_cerah:
- 		nkRendah[432]=min(kering,dingin,hujan,w_cerah,f_cerah,f2_cerah);
+ 		nkTinggi[432]=min(kering,dingin,hujan,w_cerah,f_cerah,f2_cerah);
 
  	if kering and dingin and hujan and w_cerah and f_cerah and f2_mendung:
- 		nkRendah[433]=min(kering,dingin,hujan,w_cerah,f_cerah,f2_mendung);
+ 		nkTinggi[433]=min(kering,dingin,hujan,w_cerah,f_cerah,f2_mendung);
 
  	if kering and dingin and hujan and w_cerah and f_cerah and f2_hujan:
  		nkRendah[434]=min(kering,dingin,hujan,w_cerah,f_cerah,f2_hujan);
 
  	if kering and dingin and hujan and w_cerah and f_mendung and f2_cerah:
- 		nkRendah[435]=min(kering,dingin,hujan,w_cerah,f_mendung,f2_cerah);
+ 		nkTinggi[435]=min(kering,dingin,hujan,w_cerah,f_mendung,f2_cerah);
  	
  	if kering and dingin and hujan and w_cerah and f_mendung and f2_mendung:
- 		nkRendah[436]=min(kering,dingin,hujan,w_cerah,f_mendung,f2_mendung);
+ 		nkTinggi[436]=min(kering,dingin,hujan,w_cerah,f_mendung,f2_mendung);
  	
  	if kering and dingin and hujan and w_cerah and f_mendung and f2_hujan:
  		nkRendah[437]=min(kering,dingin,hujan,w_cerah,f_mendung,f2_hujan);
@@ -1465,19 +1466,19 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[440]=min(kering,dingin,hujan,w_cerah,f_hujan,f2_hujan);
 
  	if kering and dingin and hujan and w_mendung and f_cerah and f2_cerah:
- 		nkRendah[441]=min(kering,dingin,hujan,w_mendung,f_cerah,f2_cerah);
+ 		nkTinggi[441]=min(kering,dingin,hujan,w_mendung,f_cerah,f2_cerah);
 
  	if kering and dingin and hujan and w_mendung and f_cerah and f2_mendung:
- 		nkRendah[442]=min(kering,dingin,hujan,w_mendung,f_cerah,f2_mendung);
+ 		nkTinggi[442]=min(kering,dingin,hujan,w_mendung,f_cerah,f2_mendung);
 
  	if kering and dingin and hujan and w_mendung and f_cerah and f2_hujan:
  		nkRendah[443]=min(kering,dingin,hujan,w_mendung,f_cerah,f2_hujan);
 
  	if kering and dingin and hujan and w_mendung and f_mendung and f2_cerah:
- 		nkRendah[444]=min(kering,dingin,hujan,w_mendung,f_mendung,f2_cerah);
+ 		nkTinggi[444]=min(kering,dingin,hujan,w_mendung,f_mendung,f2_cerah);
 
  	if kering and dingin and hujan and w_mendung and f_mendung and f2_mendung:
- 		nkRendah[445]=min(kering,dingin,hujan,w_mendung,f_mendung,f2_mendung);
+ 		nkTinggi[445]=min(kering,dingin,hujan,w_mendung,f_mendung,f2_mendung);
 
  	if kering and dingin and hujan and w_mendung and f_mendung and f2_hujan:
  		nkRendah[446]=min(kering,dingin,hujan,w_mendung,f_mendung,f2_hujan);
@@ -1492,19 +1493,19 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[449]=min(kering,dingin,hujan,w_mendung,f_hujan,f2_hujan);
 
  	if kering and dingin and hujan and w_hujan and f_cerah and f2_cerah:
- 		nkRendah[450]=min(kering,dingin,hujan,w_hujan,f_cerah,f2_cerah);
+ 		nkTinggi[450]=min(kering,dingin,hujan,w_hujan,f_cerah,f2_cerah);
 
  	if kering and dingin and hujan and w_hujan and f_cerah and f2_mendung:
- 		nkRendah[451]=min(kering,dingin,hujan,w_hujan,f_cerah,f2_mendung);
+ 		nkTinggi[451]=min(kering,dingin,hujan,w_hujan,f_cerah,f2_mendung);
 
  	if kering and dingin and hujan and w_hujan and f_cerah and f2_hujan:
  		nkRendah[452]=min(kering,dingin,hujan,w_hujan,f_cerah,f2_hujan);
 
  	if kering and dingin and hujan and w_hujan and f_mendung and f2_cerah:
- 		nkRendah[453]=min(kering,dingin,hujan,w_hujan,f_mendung,f2_cerah);
+ 		nkTinggi[453]=min(kering,dingin,hujan,w_hujan,f_mendung,f2_cerah);
 
  	if kering and dingin and hujan and w_hujan and f_mendung and f2_mendung:
- 		nkRendah[454]=min(kering,dingin,hujan,w_hujan,f_mendung,f2_mendung);
+ 		nkTinggi[454]=min(kering,dingin,hujan,w_hujan,f_mendung,f2_mendung);
 
  	if kering and dingin and hujan and w_hujan and f_mendung and f2_hujan:
  		nkRendah[455]=min(kering,dingin,hujan,w_hujan,f_mendung,f2_hujan);
@@ -1519,19 +1520,19 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[458]=min(kering,dingin,hujan,w_hujan,f_hujan,f2_hujan);
 
  	if kering and dingin and tdk_hujan and w_cerah and f_cerah and f2_cerah:
- 		nkRendah[459]=min(kering,dingin,tdk_hujan,w_cerah,f_cerah,f2_cerah);
+ 		nkTinggi[459]=min(kering,dingin,tdk_hujan,w_cerah,f_cerah,f2_cerah);
 
  	if kering and dingin and tdk_hujan and w_cerah and f_cerah and f2_mendung:
- 		nkRendah[460]=min(kering,dingin,tdk_hujan,w_cerah,f_cerah,f2_mendung);
+ 		nkTinggi[460]=min(kering,dingin,tdk_hujan,w_cerah,f_cerah,f2_mendung);
 
  	if kering and dingin and tdk_hujan and w_cerah and f_cerah and f2_hujan:
  		nkRendah[461]=min(kering,dingin,tdk_hujan,w_cerah,f_cerah,f2_hujan);
 
  	if kering and dingin and tdk_hujan and w_cerah and f_mendung and f2_cerah:
- 		nkRendah[462]=min(kering,dingin,tdk_hujan,w_cerah,f_mendung,f2_cerah);
+ 		nkTinggi[462]=min(kering,dingin,tdk_hujan,w_cerah,f_mendung,f2_cerah);
  	
  	if kering and dingin and tdk_hujan and w_cerah and f_mendung and f2_mendung:
- 		nkRendah[463]=min(kering,dingin,tdk_hujan,w_cerah,f_mendung,f2_mendung);
+ 		nkTinggi[463]=min(kering,dingin,tdk_hujan,w_cerah,f_mendung,f2_mendung);
  	
  	if kering and dingin and tdk_hujan and w_cerah and f_mendung and f2_hujan:
  		nkRendah[464]=min(kering,dingin,tdk_hujan,w_cerah,f_mendung,f2_hujan);
@@ -1542,23 +1543,23 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  	if kering and dingin and tdk_hujan and w_cerah and f_hujan and f2_mendung:
  		nkRendah[466]=min(kering,dingin,tdk_hujan,w_cerah,f_hujan,f2_mendung);
  	
- 	if kering and dingin and tdk_hujan and w_cerah and f_hujan and f2_huan:
+ 	if kering and dingin and tdk_hujan and w_cerah and f_hujan and f2_hujan:
  		nkRendah[467]=min(kering,dingin,tdk_hujan,w_cerah,f_hujan,f2_hujan);
 
  	if kering and dingin and tdk_hujan and w_mendung and f_cerah and f2_cerah:
- 		nkRendah[468]=min(kering,dingin,tdk_hujan,w_mendung,f_cerah,f2_cerah);
+ 		nkTinggi[468]=min(kering,dingin,tdk_hujan,w_mendung,f_cerah,f2_cerah);
 
  	if kering and dingin and tdk_hujan and w_mendung and f_cerah and f2_mendung:
- 		nkRendah[469]=min(kering,dingin,tdk_hujan,w_mendung,f_cerah,f2_mendung);
+ 		nkTinggi[469]=min(kering,dingin,tdk_hujan,w_mendung,f_cerah,f2_mendung);
 
  	if kering and dingin and tdk_hujan and w_mendung and f_cerah and f2_hujan:
  		nkRendah[470]=min(kering,dingin,tdk_hujan,w_mendung,f_cerah,f2_hujan);
 
  	if kering and dingin and tdk_hujan and w_mendung and f_mendung and f2_cerah:
- 		nkRendah[471]=min(kering,dingin,tdk_hujan,w_mendung,f_mendung,f2_cerah);
+ 		nkTinggi[471]=min(kering,dingin,tdk_hujan,w_mendung,f_mendung,f2_cerah);
 
  	if kering and dingin and tdk_hujan and w_mendung and f_mendung and f2_mendung:
- 		nkRendah[472]=min(kering,dingin,tdk_hujan,w_mendung,f_mendung,f2_mendung);
+ 		nkTinggi[472]=min(kering,dingin,tdk_hujan,w_mendung,f_mendung,f2_mendung);
 
  	if kering and dingin and tdk_hujan and w_mendung and f_mendung and f2_hujan:
  		nkRendah[473]=min(kering,dingin,tdk_hujan,w_mendung,f_mendung,f2_hujan);
@@ -1573,19 +1574,19 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
  		nkRendah[476]=min(kering,dingin,tdk_hujan,w_mendung,f_hujan,f2_hujan);
 
  	if kering and dingin and tdk_hujan and w_hujan and f_cerah and f2_cerah:
- 		nkRendah[477]=min(kering,dingin,tdk_hujan,w_hujan,f_cerah,f2_cerah);
+ 		nkTinggi[477]=min(kering,dingin,tdk_hujan,w_hujan,f_cerah,f2_cerah);
 
  	if kering and dingin and tdk_hujan and w_hujan and f_cerah and f2_mendung:
- 		nkRendah[478]=min(kering,dingin,tdk_hujan,w_hujan,f_cerah,f2_mendung);
+ 		nkTinggi[478]=min(kering,dingin,tdk_hujan,w_hujan,f_cerah,f2_mendung);
 
  	if kering and dingin and tdk_hujan and w_hujan and f_cerah and f2_hujan:
  		nkRendah[479]=min(kering,dingin,tdk_hujan,w_hujan,f_cerah,f2_hujan);
 
  	if kering and dingin and tdk_hujan and w_hujan and f_mendung and f2_cerah:
- 		nkRendah[480]=min(kering,dingin,tdk_hujan,w_hujan,f_mendung,f2_cerah);
+ 		nkTinggi[480]=min(kering,dingin,tdk_hujan,w_hujan,f_mendung,f2_cerah);
 
  	if kering and dingin and tdk_hujan and w_hujan and f_mendung and f2_mendung:
- 		nkRendah[481]=min(kering,dingin,tdk_hujan,w_hujan,f_mendung,f2_mendung);
+ 		nkTinggi[481]=min(kering,dingin,tdk_hujan,w_hujan,f_mendung,f2_mendung);
 
  	if kering and dingin and tdk_hujan and w_hujan and f_mendung and f2_hujan:
  		nkRendah[482]=min(kering,dingin,tdk_hujan,w_hujan,f_mendung,f2_hujan);
@@ -1602,6 +1603,54 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
 	
 	#nkRendah.append(5);
 	#nkRendah.insert(1,6);
+	for i in range(486):
+		if nkRendah[i]>0:
+			print "Rule "+str(i+1)+ " Rendah : "+str(nkRendah[i]);
+			if nkRendah[i]>rendah:
+				rendah=nkRendah[i];
+		if nkTinggi[i]>0:
+			print "Rule "+str(i+1)+ " Tinggi : "+str(nkTinggi[i]);
+			if nkTinggi[i]>tinggi:
+				tinggi=nkTinggi[i];
 
-	
+	if rendah>0:
+		print "Rendah("+str(rendah)+")";
+	if tinggi>0:
+		print "Tinggi("+str(tinggi)+")";
+
+
+	#DEFUZIFIKASI
+	#batas
+	b_rendah = 50;
+	b_tinggi = 80;
+	m1 = 0;
+	m2 = 0;
+	count = 0;
+	y=[];
+	i = 0;
+	while count<100:
+		count += 5;
+		val = 0;
+		if count<=b_rendah:
+			val = rendah;
+		elif count>=b_tinggi:
+			val = tinggi;
+		elif count > b_rendah and count < b_tinggi:
+			m1 = (b_tinggi - (count*1.0)) / (b_tinggi - b_rendah);
+			m2 = ((count*1.0) - b_rendah) / (b_tinggi - b_rendah);
+			
+			if(count<=(b_rendah+b_tinggi)/2):
+				if m1>rendah:
+					m1 = rendah;
+				val = max(m1,m2);
+
+			elif count>=(b_rendah+b_tinggi)/2:
+				if m2>tinggi:
+					m2 = tinggi;
+				val = max(m1,m2);
+
+		y.append(val);
+		print str(count) + ":" + str(y[i]);
+		i += 1;
+
 	return str(nkRendah[0]) + ', ' + str(min(10,20,30,40,50,60,70,0.5)) + ', ' + str(basah);
