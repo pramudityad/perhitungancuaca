@@ -51,7 +51,7 @@ print 'Prediksi  : Jam      :' + timeForcast;
 print '            Cuaca    :' + weather;
 print '            Code     :' + code;
 
-print "Nilai Kelayakan" + str(fuzzy.calculate(130,20,0,0,0,0)); #calculate(soil,suhu,hujan,weather,wsp1,wsp2)
+print "Nilai Kelayakan : " + str(fuzzy.calculate(130,20,0,0,0,0)); #calculate(soil,suhu,hujan,weather,wsp1,wsp2)
 
 # while (1):
 #     now = datetime.datetime.now()
