@@ -1628,6 +1628,9 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
 	count = 0;
 	y=[];
 	i = 0;
+	mamdani_pembilang = 0;
+	mamdani_penyebut = 0;
+	mamdani = 0;
 	while count<100:
 		count += 5;
 		val = 0;
@@ -1650,7 +1653,10 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
 				val = max(m1,m2);
 
 		y.append(val);
+		mamdani_pembilang = mamdani_pembilang + (count*val);
+		mamdani_penyebut  = mamdani_penyebut + val;
 		print str(count) + ":" + str(y[i]);
 		i += 1;
-
-	return str(nkRendah[0]) + ', ' + str(min(10,20,30,40,50,60,70,0.5)) + ', ' + str(basah);
+	mamdani = mamdani_pembilang/mamdani_penyebut;
+	#print "Nilai Kelayakan : "+str(mamdani);
+	return mamdani;
