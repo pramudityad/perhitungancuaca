@@ -99,6 +99,7 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
 		f2_hujan 	= 1;
 	
 	#print linguistik
+	print "FUZZYFIKASI";
 	print "SOIL";
 	print "BASAH  : "+str(basah);
 	print "SEDANG : "+str(sedang);
@@ -1603,6 +1604,7 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
 	
 	#nkRendah.append(5);
 	#nkRendah.insert(1,6);
+	print "FUZZY OUTPUT";
 	for i in range(486):
 		if nkRendah[i]>0:
 			print "Rule "+str(i+1)+ " Rendah : "+str(nkRendah[i]);
@@ -1621,6 +1623,7 @@ def calculate(soil,suhu,rain,weather,forecast,forecast2):
 
 	#DEFUZIFIKASI
 	#batas
+	print "DEFUZZYFIKASI";
 	b_rendah = 50;
 	b_tinggi = 80;
 	m1 = 0;
