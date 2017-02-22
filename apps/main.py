@@ -7,12 +7,15 @@ import functions.fuzzy as fuzzy;
 import functions.dataserial as DS;
 import serial;
 
-ser = serial.Serial(port='/dev/ttyACM0',
+try:
+    ser = serial.Serial(port='/dev/ttyACM0',
                     baudrate = 9600,
                     parity=serial.PARITY_NONE,
                     stopbits=serial.STOPBITS_ONE,
                     bytesize=serial.EIGHTBITS,
                     timeout=1)
+except Exception as e:
+    print "Error Serial";
 
 print str(DB.getLastSoil());
 
@@ -54,8 +57,11 @@ def requestSerial():
     dataSerial = "";
     while(dataSerial == ""):
         dataSerial = "";
-        ser.write("01\n");
-        dataSerial = ser.readline();
+        try:
+            ser.write("01\n");
+            dataSerial = ser.readline();
+        except Exception as e:
+            print "Error Serial"
         # print "Send Request";
         #time.sleep(1);
     return dataSerial;
@@ -70,8 +76,11 @@ def sendLED(data):
     dataSerial = "";
     while(dataSerial == ""):
         dataSerial = "";
-        ser.write("02"+str(ledVal)+"\n");
-        dataSerial = ser.readline();
+        try:
+            ser.write("02"+str(ledVal)+"\n");
+            dataSerial = ser.readline();
+        except Exception as e:
+            print "Error Serial";
         # print "Send LED "+dataSerial;
         # if(dataSerial==""):
         #     print "Kosong";
