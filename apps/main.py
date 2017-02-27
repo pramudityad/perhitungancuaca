@@ -5,17 +5,15 @@ import RPi.GPIO as GPIO
 import functions.database as DB
 import functions.fuzzy as fuzzy;
 import functions.dataserial as DS;
-import serial;
-
-try:
-    ser = serial.Serial(port='/dev/ttyACM0',
-                    baudrate = 9600,
-                    parity=serial.PARITY_NONE,
-                    stopbits=serial.STOPBITS_ONE,
-                    bytesize=serial.EIGHTBITS,
-                    timeout=1)
-except Exception as e:
-    print "Error Serial";
+# try:
+#     ser = serial.Serial(port='/dev/ttyACM0',
+#                     baudrate = 9600,
+#                     parity=serial.PARITY_NONE,
+#                     stopbits=serial.STOPBITS_ONE,
+#                     bytesize=serial.EIGHTBITS,
+#                     timeout=1)
+# except Exception as e:
+#     print "Error Serial";
 
 print str(DB.getLastSoil());
 
@@ -28,6 +26,14 @@ timeForcast = 'N/A';
 weather     = 'N/A';
 code        = 'N/A';
 lastSoil    = DB.getLastSoil();
+
+#Sensor
+str_sensor  = None;
+soil        = None;
+temp        = None;
+light       = None;
+sensor_status = None;
+
 
 def requestData():
     now = datetime.datetime.now();
@@ -53,39 +59,57 @@ def requestData():
     except Exception as e:
         print 'Error Connection';
 
-def requestSerial():
-    dataSerial = "";
-    while(dataSerial == ""):
-        dataSerial = "";
-        try:
-            ser.write("01\n");
-            dataSerial = ser.readline();
-        except Exception as e:
-            print "Error Serial"
-        # print "Send Request";
-        #time.sleep(1);
-    return dataSerial;
+# def requestSerial():
+#     dataSerial = "";
+#     while(dataSerial == ""):
+#         dataSerial = "";
+#         try:
+#             ser.write("01\n");
+#             dataSerial = ser.readline();
+#         except Exception as e:
+#             print "Error Serial"
+#         # print "Send Request";
+#         #time.sleep(1);
+#     return dataSerial;
 
-def sendLED(data):
-    if (data=="ON"):
-        ledVal = 1
-    elif (data=="OFF"):
-        ledVal = 0;
-    else :
-        return False;
-    dataSerial = "";
-    while(dataSerial == ""):
-        dataSerial = "";
-        try:
-            ser.write("02"+str(ledVal)+"\n");
-            dataSerial = ser.readline();
-        except Exception as e:
-            print "Error Serial";
-        # print "Send LED "+dataSerial;
-        # if(dataSerial==""):
-        #     print "Kosong";
-        #time.sleep(1);
-    return dataSerial;
+# def sendLED(data):
+#     if (data=="ON"):
+#         ledVal = 1
+#     elif (data=="OFF"):
+#         ledVal = 0;
+#     else :
+#         return False;
+#     dataSerial = "";
+#     while(dataSerial == ""):
+#         dataSerial = "";
+#         try:
+#             ser.write("02"+str(ledVal)+"\n");
+#             dataSerial = ser.readline();
+#         except Exception as e:
+#             print "Error Serial";
+#         # print "Send LED "+dataSerial;
+#         # if(dataSerial==""):
+#         #     print "Kosong";
+#         #time.sleep(1);
+#     return dataSerial;
+
+def requestSensor():
+    try:
+        global str_sensor
+        global soil
+        global temp
+        global light
+        global sensor_status;
+
+        str_sensor = DS.getSensor();
+        if (str_sensor['status'] == True):
+            soil = str_sensor['data']['soil']
+            temp = str_sensor['data']['temp']
+            light = str_sensor['data']['light']
+    except Exception as e:
+        print "Request Sensor Error"
+
+
 
 print "Start"
 requestData();
@@ -110,20 +134,23 @@ while (1):
         #print OW.getForecast();
         #print "Request at: ",now.hour,":",now.minute,":",now.second
     #print timeRequest + '\t' + location +'\t' + latitude +'\t'+ longitude + '\t' + timeForcast +'\t' + weather +'\t' + code;
-    str_serial = DS.getString(requestSerial());
-    soil = DS.getSoil(str_serial);
-    if(lastSoil!=soil):
-        DB.addSoil(soil);
-        lastSoil = soil;
-    NK = fuzzy.calculate(soil,temp,0,0,0,0)
-    print "Nilai Kelayakan : " + str(NK);
-    if(NK >= 80):
-        sendLED("ON");
-    else:
-        sendLED("OFF");
+    # str_serial = DS.getString(requestSerial());
+    # soil = DS.getSoil(str_serial);
+    # if(lastSoil!=soil):
+    #     DB.addSoil(soil);
+    #     lastSoil = soil;
+    # NK = fuzzy.calculate(soil,temp,0,0,0,0)
+    # print "Nilai Kelayakan : " + str(NK);
+    
     # soil = DB.getLastSoil();
     # temp = DB.getLastTemp();
-    # print str(fuzzy.calculate(soil,temp,0,0,0,0));
+    requestSensor();
+    NK = fuzzy.calculate(soil,temp,0,0,0,0)
+    print NK;
+    if(NK >= 80):
+        DS.sendLED("ON");
+    else:
+        DS.sendLED("OFF");
     time.sleep(1);
 
 
