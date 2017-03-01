@@ -103,11 +103,11 @@ def requestSensor():
 
         str_sensor = DS.getSensor();
         if (str_sensor['status'] == True):
-            soil = str_sensor['data']['soil']
-            temp = str_sensor['data']['temp']
-            light = str_sensor['data']['light']
+            soil = str_sensor['data']['sensors']['soil']
+            temp = str_sensor['data']['sensors']['temp']
+            light = str_sensor['data']['sensors']['light']
     except Exception as e:
-        print "Request Sensor Error"
+        print "Request Sensor Error  " + str(e)
 
 
 

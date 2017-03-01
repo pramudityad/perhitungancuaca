@@ -5,7 +5,7 @@ from datetime import timedelta
 
 db = MySQLdb.connect(host="localhost",
                      user="root",
-                     passwd="1234qwer",
+                     passwd="raspberry",
                      db="gfa");
 def getDb():
     cur = db.cursor()

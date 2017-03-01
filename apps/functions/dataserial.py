@@ -1,9 +1,9 @@
-import urllib2, urllib, json
+import urllib2, urllib, json 
 import datetime, time
 from datetime import timedelta
 
 def getSensor():
-    host   = 'http://192.168.1.104:8080/'
+    host   = 'http://192.168.10.1:8080/'
     url    = host+'api?data=01'
     result = urllib2.urlopen(url).read()
     data   = json.loads(result)
@@ -23,7 +23,7 @@ def sendLED(data):
 		ledVal = 0;
 	else :
 		return False;
-	host   = 'http://192.168.1.104:8080/'
+	host   = 'http://192.168.10.1:8080/'
 	url    = host+'api?data=02'+str(ledVal)
 	result = urllib2.urlopen(url).read()
 	data   = json.loads(result)
