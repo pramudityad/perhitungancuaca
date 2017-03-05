@@ -2,11 +2,11 @@ import urllib2, urllib, json
 import datetime, time
 from datetime import timedelta
 
-def getForecast():
+def getForecast(latitude,longitude):
     appid  = 'ab09346d9a9123104405c6a84ad48c19';
     host   = 'http://api.openweathermap.org/';
-    lat    = '-6.973588';
-    lon    = '107.630425';
+    lat    = str(latitude);
+    lon    = str(longitude);
     units  = 'metric';
     #url    = 'http://api.openweathermap.org/data/2.5/forecast?q=Bandung&appid=ab09346d9a9123104405c6a84ad48c19'
     url    = host+'data/2.5/forecast?lat='+lat+'&lon='+lon+'&appid='+appid+'&units='+units;
@@ -40,4 +40,18 @@ def getForecastNext(data):
         if(timeRequest == var['dt_txt']):
             res = var;
     return res;
+
+def getForcastByTime(data,dataTime):
+    # myTime  = datetime.datetime.now();
+    # hour    = myTime.hour;
+    # while(hour%3!=0):
+    #     hour = hour-1;
+    #     myTime -= timedelta(hours=1);
+    # myTime += timedelta(hours=3);
+    # timeRequest = myTime.strftime('%Y-%m-%d %H:00:00');
+    res = ''
+    for var in data['list']:
+        if(dataTime == var['dt_txt']):
+            res = var
+    return res
     

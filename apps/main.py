@@ -1,10 +1,13 @@
 import urllib2, urllib, json
 import functions.openweather as OW
 import datetime, time
+from datetime import timedelta
 import RPi.GPIO as GPIO
 import functions.database as DB
-import functions.fuzzy as fuzzy;
+import functions.fuzzy_v2 as fuzzy;
 import functions.dataserial as DS;
+import functions.wunderground as WU;
+import functions.hisab as hisab;
 # try:
 #     ser = serial.Serial(port='/dev/ttyACM0',
 #                     baudrate = 9600,
@@ -15,10 +18,9 @@ import functions.dataserial as DS;
 # except Exception as e:
 #     print "Error Serial";
 
-print str(DB.getLastSoil());
-
 timeRequest = 'N/A';
 str_ow_data = 'N/A';
+str_wu_data = 'N/A';
 location    = 'N/A';
 latitude    = 'N/A';
 longitude   = 'N/A';
@@ -34,6 +36,20 @@ temp        = None;
 light       = None;
 sensor_status = None;
 
+ow_hujan_code   = {501,502,503,504,511,520,521,522,531,300,301,302,310,311,312,313,314,321}
+ow_mendung_code = {500,803,804}
+ow_cerah_code   = {800,801,802}
+ow_code = 0
+ow_desc = 'Cerah'
+
+wu_hujan_code   = {13,14,15,16,17,18,19,20,21,22,}
+wu_mendung_code = {3,4,5,6,7,8,9,10,11,12}
+wu_cerah_code   = {1,2}
+wu_code = 0
+wu_desc = 'Cerah'
+
+terbit = hisab.terbit(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
+terbenam = hisab.terbenam(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
 
 def requestData():
     now = datetime.datetime.now();
@@ -41,6 +57,7 @@ def requestData():
     print 'Request Data';
     try:
         global str_ow_data;
+        global str_wu_data;
         global location;   
         global latitude;   
         global longitude;  
@@ -48,7 +65,8 @@ def requestData():
         global weather;    
         global code;       
 
-        str_ow_data = OW.getForecast();
+        str_ow_data = OW.getForecast(DB.getLatitude(),DB.getLongitude());
+        str_wu_data = WU.getForecast(DB.getLatitude(),DB.getLongitude());
         location    = OW.getCityName(str_ow_data);
         latitude    = str(OW.getCityLatitude(str_ow_data));
         longitude   = str(OW.getCityLongitude(str_ow_data));
@@ -109,10 +127,92 @@ def requestSensor():
     except Exception as e:
         print "Request Sensor Error  " + str(e)
 
+def cekOwCode():
+    print "CEK OW CODE"
+    global ow_code
+    global ow_desc
+    terbit = int(hisab.terbit(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0))
+    terbenam = int(hisab.terbenam(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0))
+    siang = int(hisab.siang(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0))
+    now  = datetime.datetime.now();
+    myTime = now
+    hour    = myTime.hour;
+    while(hour%3!=0):
+        hour = hour+1;
+        myTime += timedelta(hours=1);
 
+    batas = terbenam
+    inv   = terbenam - terbit
+    if now.hour>siang or now.hour<terbit:
+        batas   = terbit
+        inv     = 24 - hour + terbit
 
+    for i in range(0,inv,3):
+        print i
+        timeRequest = myTime.strftime('%Y-%m-%d %H:00:00');  
+        myTime += timedelta(hours=3)
+        hour += 3
+        print str(timeRequest) + " : " + str(OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id'])
+        for dt in ow_cerah_code:
+            if(OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id'] == dt):
+                ow_code_temp = 0
+                ow_desc_temp = 'Cerah'
+        for dt in ow_mendung_code:
+            if(OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id'] == dt):
+                ow_code_temp = 1
+                ow_desc_temp = 'Mendung'
+        for dt in ow_hujan_code:
+            if(OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id'] == dt):
+                ow_code_temp = 2
+                ow_desc_temp = 'Hujan'
+        if(ow_code_temp>ow_code):
+            ow_code = ow_code_temp
+            ow_desc = ow_desc_temp
+
+def cekWuCode():
+    print "CEK WU CODE"
+    global wu_code
+    global wu_desc
+    terbit  = int(hisab.terbit(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0))
+    terbenam= int(hisab.terbenam(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0))
+    siang   = int(hisab.siang(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0))
+    now     = datetime.datetime.now();
+    myTime  = now
+    hour    = myTime.hour;
+    batas   = terbenam
+    inv     = terbenam - terbit
+    if now.hour>siang or now.hour<terbit:
+        batas   = terbit
+        inv     = 24-now.hour + terbit
+
+    for i in range(inv):
+        myTime += timedelta(hours=1)
+        print str(myTime.hour)+" : "+str(WU.getForcastByTime(str_wu_data, str(myTime.hour))['fctcode'])
+        for dt in wu_cerah_code:
+            if(int(WU.getForcastByTime(str_wu_data, str(myTime.hour))['fctcode']) == dt):
+                wu_code_temp = 0
+                wu_desc_temp = 'Cerah'
+        for dt in wu_mendung_code:
+            if(int(WU.getForcastByTime(str_wu_data, str(myTime.hour))['fctcode']) == dt):
+                wu_code_temp = 1
+                wu_desc_temp = 'Mendung'
+        for dt in wu_hujan_code:
+            if(int(WU.getForcastByTime(str_wu_data, str(myTime.hour))['fctcode']) == dt):
+                wu_code_temp = 2
+                wu_desc_temp = 'Hujan'
+        if(wu_code_temp>wu_code):
+            wu_code = wu_code_temp
+            wu_desc = wu_desc_temp
+
+    # print myTime.hour
+    # print batas
+    # while myTime.hour<=batas:
+    #     print WU.getForcastByTime(str_wu_data, str(myTime.hour))['fctcode']
+        
 print "Start"
 requestData();
+cekOwCode();
+cekWuCode();
 #print str_ow_data;
 print 'Time      : ' + timeRequest;
 print 'Lokasi    : ' + location;
@@ -123,14 +223,31 @@ print '            Cuaca    :' + weather;
 print '            Code     :' + code;
 soil = DB.getLastSoil();
 temp = DB.getLastTemp();
-print "Nilai Kelayakan : " + str(fuzzy.calculate(soil,temp,0,0,0,0)); #calculate(soil,suhu,hujan,weather,wsp1,wsp2)
+print "Nilai Kelayakan : " + str(fuzzy.calculate(soil,300,ow_code,wu_code)); #calculate(soil,suhu,hujan,weather,wsp1,wsp2)
 
 while (1):
     now = datetime.datetime.now()
     timeRequest = now.strftime('%Y-%m-%d %H:%M:%S');
     #print now.year, now.hour, now.minute, now.second
+    print timeRequest
     if(now.hour%1==0 and now.minute%2==0 and now.second==0):
-        requestData();
+        requestData()
+        cekOwCode()
+        cekWuCode()
+        terbit = hisab.terbit(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
+        terbenam = hisab.terbenam(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
+        soil = DB.getLastSoil();
+        if(now.minute==0 and now.second==0):
+            timeRequest = now.strftime('%Y-%m-%d %H:00:00');
+            code = WU.getForcastByTime(str_wu_data, str(now.hour))['fctcode']
+            weather = WU.getForcastByTime(str_wu_data, str(now.hour))['condition']
+            wsp = "wunderground"
+            DB.addForecast(code,weather,wsp,timeRequest)
+            if(now.hour%3==0):
+                code = OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id']
+                weather = OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['description']
+                wsp = "openweather"
+                DB.addForecast(code,weather,wsp,timeRequest)
         #print OW.getForecast();
         #print "Request at: ",now.hour,":",now.minute,":",now.second
     #print timeRequest + '\t' + location +'\t' + latitude +'\t'+ longitude + '\t' + timeForcast +'\t' + weather +'\t' + code;
@@ -139,18 +256,30 @@ while (1):
     # if(lastSoil!=soil):
     #     DB.addSoil(soil);
     #     lastSoil = soil;
-    # NK = fuzzy.calculate(soil,temp,0,0,0,0)
-    # print "Nilai Kelayakan : " + str(NK);
-    
+    NK = fuzzy.calculate(soil,250,ow_code,0)
+    print "Nilai Kelayakan : " + str(NK);
+    print "---------------"
     # soil = DB.getLastSoil();
     # temp = DB.getLastTemp();
-    requestSensor();
-    NK = fuzzy.calculate(soil,temp,0,0,0,0)
-    print NK;
-    if(NK >= 80):
-        DS.sendLED("ON");
-    else:
-        DS.sendLED("OFF");
+    # requestSensor();
+    # NK = fuzzy.calculate(soil,temp,0,0,0,0)
+    # print NK;
+    # if(NK >= 80):
+    #     DS.sendLED("ON");
+    # else:
+    #     DS.sendLED("OFF");
+    #print WU.getForecast();
+    
+    print "F1 : " + str(ow_code)
+    print "F1 : " + ow_desc
+    print "---------------"
+    print "F2 : " + str(wu_code)
+    print "F2 : " + wu_desc
+    print "---------------"
+    print "Terbit : " + str(int(terbit))+":"+str(int((terbit%1)*60))
+    print "Terbenam : " + str(int(terbenam))+":"+str(int((terbenam%1)*60))
+    print "---------------"
+    
     time.sleep(1);
 
 
