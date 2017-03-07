@@ -90,15 +90,15 @@ def calculate(soil,rain,forecast,forecast2):
 	# print "MENDUNG: "+str(w_mendung);
 	# print "HUJAN  : "+str(w_hujan);
 
-	# print "FORECAST 1";
-	# print "CERAH  : "+str(f_cerah);
-	# print "MENDUNG: "+str(f_mendung);
-	# print "HUJAN  : "+str(f_hujan);
+	print "FORECAST 1";
+	print "CERAH  : "+str(f_cerah);
+	print "MENDUNG: "+str(f_mendung);
+	print "HUJAN  : "+str(f_hujan);
 
-	# print "FORECAST 2";
-	# print "CERAH  : "+str(f2_cerah);
-	# print "MENDUNG: "+str(f2_mendung);
-	# print "HUJAN  : "+str(f2_hujan);
+	print "FORECAST 2";
+	print "CERAH  : "+str(f2_cerah);
+	print "MENDUNG: "+str(f2_mendung);
+	print "HUJAN  : "+str(f2_hujan);
 
 
 	#Inferensi

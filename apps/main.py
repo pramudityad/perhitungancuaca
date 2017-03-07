@@ -8,6 +8,10 @@ import functions.fuzzy_v2 as fuzzy;
 import functions.dataserial as DS;
 import functions.wunderground as WU;
 import functions.hisab as hisab;
+import functions.read_spi as SPI
+import websocket
+import thread
+
 # try:
 #     ser = serial.Serial(port='/dev/ttyACM0',
 #                     baudrate = 9600,
@@ -36,8 +40,8 @@ temp        = None;
 light       = None;
 sensor_status = None;
 
-ow_hujan_code   = {501,502,503,504,511,520,521,522,531,300,301,302,310,311,312,313,314,321}
-ow_mendung_code = {500,803,804}
+ow_hujan_code   = {500,501,502,503,504,511,520,521,522,531,300,301,302,310,311,312,313,314,321}
+ow_mendung_code = {803,804}
 ow_cerah_code   = {800,801,802}
 ow_code = 0
 ow_desc = 'Cerah'
@@ -131,6 +135,8 @@ def cekOwCode():
     print "CEK OW CODE"
     global ow_code
     global ow_desc
+    ow_code = 0
+    ow_desc = 'Cerah'
     terbit = int(hisab.terbit(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0))
     terbenam = int(hisab.terbenam(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0))
     siang = int(hisab.siang(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0))
@@ -142,10 +148,12 @@ def cekOwCode():
         myTime += timedelta(hours=1);
 
     batas = terbenam
-    inv   = terbenam - terbit
+    inv   = terbenam - now.hour
     if now.hour>siang or now.hour<terbit:
         batas   = terbit
         inv     = 24 - hour + terbit
+        if now.hour < terbit:
+            inv = terbit - now.hour
 
     for i in range(0,inv,3):
         print i
@@ -173,6 +181,8 @@ def cekWuCode():
     print "CEK WU CODE"
     global wu_code
     global wu_desc
+    wu_code = 0
+    wu_desc = 'Cerah'
     terbit  = int(hisab.terbit(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0))
     terbenam= int(hisab.terbenam(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0))
     siang   = int(hisab.siang(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0))
@@ -180,10 +190,12 @@ def cekWuCode():
     myTime  = now
     hour    = myTime.hour;
     batas   = terbenam
-    inv     = terbenam - terbit
+    inv     = terbenam - now.hour
     if now.hour>siang or now.hour<terbit:
         batas   = terbit
         inv     = 24-now.hour + terbit
+        if now.hour < terbit:
+            inv = terbit - now.hour
 
     for i in range(inv):
         myTime += timedelta(hours=1)
@@ -225,61 +237,88 @@ soil = DB.getLastSoil();
 temp = DB.getLastTemp();
 print "Nilai Kelayakan : " + str(fuzzy.calculate(soil,300,ow_code,wu_code)); #calculate(soil,suhu,hujan,weather,wsp1,wsp2)
 
-while (1):
-    now = datetime.datetime.now()
-    timeRequest = now.strftime('%Y-%m-%d %H:%M:%S');
-    #print now.year, now.hour, now.minute, now.second
-    print timeRequest
-    if(now.hour%1==0 and now.minute%2==0 and now.second==0):
-        requestData()
-        cekOwCode()
-        cekWuCode()
-        terbit = hisab.terbit(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
-        terbenam = hisab.terbenam(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
-        soil = DB.getLastSoil();
-        if(now.minute==0 and now.second==0):
-            timeRequest = now.strftime('%Y-%m-%d %H:00:00');
-            code = WU.getForcastByTime(str_wu_data, str(now.hour))['fctcode']
-            weather = WU.getForcastByTime(str_wu_data, str(now.hour))['condition']
-            wsp = "wunderground"
-            DB.addForecast(code,weather,wsp,timeRequest)
-            if(now.hour%3==0):
-                code = OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id']
-                weather = OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['description']
-                wsp = "openweather"
-                DB.addForecast(code,weather,wsp,timeRequest)
-        #print OW.getForecast();
-        #print "Request at: ",now.hour,":",now.minute,":",now.second
-    #print timeRequest + '\t' + location +'\t' + latitude +'\t'+ longitude + '\t' + timeForcast +'\t' + weather +'\t' + code;
-    # str_serial = DS.getString(requestSerial());
-    # soil = DS.getSoil(str_serial);
-    # if(lastSoil!=soil):
-    #     DB.addSoil(soil);
-    #     lastSoil = soil;
-    NK = fuzzy.calculate(soil,250,ow_code,0)
-    print "Nilai Kelayakan : " + str(NK);
-    print "---------------"
-    # soil = DB.getLastSoil();
-    # temp = DB.getLastTemp();
-    # requestSensor();
-    # NK = fuzzy.calculate(soil,temp,0,0,0,0)
-    # print NK;
-    # if(NK >= 80):
-    #     DS.sendLED("ON");
-    # else:
-    #     DS.sendLED("OFF");
-    #print WU.getForecast();
-    
-    print "F1 : " + str(ow_code)
-    print "F1 : " + ow_desc
-    print "---------------"
-    print "F2 : " + str(wu_code)
-    print "F2 : " + wu_desc
-    print "---------------"
-    print "Terbit : " + str(int(terbit))+":"+str(int((terbit%1)*60))
-    print "Terbenam : " + str(int(terbenam))+":"+str(int((terbenam%1)*60))
-    print "---------------"
-    
-    time.sleep(1);
+def on_message(ws, message):
+    print message
+
+def on_error(ws, error):
+    print error
+
+def on_close(ws):
+    print "### closed ###"
+
+def on_open(ws):
+    def run(*args):
+        global soil
+        global terbit
+        global terbenam
+        while True:
+            now = datetime.datetime.now()
+            timeRequest = now.strftime('%Y-%m-%d %H:%M:%S');
+            #print now.year, now.hour, now.minute, now.second
+            print timeRequest
+            if(now.hour%1==0 and now.minute%2==0 and now.second==0):
+                requestData()
+                cekOwCode()
+                cekWuCode()
+                terbit = hisab.terbit(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
+                terbenam = hisab.terbenam(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
+                soil = DB.getLastSoil();
+                if(now.minute==0 and now.second==0):
+                    timeRequest = now.strftime('%Y-%m-%d %H:00:00');
+                    code = WU.getForcastByTime(str_wu_data, str(now.hour))['fctcode']
+                    weather = WU.getForcastByTime(str_wu_data, str(now.hour))['condition']
+                    wsp = "wunderground"
+                    DB.addForecast(code,weather,wsp,timeRequest)
+                    if(now.hour%3==0):
+                        code = OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id']
+                        weather = OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['description']
+                        wsp = "openweather"
+                        DB.addForecast(code,weather,wsp,timeRequest)
+                #print OW.getForecast();
+                #print "Request at: ",now.hour,":",now.minute,":",now.second
+            #print timeRequest + '\t' + location +'\t' + latitude +'\t'+ longitude + '\t' + timeForcast +'\t' + weather +'\t' + code;
+            # str_serial = DS.getString(requestSerial());
+            # soil = DS.getSoil(str_serial);
+            # if(lastSoil!=soil):
+            #     DB.addSoil(soil);
+            #     lastSoil = soil;
+            NK = fuzzy.calculate(soil,250,ow_code,wu_code)
+            print "Nilai Kelayakan : " + str(NK);
+            print "---------------"
+            # soil = DB.getLastSoil();
+            # temp = DB.getLastTemp();
+            # requestSensor();
+            # NK = fuzzy.calculate(soil,temp,0,0,0,0)
+            # print NK;
+            # if(NK >= 80):
+            #     DS.sendLED("ON");
+            # else:
+            #     DS.sendLED("OFF");
+            #print WU.getForecast();
+            
+            print "F1 : " + str(ow_code)
+            print "F1 : " + ow_desc
+            print "---------------"
+            print "F2 : " + str(wu_code)
+            print "F2 : " + wu_desc
+            print "---------------"
+            print "Terbit : " + str(int(terbit))+":"+str(int((terbit%1)*60))
+            print "Terbenam : " + str(int(terbenam))+":"+str(int((terbenam%1)*60))
+            print "---------------"
+            print "Soil :" + str(SPI.readSensor(0))
+            print "Raindrop : " + str(SPI.readSensor(0))
+            
+            time.sleep(1);
+            ws.send("{\"sensors\":{\"soil\": %d }}" % soil)
+    thread.start_new_thread(run, ())
+if __name__ == "__main__":
+    websocket.enableTrace(True)
+    ws = websocket.WebSocketApp("ws://192.168.10.1:8080/v2",
+                              on_message = on_message,
+                              on_error = on_error,
+                              on_close = on_close)
+    ws.on_open = on_open
+    ws.run_forever()
+
 
 
