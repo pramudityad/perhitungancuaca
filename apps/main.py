@@ -306,7 +306,7 @@ def on_open(ws):
             print "Terbenam : " + str(int(terbenam))+":"+str(int((terbenam%1)*60))
             print "---------------"
             print "Soil :" + str(SPI.readSensor(0))
-            print "Raindrop : " + str(SPI.readSensor(0))
+            print "Raindrop : " + str(SPI.readSensor(1))
             
             time.sleep(1);
             ws.send("{\"sensors\":{\"soil\": %d }}" % soil)
