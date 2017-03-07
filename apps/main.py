@@ -21,6 +21,9 @@ import thread
 #                     timeout=1)
 # except Exception as e:
 #     print "Error Serial";
+     
+GPIO.setmode(GPIO.BOARD) ## Use board pin numbering
+GPIO.setup(7, GPIO.OUT) ## Setup GPIO Pin 7 to OUT
 
 timeRequest = 'N/A';
 str_ow_data = 'N/A';
@@ -245,8 +248,10 @@ def on_message(ws, message):
             if data['data']['code'] == 1:
                 if data['data']['value'] == 1:
                     print "LED ON"
+                    GPIO.output(7,True)## Switch on pin 7
                 elif data['data']['value'] == 0:
                     print "LED OFF"
+                    GPIO.output(7,False)## Switch on pin 7
                 else:
                     print "Value Error"
     except Exception as e:
