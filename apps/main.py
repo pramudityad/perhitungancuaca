@@ -309,11 +309,17 @@ def on_open(ws):
             print "Terbit : " + str(int(terbit))+":"+str(int((terbit%1)*60))
             print "Terbenam : " + str(int(terbenam))+":"+str(int((terbenam%1)*60))
             print "---------------"
-            print "Soil :" + str(SPI.readSensor(0))
-            print "Raindrop : " + str(SPI.readSensor(1))
+            print "Soil :" + str(soil)
+            print "Raindrop : " + str(rain)
             
+            sensors = {}
+            sensors['soil'] = soil
+            sensors['rain'] = rain
+            res = {}
+            res['sensors'] = sensors
+            res['actuators'] = None
             time.sleep(1);
-            ws.send("{\"sensors\":{\"soil\": %d }}" % soil)
+            ws.send(json.dumps(res))
     thread.start_new_thread(run, ())
 if __name__ == "__main__":
     websocket.enableTrace(True)
