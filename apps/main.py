@@ -239,6 +239,18 @@ temp = DB.getLastTemp();
 print "Nilai Kelayakan : " + str(fuzzy.calculate(soil,300,ow_code,wu_code)); #calculate(soil,suhu,hujan,weather,wsp1,wsp2)
 
 def on_message(ws, message):
+    try:
+        data = json.loads(message)
+        if data['status']==True:
+            if data['data']['code'] = 1:
+                if data['data']['value'] = 1:
+                    print "LED ON"
+                elif data['data']['value'] = 0:
+                    print "LED OFF"
+                else:
+                    print "Value Error"
+    except Exception as e:
+        print "Error JSON"
     print message
 
 def on_error(ws, error):
