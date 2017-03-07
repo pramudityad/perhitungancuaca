@@ -17,4 +17,5 @@ def readSensor(data):
 	SPI_DEVICE = 0
 	mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
 	val = mcp.read_adc(data)
+	val = 1024-val
 	return val
