@@ -36,6 +36,7 @@ lastSoil    = DB.getLastSoil();
 #Sensor
 str_sensor  = None;
 soil        = None;
+rain        = None;
 temp        = None;
 light       = None;
 sensor_status = None;
@@ -249,6 +250,7 @@ def on_close(ws):
 def on_open(ws):
     def run(*args):
         global soil
+        global rain
         global terbit
         global terbenam
         while True:
@@ -282,7 +284,9 @@ def on_open(ws):
             # if(lastSoil!=soil):
             #     DB.addSoil(soil);
             #     lastSoil = soil;
-            NK = fuzzy.calculate(soil,250,ow_code,wu_code)
+            soil = SPI.readSensor(0)
+            rain = SPI.readSensor(1)
+            NK = fuzzy.calculate(soil,rain,ow_code,wu_code)
             print "Nilai Kelayakan : " + str(NK);
             print "---------------"
             # soil = DB.getLastSoil();
