@@ -242,10 +242,10 @@ def on_message(ws, message):
     try:
         data = json.loads(message)
         if data['status']==True:
-            if data['data']['code'] = 1:
-                if data['data']['value'] = 1:
+            if data['data']['code'] == 1:
+                if data['data']['value'] == 1:
                     print "LED ON"
-                elif data['data']['value'] = 0:
+                elif data['data']['value'] == 0:
                     print "LED OFF"
                 else:
                     print "Value Error"
