@@ -2,7 +2,7 @@ import urllib2, urllib, json
 import functions.openweather as OW
 import datetime, time
 from datetime import timedelta
-import RPi.GPIO as GPIO
+import functions.RPi.GPIO as GPIO
 import functions.database as DB
 import functions.fuzzy_v2 as fuzzy;
 import functions.dataserial as DS;
@@ -43,6 +43,8 @@ rain        = None;
 temp        = None;
 light       = None;
 sensor_status = None;
+statePenyiram = False;
+statePemupuk  = False;
 
 ow_hujan_code   = {500,501,502,503,504,511,520,521,522,531,300,301,302,310,311,312,313,314,321}
 ow_mendung_code = {803,804}
@@ -270,6 +272,8 @@ def on_open(ws):
         global rain
         global terbit
         global terbenam
+        global statePenyiram
+        global statePemupuk
         while True:
             now = datetime.datetime.now()
             timeRequest = now.strftime('%Y-%m-%d %H:%M:%S');
@@ -301,8 +305,9 @@ def on_open(ws):
             # if(lastSoil!=soil):
             #     DB.addSoil(soil);
             #     lastSoil = soil;
-            soil = SPI.readSensor(0)
-            rain = SPI.readSensor(1)
+            
+            # soil = SPI.readSensor(0)
+            # rain = SPI.readSensor(1)
             NK = fuzzy.calculate(soil,rain,ow_code,wu_code)
             print "Nilai Kelayakan : " + str(NK);
             print "---------------"
@@ -329,9 +334,13 @@ def on_open(ws):
             print "Soil :" + str(soil)
             print "Raindrop : " + str(rain)
             
+            # KIRIM DATA
             sensors = {}
             sensors['soil'] = soil
             sensors['rain'] = rain
+            actuators = {}
+            actuators['penyiram']   = statePenyiram
+            actuators['pemupuk']    = statePemupuk
             res = {}
             res['sensors'] = sensors
             res['actuators'] = None
@@ -340,7 +349,7 @@ def on_open(ws):
     thread.start_new_thread(run, ())
 if __name__ == "__main__":
     websocket.enableTrace(True)
-    ws = websocket.WebSocketApp("ws://192.168.10.1:8080/v2",
+    ws = websocket.WebSocketApp("ws://localhost:8080/v2",
                               on_message = on_message,
                               on_error = on_error,
                               on_close = on_close)

@@ -50,8 +50,12 @@ def getForcastByTime(data,dataTime):
     # myTime += timedelta(hours=3);
     # timeRequest = myTime.strftime('%Y-%m-%d %H:00:00');
     res = ''
-    for var in data['list']:
-        if(dataTime == var['dt_txt']):
-            res = var
+    try:
+        for var in data['list']:
+            if(dataTime == var['dt_txt']):
+                res = var
+    except Exception as e:
+        res = "{\"status\":\"error\"}"
+    
     return res
     
