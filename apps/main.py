@@ -25,6 +25,8 @@ import thread
 GPIO.setmode(GPIO.BCM) ## Use board pin numbering
 GPIO.setup(26, GPIO.OUT) ## Setup GPIO Pin 7 to OUT
 GPIO.output(26,False)
+GPIO.setup(21, GPIO.OUT) ## Setup GPIO Pin 7 to OUT
+GPIO.output(21,False)
 
 timeRequest = 'N/A';
 str_ow_data = 'N/A';
@@ -255,6 +257,15 @@ def on_message(ws, message):
                     GPIO.output(26,False)
                 else:
                     print "Value Error"
+            elif data['data']['code'] == 2:
+                if data['data']['value'] == 1:
+                    print "LED ON"
+                    GPIO.output(21,True)
+                elif data['data']['value'] == 0:
+                    print "LED OFF"
+                    GPIO.output(21,False)
+                else:
+                    print "Value Error"
     except Exception as e:
         print "Error JSON"
     print message
@@ -283,6 +294,9 @@ def on_open(ws):
                 cekWuCode()
                 terbit = hisab.terbit(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
                 terbenam = hisab.terbenam(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
+                if(lastSoil!=soil):
+                    DB.addSoil(soil);
+                    lastSoil = soil;
                 soil = DB.getLastSoil();
                 if(now.minute==0 and now.second==0):
                     timeRequest = now.strftime('%Y-%m-%d %H:00:00');
@@ -300,9 +314,6 @@ def on_open(ws):
             #print timeRequest + '\t' + location +'\t' + latitude +'\t'+ longitude + '\t' + timeForcast +'\t' + weather +'\t' + code;
             # str_serial = DS.getString(requestSerial());
             # soil = DS.getSoil(str_serial);
-            if(lastSoil!=soil):
-                 DB.addSoil(soil);
-                 lastSoil = soil;
             soil = SPI.readSensor(0)
             rain = SPI.readSensor(1)
             NK = fuzzy.calculate(soil,rain,ow_code,wu_code)
