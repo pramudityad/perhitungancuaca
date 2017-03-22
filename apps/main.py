@@ -271,6 +271,7 @@ def on_open(ws):
         global rain
         global terbit
         global terbenam
+	global lastSoil
         while True:
             now = datetime.datetime.now()
             timeRequest = now.strftime('%Y-%m-%d %H:%M:%S');
@@ -299,9 +300,9 @@ def on_open(ws):
             #print timeRequest + '\t' + location +'\t' + latitude +'\t'+ longitude + '\t' + timeForcast +'\t' + weather +'\t' + code;
             # str_serial = DS.getString(requestSerial());
             # soil = DS.getSoil(str_serial);
-            # if(lastSoil!=soil):
-            #     DB.addSoil(soil);
-            #     lastSoil = soil;
+            if(lastSoil!=soil):
+                 DB.addSoil(soil);
+                 lastSoil = soil;
             soil = SPI.readSensor(0)
             rain = SPI.readSensor(1)
             NK = fuzzy.calculate(soil,rain,ow_code,wu_code)
