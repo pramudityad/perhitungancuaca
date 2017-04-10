@@ -2,7 +2,7 @@ import urllib2, urllib, json
 import functions.openweather as OW
 import datetime, time
 from datetime import timedelta
-import functions.RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import functions.database as DB
 import functions.fuzzy_v2 as fuzzy;
 import functions.dataserial as DS;
