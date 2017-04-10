@@ -21,9 +21,12 @@ import thread
 #                     timeout=1)
 # except Exception as e:
 #     print "Error Serial";
-     
-GPIO.setmode(GPIO.BOARD) ## Use board pin numbering
-GPIO.setup(7, GPIO.OUT) ## Setup GPIO Pin 7 to OUT
+
+GPIO.setmode(GPIO.BCM) ## Use board pin numbering
+GPIO.setup(26, GPIO.OUT) ## Setup GPIO Pin 7 to OUT
+GPIO.output(26,False)
+GPIO.setup(21, GPIO.OUT)
+GPIO.output(21,False)
 
 timeRequest = 'N/A';
 str_ow_data = 'N/A';
@@ -68,12 +71,12 @@ def requestData():
     try:
         global str_ow_data;
         global str_wu_data;
-        global location;   
-        global latitude;   
-        global longitude;  
+        global location;
+        global latitude;
+        global longitude;
         global timeForcast;
-        global weather;    
-        global code;       
+        global weather;
+        global code;
 
         str_ow_data = OW.getForecast(DB.getLatitude(),DB.getLongitude());
         str_wu_data = WU.getForecast(DB.getLatitude(),DB.getLongitude());
@@ -163,7 +166,7 @@ def cekOwCode():
 
     for i in range(0,inv,3):
         print i
-        timeRequest = myTime.strftime('%Y-%m-%d %H:00:00');  
+        timeRequest = myTime.strftime('%Y-%m-%d %H:00:00');
         myTime += timedelta(hours=3)
         hour += 3
         print str(timeRequest) + " : " + str(OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id'])
@@ -226,7 +229,7 @@ def cekWuCode():
     # print batas
     # while myTime.hour<=batas:
     #     print WU.getForcastByTime(str_wu_data, str(myTime.hour))['fctcode']
-        
+
 print "Start"
 requestData();
 cekOwCode();
@@ -250,10 +253,19 @@ def on_message(ws, message):
             if data['data']['code'] == 1:
                 if data['data']['value'] == 1:
                     print "LED ON"
-                    GPIO.output(7,True)## Switch on pin 7
+                    GPIO.output(26,True)
                 elif data['data']['value'] == 0:
                     print "LED OFF"
-                    GPIO.output(7,False)## Switch on pin 7
+                    GPIO.output(26,False)
+                else:
+                    print "Value Error"
+            elif data['data']['code'] == 2:
+                if data['data']['value'] == 1:
+                    print "LED ON"
+                    GPIO.output(21,True)
+                elif data['data']['value'] == 0:
+                    print "LED OFF"
+                    GPIO.output(21,False)
                 else:
                     print "Value Error"
     except Exception as e:
@@ -305,7 +317,7 @@ def on_open(ws):
             # if(lastSoil!=soil):
             #     DB.addSoil(soil);
             #     lastSoil = soil;
-            
+
             # soil = SPI.readSensor(0)
             # rain = SPI.readSensor(1)
             NK = fuzzy.calculate(soil,rain,ow_code,wu_code)
@@ -321,7 +333,7 @@ def on_open(ws):
             # else:
             #     DS.sendLED("OFF");
             #print WU.getForecast();
-            
+
             print "F1 : " + str(ow_code)
             print "F1 : " + ow_desc
             print "---------------"
@@ -333,7 +345,7 @@ def on_open(ws):
             print "---------------"
             print "Soil :" + str(soil)
             print "Raindrop : " + str(rain)
-            
+
             # KIRIM DATA
             sensors = {}
             sensors['soil'] = soil
@@ -355,6 +367,3 @@ if __name__ == "__main__":
                               on_close = on_close)
     ws.on_open = on_open
     ws.run_forever()
-
-
-

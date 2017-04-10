@@ -148,4 +148,3 @@ def addForecast(code,weather,wsp,dataTime):
 		status = False;
 		print e
 	return status;
-
