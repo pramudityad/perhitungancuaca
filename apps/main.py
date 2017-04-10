@@ -359,6 +359,7 @@ def on_open(ws):
             actuators = {}
             actuators['penyiram']   = statePenyiram
             actuators['pemupuk']    = statePemupuk
+            forecast = {}
             forecast['openweather'] = ow_code
             forecast['wunderground']= wu_code 
             res = {}
