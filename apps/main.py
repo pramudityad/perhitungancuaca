@@ -11,6 +11,7 @@ import functions.hisab as hisab;
 import functions.read_spi as SPI
 import websocket
 import thread
+import math
 
 # try:
 #     ser = serial.Serial(port='/dev/ttyACM0',
@@ -304,6 +305,12 @@ def on_open(ws):
                 cekWuCode()
                 terbit = hisab.terbit(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
                 terbenam = hisab.terbenam(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
+                if(math.floor(terbit) == now.hour or math.floor(terbenam) == now.hour)
+                    GPIO.output(26,True)
+                    statePenyiram = True
+                    if(now.second > 50)
+                        GPIO.output(26,False)
+                        statePenyiram = False
                 if(lastSoil!=soil):
                     DB.addSoil(soil);
                     lastSoil = soil;
@@ -363,8 +370,8 @@ def on_open(ws):
             forecast['openweather'] = ow_code
             forecast['wunderground']= wu_code
             suntime = {}
-            suntime['sunrise'] = str(int(terbit))+":"+str(int((terbit%1)*60))
-            suntime['sunset']  = str(int(terbenam))+":"+str(int((terbenam%1)*60))
+            suntime['sunrise'] = str(math.floor(terbit))+":"+str(int((terbit%1)*60))
+            suntime['sunset']  = str(math.floor(terbenam))+":"+str(int((terbenam%1)*60))
             res = {}
             res['sensors'] = sensors
             res['actuators'] = actuators
