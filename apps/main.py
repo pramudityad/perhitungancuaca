@@ -25,11 +25,7 @@ import thread
 GPIO.setmode(GPIO.BCM) ## Use board pin numbering
 GPIO.setup(26, GPIO.OUT) ## Setup GPIO Pin 7 to OUT
 GPIO.output(26,False)
-<<<<<<< HEAD
-GPIO.setup(21, GPIO.OUT)
-=======
 GPIO.setup(21, GPIO.OUT) ## Setup GPIO Pin 7 to OUT
->>>>>>> 22084a07f55b3ed5ac8ab023c614782e5299a4bb
 GPIO.output(21,False)
 
 timeRequest = 'N/A';
