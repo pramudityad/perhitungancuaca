@@ -361,11 +361,16 @@ def on_open(ws):
             actuators['pemupuk']    = statePemupuk
             forecast = {}
             forecast['openweather'] = ow_code
-            forecast['wunderground']= wu_code 
+            forecast['wunderground']= wu_code
+            suntime = {}
+            suntime['sunrise'] = str(int(terbit))+":"+str(int((terbit%1)*60))
+            suntime['sunset']  = str(int(terbenam))+":"+str(int((terbenam%1)*60))
             res = {}
             res['sensors'] = sensors
             res['actuators'] = actuators
             res['forecast'] = forecast
+            res['suntime'] = suntime
+            res['fuzzy_output'] = NK
             time.sleep(1);
             ws.send(json.dumps(res))
     thread.start_new_thread(run, ())
