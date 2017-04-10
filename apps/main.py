@@ -359,9 +359,12 @@ def on_open(ws):
             actuators = {}
             actuators['penyiram']   = statePenyiram
             actuators['pemupuk']    = statePemupuk
+            forecast['openweather'] = ow_code
+            forecast['wunderground']= wu_code 
             res = {}
             res['sensors'] = sensors
             res['actuators'] = actuators
+            res['forecast'] = forecast
             time.sleep(1);
             ws.send(json.dumps(res))
     thread.start_new_thread(run, ())
