@@ -370,8 +370,8 @@ def on_open(ws):
             forecast['openweather'] = ow_code
             forecast['wunderground']= wu_code
             suntime = {}
-            suntime['sunrise'] = str(math.floor(terbit))+":"+str(int((terbit%1)*60))
-            suntime['sunset']  = str(math.floor(terbenam))+":"+str(int((terbenam%1)*60))
+            suntime['sunrise'] = str(int(math.floor(terbit)))+":"+str(int((terbit%1)*60))
+            suntime['sunset']  = str(int(math.floor(terbenam)))+":"+str(int((terbenam%1)*60))
             res = {}
             res['sensors'] = sensors
             res['actuators'] = actuators
