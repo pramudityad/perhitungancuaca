@@ -308,7 +308,7 @@ def on_open(ws):
                 if((math.floor(terbit) == now.hour) or (math.floor(terbenam) == now.hour)):
                     GPIO.output(26,True)
                     statePenyiram = True
-                    if(now.second > 50)
+                    if(now.second > 50):
                         GPIO.output(26,False)
                         statePenyiram = False
                 if(lastSoil!=soil):
