@@ -305,7 +305,7 @@ def on_open(ws):
                 cekWuCode()
                 terbit = hisab.terbit(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
                 terbenam = hisab.terbenam(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
-                if((math.floor(terbit) == now.hour) or (math.floor(terbenam) == now.hour))
+                if((math.floor(terbit) == now.hour) or (math.floor(terbenam) == now.hour)):
                     GPIO.output(26,True)
                     statePenyiram = True
                     if(now.second > 50)
