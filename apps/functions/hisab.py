@@ -3,13 +3,13 @@ import datetime
 import math
 
 TZ = 7
-LA = -7.23
-LO = 112.74
+LA = -6.973588
+LO = 107.630425
 H = 0
 def hitungMatahari(TZ,LA,LO,H):
 	now = datetime.datetime.now()
 	# jd2000 = gcal2jd(now.year,now.month,now.day)
-	jd2000 = gcal2jd(2004,2,24)
+	jd2000 = gcal2jd(2017,4,11)
 	mjd = jd2000[1] - 51544
 	# print mjd
 
@@ -47,13 +47,15 @@ def hitungMatahari(TZ,LA,LO,H):
 	a = math.degrees(math.atan(Y/X))
 	# print a
 
-	if Y != 0 :
+	if Y <= 0 :
 		alpha = a + 360
-		delta = math.degrees(math.asin(math.sin(math.radians(epsilon))*math.sin(math.radians(lmda))))
-		et = (L-alpha) * 4
-
-		# print delta
-		# print et 
+	else:
+		alpha = a
+	delta = math.degrees(math.asin(math.sin(math.radians(epsilon))*math.sin(math.radians(lmda))))
+	et = (L-alpha) * 4
+	# print alpha
+	# print delta
+	# print et 
 
 	Z = 12 + (TZ * 15 - LO)/15.0 - et/60.0
 	# print Z
