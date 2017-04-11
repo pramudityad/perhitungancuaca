@@ -13,15 +13,6 @@ import websocket
 import thread
 import math
 
-# try:
-#     ser = serial.Serial(port='/dev/ttyACM0',
-#                     baudrate = 9600,
-#                     parity=serial.PARITY_NONE,
-#                     stopbits=serial.STOPBITS_ONE,
-#                     bytesize=serial.EIGHTBITS,
-#                     timeout=1)
-# except Exception as e:
-#     print "Error Serial";
 
 GPIO.setmode(GPIO.BCM) ## Use board pin numbering
 GPIO.setup(26, GPIO.OUT) ## Setup GPIO Pin 7 to OUT
@@ -91,40 +82,6 @@ def requestData():
     except Exception as e:
         print 'Error Connection';
 
-# def requestSerial():
-#     dataSerial = "";
-#     while(dataSerial == ""):
-#         dataSerial = "";
-#         try:
-#             ser.write("01\n");
-#             dataSerial = ser.readline();
-#         except Exception as e:
-#             print "Error Serial"
-#         # print "Send Request";
-#         #time.sleep(1);
-#     return dataSerial;
-
-# def sendLED(data):
-#     if (data=="ON"):
-#         ledVal = 1
-#     elif (data=="OFF"):
-#         ledVal = 0;
-#     else :
-#         return False;
-#     dataSerial = "";
-#     while(dataSerial == ""):
-#         dataSerial = "";
-#         try:
-#             ser.write("02"+str(ledVal)+"\n");
-#             dataSerial = ser.readline();
-#         except Exception as e:
-#             print "Error Serial";
-#         # print "Send LED "+dataSerial;
-#         # if(dataSerial==""):
-#         #     print "Kosong";
-#         #time.sleep(1);
-#     return dataSerial;
-
 def requestSensor():
     try:
         global str_sensor
@@ -145,91 +102,233 @@ def cekOwCode():
     print "CEK OW CODE"
     global ow_code
     global ow_desc
+    global str_ow_data
     ow_code = 0
     ow_desc = 'Cerah'
     terbit = int(hisab.terbit(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0))
     terbenam = int(hisab.terbenam(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0))
     siang = int(hisab.siang(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0))
     now  = datetime.datetime.now();
-    myTime = now
-    hour    = myTime.hour;
-    while(hour%3!=0):
-        hour = hour+1;
-        myTime += timedelta(hours=1);
 
-    batas = terbenam
-    inv   = terbenam - now.hour
-    if now.hour>siang or now.hour<terbit:
-        batas   = terbit
-        inv     = 24 - hour + terbit
-        if now.hour < terbit:
-            inv = terbit - now.hour
+    if(now.hour<terbit or now.hour > terbenam):
+        hour1 = terbit
+        hour2 = terbenam
+        while(hour1%3!=0):
+            hour1 = hour1+1
 
-    for i in range(0,inv,3):
-        print i
-        timeRequest = myTime.strftime('%Y-%m-%d %H:00:00');
-        myTime += timedelta(hours=3)
-        hour += 3
-        print str(timeRequest) + " : " + str(OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id'])
-        for dt in ow_cerah_code:
-            if(OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id'] == dt):
-                ow_code_temp = 0
-                ow_desc_temp = 'Cerah'
-        for dt in ow_mendung_code:
-            if(OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id'] == dt):
-                ow_code_temp = 1
-                ow_desc_temp = 'Mendung'
-        for dt in ow_hujan_code:
-            if(OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id'] == dt):
-                ow_code_temp = 2
-                ow_desc_temp = 'Hujan'
-        if(ow_code_temp>ow_code):
-            ow_code = ow_code_temp
-            ow_desc = ow_desc_temp
+        for i in range(hour1,hour2,3):
+            myTime = datetime.datetime.now()
+            myTime = myTime.replace(hour=i)
+            if(now.hour>terbenam):
+                myTime = myTime.replace(hour=i,day=myTime.day+1)
+            timeRequest = myTime.strftime('%Y-%m-%d %H:00:00');
+            for dt in ow_cerah_code:
+                if(OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id'] == dt):
+                    ow_code_temp = 0
+                    ow_desc_temp = 'Cerah'
+            for dt in ow_mendung_code:
+                if(OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id'] == dt):
+                    ow_code_temp = 1
+                    ow_desc_temp = 'Mendung'
+            for dt in ow_hujan_code:
+                if(OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id'] == dt):
+                    ow_code_temp = 2
+                    ow_desc_temp = 'Hujan'
+            if(ow_code_temp>ow_code):
+                ow_code = ow_code_temp
+                ow_desc = ow_desc_temp
+            print str(i) + " : " + str(ow_code_temp)
+    elif(now.hour>terbit and now.hour<terbenam):
+        hour1 = terbenam
+        hour2 = terbit
+        while(hour1%3!=0):
+            hour1 = hour1+1
+
+        for i in range(hour1,24,3):
+            myTime = datetime.datetime.now()
+            myTime = myTime.replace(hour=i)
+            timeRequest = myTime.strftime('%Y-%m-%d %H:00:00');
+            for dt in ow_cerah_code:
+                if(OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id'] == dt):
+                    ow_code_temp = 0
+                    ow_desc_temp = 'Cerah'
+            for dt in ow_mendung_code:
+                if(OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id'] == dt):
+                    ow_code_temp = 1
+                    ow_desc_temp = 'Mendung'
+            for dt in ow_hujan_code:
+                if(OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id'] == dt):
+                    ow_code_temp = 2
+                    ow_desc_temp = 'Hujan'
+            if(ow_code_temp>ow_code):
+                ow_code = ow_code_temp
+                ow_desc = ow_desc_temp
+            print str(i) + " : " + str(ow_code_temp)
+
+        for i in range(0,hour2,3):
+            myTime = datetime.datetime.now()
+            myTime = myTime.replace(hour=i, day=myTime.day+1)
+            timeRequest = myTime.strftime('%Y-%m-%d %H:00:00');
+            for dt in ow_cerah_code:
+                if(OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id'] == dt):
+                    ow_code_temp = 0
+                    ow_desc_temp = 'Cerah'
+            for dt in ow_mendung_code:
+                if(OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id'] == dt):
+                    ow_code_temp = 1
+                    ow_desc_temp = 'Mendung'
+            for dt in ow_hujan_code:
+                if(OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id'] == dt):
+                    ow_code_temp = 2
+                    ow_desc_temp = 'Hujan'
+            if(ow_code_temp>ow_code):
+                ow_code = ow_code_temp
+                ow_desc = ow_desc_temp
+            print str(i) + " : " + str(ow_code_temp)
+
+
+    # batas = terbenam
+    # inv   = terbenam - now.hour
+    # if now.hour>siang or now.hour<terbit:
+    #     batas   = terbit
+    #     inv     = 24 - hour + terbit
+    #     if now.hour < terbit:
+    #         inv = terbit - now.hour
+
+    # for i in range(0,inv,3):
+    #     print i
+    #     timeRequest = myTime.strftime('%Y-%m-%d %H:00:00');
+    #     myTime += timedelta(hours=3)
+    #     hour += 3
+    #     print str(timeRequest) + " : " + str(OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id'])
+    #     for dt in ow_cerah_code:
+    #         if(OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id'] == dt):
+    #             ow_code_temp = 0
+    #             ow_desc_temp = 'Cerah'
+    #     for dt in ow_mendung_code:
+    #         if(OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id'] == dt):
+    #             ow_code_temp = 1
+    #             ow_desc_temp = 'Mendung'
+    #     for dt in ow_hujan_code:
+    #         if(OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id'] == dt):
+    #             ow_code_temp = 2
+    #             ow_desc_temp = 'Hujan'
+    #     if(ow_code_temp>ow_code):
+    #         ow_code = ow_code_temp
+    #         ow_desc = ow_desc_temp
 
 def cekWuCode():
     print "CEK WU CODE"
     global wu_code
     global wu_desc
+    global str_wu_data
     wu_code = 0
     wu_desc = 'Cerah'
     terbit  = int(hisab.terbit(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0))
     terbenam= int(hisab.terbenam(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0))
     siang   = int(hisab.siang(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0))
     now     = datetime.datetime.now();
-    myTime  = now
-    hour    = myTime.hour;
-    batas   = terbenam
-    inv     = terbenam - now.hour
-    if now.hour>siang or now.hour<terbit:
-        batas   = terbit
-        inv     = 24-now.hour + terbit
-        if now.hour < terbit:
-            inv = terbit - now.hour
 
-    for i in range(inv):
-        myTime += timedelta(hours=1)
-        print str(myTime.hour)+" : "+str(WU.getForcastByTime(str_wu_data, str(myTime.hour))['fctcode'])
-        for dt in wu_cerah_code:
-            if(int(WU.getForcastByTime(str_wu_data, str(myTime.hour))['fctcode']) == dt):
-                wu_code_temp = 0
-                wu_desc_temp = 'Cerah'
-        for dt in wu_mendung_code:
-            if(int(WU.getForcastByTime(str_wu_data, str(myTime.hour))['fctcode']) == dt):
-                wu_code_temp = 1
-                wu_desc_temp = 'Mendung'
-        for dt in wu_hujan_code:
-            if(int(WU.getForcastByTime(str_wu_data, str(myTime.hour))['fctcode']) == dt):
-                wu_code_temp = 2
-                wu_desc_temp = 'Hujan'
-        if(wu_code_temp>wu_code):
-            wu_code = wu_code_temp
-            wu_desc = wu_desc_temp
+    if(now.hour<terbit or now.hour>terbenam):
+        hour1 = terbit
+        hour2 = terbenam
 
-    # print myTime.hour
-    # print batas
-    # while myTime.hour<=batas:
-    #     print WU.getForcastByTime(str_wu_data, str(myTime.hour))['fctcode']
+        for i in range(hour1,hour2,1):
+            myTime = datetime.datetime.now()
+            myTime = myTime.replace(hour=i)
+            if(now.hour>terbenam):
+                myTime = myTime.replace(hour=i,day=myTime.day+1)
+            timeRequest = myTime.strftime('%Y-%m-%d %H:00:00');
+            for dt in wu_cerah_code:
+                if(int(WU.getForcastByTime(str_wu_data, str(myTime.hour))['fctcode']) == dt):
+                    wu_code_temp = 0
+                    wu_desc_temp = 'Cerah'
+            for dt in wu_mendung_code:
+                if(int(WU.getForcastByTime(str_wu_data, str(myTime.hour))['fctcode']) == dt):
+                    wu_code_temp = 1
+                    wu_desc_temp = 'Mendung'
+            for dt in wu_hujan_code:
+                if(int(WU.getForcastByTime(str_wu_data, str(myTime.hour))['fctcode']) == dt):
+                    wu_code_temp = 2
+                    wu_desc_temp = 'Hujan'
+            if(wu_code_temp>wu_code):
+                wu_code = wu_code_temp
+                wu_desc = wu_desc_temp
+            print str(i) + " : " + str(wu_code_temp)
+    elif(now.hour>terbit and now.hour<terbenam):
+        hour1 = terbenam
+        hour2 = terbit
+        for i in range(hour1,24,1):
+            myTime = datetime.datetime.now()
+            myTime = myTime.replace(hour=i)
+            timeRequest = myTime.strftime('%Y-%m-%d %H:00:00');
+            for dt in wu_cerah_code:
+                if(int(WU.getForcastByTime(str_wu_data, str(myTime.hour))['fctcode']) == dt):
+                    wu_code_temp = 0
+                    wu_desc_temp = 'Cerah'
+            for dt in wu_mendung_code:
+                if(int(WU.getForcastByTime(str_wu_data, str(myTime.hour))['fctcode']) == dt):
+                    wu_code_temp = 1
+                    wu_desc_temp = 'Mendung'
+            for dt in wu_hujan_code:
+                if(int(WU.getForcastByTime(str_wu_data, str(myTime.hour))['fctcode']) == dt):
+                    wu_code_temp = 2
+                    wu_desc_temp = 'Hujan'
+            if(wu_code_temp>wu_code):
+                wu_code = wu_code_temp
+                wu_desc = wu_desc_temp
+            print str(i) + " : " + str(wu_code_temp)
+
+        for i in range(0,hour2,1):
+            myTime = datetime.datetime.now()
+            myTime = myTime.replace(hour=i,day=myTime.day+1)
+            timeRequest = myTime.strftime('%Y-%m-%d %H:00:00');
+            for dt in wu_cerah_code:
+                if(int(WU.getForcastByTime(str_wu_data, str(myTime.hour))['fctcode']) == dt):
+                    wu_code_temp = 0
+                    wu_desc_temp = 'Cerah'
+            for dt in wu_mendung_code:
+                if(int(WU.getForcastByTime(str_wu_data, str(myTime.hour))['fctcode']) == dt):
+                    wu_code_temp = 1
+                    wu_desc_temp = 'Mendung'
+            for dt in wu_hujan_code:
+                if(int(WU.getForcastByTime(str_wu_data, str(myTime.hour))['fctcode']) == dt):
+                    wu_code_temp = 2
+                    wu_desc_temp = 'Hujan'
+            if(wu_code_temp>wu_code):
+                wu_code = wu_code_temp
+                wu_desc = wu_desc_temp
+            print str(i) + " : " + str(wu_code_temp)
+
+    # myTime  = now
+    # hour    = myTime.hour;
+    # batas   = terbenam
+    # inv     = terbenam - now.hour
+    # if now.hour>siang or now.hour<terbit:
+    #     batas   = terbit
+    #     inv     = 24-now.hour + terbit
+    #     if now.hour < terbit:
+    #         inv = terbit - now.hour
+
+    # for i in range(inv):
+    #     myTime += timedelta(hours=1)
+    #     print str(myTime.hour)+" : "+str(WU.getForcastByTime(str_wu_data, str(myTime.hour))['fctcode'])
+    #     for dt in wu_cerah_code:
+    #         if(int(WU.getForcastByTime(str_wu_data, str(myTime.hour))['fctcode']) == dt):
+    #             wu_code_temp = 0
+    #             wu_desc_temp = 'Cerah'
+    #     for dt in wu_mendung_code:
+    #         if(int(WU.getForcastByTime(str_wu_data, str(myTime.hour))['fctcode']) == dt):
+    #             wu_code_temp = 1
+    #             wu_desc_temp = 'Mendung'
+    #     for dt in wu_hujan_code:
+    #         if(int(WU.getForcastByTime(str_wu_data, str(myTime.hour))['fctcode']) == dt):
+    #             wu_code_temp = 2
+    #             wu_desc_temp = 'Hujan'
+    #     if(wu_code_temp>wu_code):
+    #         wu_code = wu_code_temp
+    #         wu_desc = wu_desc_temp
+
 
 print "Start"
 requestData();
@@ -326,27 +425,13 @@ def on_open(ws):
                         weather = OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['description']
                         wsp = "openweather"
                         DB.addForecast(code,weather,wsp,timeRequest)
-                #print OW.getForecast();
-                #print "Request at: ",now.hour,":",now.minute,":",now.second
-            #print timeRequest + '\t' + location +'\t' + latitude +'\t'+ longitude + '\t' + timeForcast +'\t' + weather +'\t' + code;
-            # str_serial = DS.getString(requestSerial());
-            # soil = DS.getSoil(str_serial);
+
             soil = SPI.readSensor(0)
             rain = SPI.readSensor(1)
+            # soil = 2
+            # rain = 1
             NK = fuzzy.calculate(soil,rain,ow_code,wu_code)
-            print "Nilai Kelayakan : " + str(NK);
-            print "---------------"
-            # soil = DB.getLastSoil();
-            # temp = DB.getLastTemp();
-            # requestSensor();
-            # NK = fuzzy.calculate(soil,temp,0,0,0,0)
-            # print NK;
-            # if(NK >= 80):
-            #     DS.sendLED("ON");
-            # else:
-            #     DS.sendLED("OFF");
-            #print WU.getForecast();
-
+            print "Nilai Kelayakan : " + str(NK)
             print "F1 : " + str(ow_code)
             print "F1 : " + ow_desc
             print "---------------"

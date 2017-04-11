@@ -1,4 +1,5 @@
 BOARD = 1
+BCM = 1
 OUT = 1
 IN = 1
 
