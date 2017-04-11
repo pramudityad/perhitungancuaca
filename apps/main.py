@@ -396,14 +396,14 @@ def on_open(ws):
         while True:
             now = datetime.datetime.now()
             timeRequest = now.strftime('%Y-%m-%d %H:%M:%S');
+            terbit = hisab.terbit(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
+            terbenam = hisab.terbenam(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
             #print now.year, now.hour, now.minute, now.second
             print timeRequest
             if(now.hour%1==0 and now.minute%2==0 and now.second==0):
                 requestData()
                 cekOwCode()
                 cekWuCode()
-                terbit = hisab.terbit(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
-                terbenam = hisab.terbenam(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
                 if((math.floor(terbit) == now.hour) or (math.floor(terbenam) == now.hour)):
                     GPIO.output(26,True)
                     statePenyiram = True
