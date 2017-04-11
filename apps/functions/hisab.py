@@ -2,25 +2,22 @@ from jdcal import gcal2jd, jd2gcal
 import datetime
 import math
 
-TZ = 7
-LA = -7.23
-LO = 112.74
-H = 0
 def hitungMatahari(TZ,LA,LO,H):
 	now = datetime.datetime.now()
-	# jd2000 = gcal2jd(now.year,now.month,now.day)
+	#jd2000 = gcal2jd(now.year,now.month,now.day)
 	jd2000 = gcal2jd(2004,2,24)
 	mjd = jd2000[1] - 51544
-	# print mjd
+	#print mjd
 
 	L = 280.461 + 0.9856474 * mjd
+	print L
 	if L>360 :
 		while L > 360:
 			L = L - 360
 	elif L<0:
 		while L < 0:
 			L = L + 360
-	# print L
+	print L
 
 	g = 357.528 + 0.9856003 * mjd
 	if g>360 :
@@ -29,7 +26,7 @@ def hitungMatahari(TZ,LA,LO,H):
 	elif g<0:
 		while g < 0:
 			g = g + 360
-	# print g
+	print g
 
 	lmda = L + (1.915 *  math.sin(math.radians(g))) + (0.020 * math.sin(math.radians(2*g)))
 	# print lmda
@@ -83,14 +80,16 @@ def terbit(TZ,LA,LO,H):
 	Z = calc[0]
 	U = calc[1]
 	terbit = Z-U
-	return terbit
+	ihtiyath = 3.0/60.0;
+	return terbit - ihtiyath;
 
 def terbenam(TZ,LA,LO,H):
 	calc = hitungMatahari(TZ,LA,LO,H)
 	Z = calc[0]
 	U = calc[1]
 	terbenam = Z+U
-	return terbenam
+	ihtiyath = 22.0/60.0
+	return terbenam - ihtiyath
 
 def siang(TZ,LA,LO,H):
 	calc = hitungMatahari(TZ,LA,LO,H)
