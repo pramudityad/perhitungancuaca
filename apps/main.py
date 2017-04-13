@@ -399,7 +399,7 @@ def on_open(ws):
             terbit = hisab.terbit(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
             terbenam = hisab.terbenam(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
             #print now.year, now.hour, now.minute, now.second
-            print timeRequest
+            # print timeRequest
             if(now.hour%1==0 and now.minute%30.0==0 and now.second==0):
                 requestData()
                 cekOwCode()
@@ -471,7 +471,7 @@ def on_open(ws):
     thread.start_new_thread(run, ())
 if __name__ == "__main__":
     websocket.enableTrace(True)
-    ws = websocket.WebSocketApp("ws://localhost:8080/v2",
+    ws = websocket.WebSocketApp("ws://192.168.10.1:8080/v2",
                               on_message = on_message,
                               on_error = on_error,
                               on_close = on_close)
