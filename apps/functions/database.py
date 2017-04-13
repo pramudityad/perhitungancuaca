@@ -28,23 +28,10 @@ def getLastSoil():
 		db.rollback()
 	return val;
 
-def getLastTemp():
+def getLastRaindrop():
 	val = 0
 	cur = db.cursor()
-	sql = "SELECT * FROM temp ORDER BY id DESC LIMIT 1"
-	try:
-		cur.execute(sql)
-		for row in cur.fetchall():
-			val = row[1]
-		db.commit();
-	except Exception as e:
-		db.rollback()
-	return val;
-
-def getLastHujan():
-	val = 0
-	cur = db.cursor()
-	sql = "SELECT * FROM soil ORDER BY id DESC LIMIT 1"
+	sql = "SELECT * FROM raindrop ORDER BY id DESC LIMIT 1"
 	try:
 		cur.execute(sql)
 		for row in cur.fetchall():
@@ -85,6 +72,20 @@ def addSoil(data):
 	myTime  	= datetime.datetime.now();
 	currentTime	= myTime.strftime('%Y-%m-%d %H:%M:%S');
 	sql = "INSERT INTO soil(value,created_at) VALUES ("+str(data)+",'"+currentTime+"')"
+	try:
+		cur.execute(sql)
+		db.commit();
+		status = True;
+	except Exception as e:
+		db.rollback()
+		status = False;
+	return status;
+
+def addRaindrop(data):
+	cur = db.cursor()
+	myTime  	= datetime.datetime.now();
+	currentTime	= myTime.strftime('%Y-%m-%d %H:%M:%S');
+	sql = "INSERT INTO raindrop(value,created_at) VALUES ("+str(data)+",'"+currentTime+"')"
 	try:
 		cur.execute(sql)
 		db.commit();
@@ -147,4 +148,19 @@ def addForecast(code,weather,wsp,dataTime):
 		db.rollback()
 		status = False;
 		print e
+	return status;
+
+def addSunTime(data):
+	cur = db.cursor()
+	myTime  	= datetime.datetime.now();
+	currentTime	= myTime.strftime('%Y-%m-%d %H:%M:%S');
+	sql = "INSERT INTO sun(sunrise,sunset,created_at) VALUES ('"+data[0]+"','"+data[1]+"','"+currentTime+"')"
+	try:
+		cur.execute(sql)
+		db.commit();
+		status = True;
+	except Exception as e:
+		print e
+		db.rollback()
+		status = False;
 	return status;

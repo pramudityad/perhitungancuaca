@@ -30,12 +30,12 @@ timeForcast = 'N/A';
 weather     = 'N/A';
 code        = 'N/A';
 lastSoil    = DB.getLastSoil();
+lastRain    = DB.getLastRaindrop();
 
 #Sensor
 str_sensor  = None;
 soil        = None;
 rain        = None;
-temp        = None;
 light       = None;
 sensor_status = None;
 statePenyiram = False;
@@ -81,22 +81,6 @@ def requestData():
         print 'Request Success';
     except Exception as e:
         print 'Error Connection';
-
-def requestSensor():
-    try:
-        global str_sensor
-        global soil
-        global temp
-        global light
-        global sensor_status;
-
-        str_sensor = DS.getSensor();
-        if (str_sensor['status'] == True):
-            soil = str_sensor['data']['sensors']['soil']
-            temp = str_sensor['data']['sensors']['temp']
-            light = str_sensor['data']['sensors']['light']
-    except Exception as e:
-        print "Request Sensor Error  " + str(e)
 
 def cekOwCode():
     print "CEK OW CODE"
@@ -342,8 +326,6 @@ cekWuCode();
 # print 'Prediksi  : Jam      :' + timeForcast;
 # print '            Cuaca    :' + weather;
 # print '            Code     :' + code;
-soil = DB.getLastSoil();
-temp = DB.getLastTemp();
 # print "Nilai Kelayakan : " + str(fuzzy.calculate(soil,300,ow_code,wu_code)); #calculate(soil,suhu,hujan,weather,wsp1,wsp2)
 
 def on_message(ws, message):
@@ -393,6 +375,7 @@ def on_open(ws):
         global statePenyiram
         global statePemupuk
         global lastSoil
+        global lastRain
         while True:
             now = datetime.datetime.now()
             timeRequest = now.strftime('%Y-%m-%d %H:%M:%S');
@@ -404,15 +387,8 @@ def on_open(ws):
                 requestData()
                 cekOwCode()
                 cekWuCode()
-                if((math.floor(terbit) == now.hour) or (math.floor(terbenam) == now.hour)):
-                    GPIO.output(26,True)
-                    statePenyiram = True
-                    if(now.second > 50):
-                        GPIO.output(26,False)
-                        statePenyiram = False
-                if(lastSoil!=soil):
-                    DB.addSoil(soil);
-                    lastSoil = soil;
+                DB.addSoil(soil);
+                DB.addRaindrop(rain);
                 soil = DB.getLastSoil();
                 if(now.minute==0 and now.second==0):
                     timeRequest = now.strftime('%Y-%m-%d %H:00:00');
@@ -446,6 +422,17 @@ def on_open(ws):
             # print "---------------"
             # print "Soil :" + str(soil)
             # print "Raindrop : " + str(rain)
+            strTerbit   = str(int(math.floor(terbit)))+":"+str(int((terbit%1)*60))
+            strTerbenam = str(int(math.floor(terbenam)))+":"+str(int((terbenam%1)*60))
+            if(now.hour==0 and now.minute==0 and now.second==1):
+                DB.addSunTime([strTerbit,strTerbenam])
+
+            if((math.floor(terbit) == now.hour and int((terbit%1)*60) == now.minute) or (math.floor(terbenam) == now.hour and int((terbenam%1)*60) == now.minute)):
+                    GPIO.output(26,True)
+                    statePenyiram = True
+                    if(now.second > 50):
+                        GPIO.output(26,False)
+                        statePenyiram = False
 
             # KIRIM DATA
             sensors = {}
@@ -458,8 +445,8 @@ def on_open(ws):
             forecast['openweather'] = ow_code
             forecast['wunderground']= wu_code
             suntime = {}
-            suntime['sunrise'] = str(int(math.floor(terbit)))+":"+str(int((terbit%1)*60))
-            suntime['sunset']  = str(int(math.floor(terbenam)))+":"+str(int((terbenam%1)*60))
+            suntime['sunrise'] = strTerbit
+            suntime['sunset']  = strTerbenam
             res = {}
             res['sensors'] = sensors
             res['actuators'] = actuators
