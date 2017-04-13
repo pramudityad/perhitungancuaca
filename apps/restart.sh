@@ -9,10 +9,10 @@ then
 	echo "empty"
 else
 	sudo kill -9 $pid
-	printf '%s\tStop Application\n' "$(date +'%T %A %d %B %Y')" >>restartlog
+	printf '%s\tStop Application\n' "$(date +'%T %A %d %B %Y')" >>/home/TA/perhitungancuaca/apps/restartlog
 fi
 
 #start semua program
-printf '%s\tStart Application\n' "$(date +'%T %A %d %B %Y')" >>restartlog
+printf '%s\tStart Application\n' "$(date +'%T %A %d %B %Y')" >>/home/TA/perhitungancuaca/apps/restartlog
 python /home/TA/perhitungancuaca/apps/main.py
 
