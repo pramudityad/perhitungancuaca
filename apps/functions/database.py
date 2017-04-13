@@ -6,7 +6,7 @@ from decimal import Decimal
 
 db = MySQLdb.connect(host="localhost",
                      user="root",
-                     passwd="raspberry",
+                     passwd="1234qwer",
                      db="gfa");
 def getDb():
     cur = db.cursor()
@@ -148,4 +148,3 @@ def addForecast(code,weather,wsp,dataTime):
 		status = False;
 		print e
 	return status;
-

@@ -71,34 +71,34 @@ def calculate(soil,rain,forecast,forecast2):
 	
 	#print linguistik
 	# print "FUZZYFIKASI";
-	print "SOIL = %d" % (soil);
-	print "BASAH  : "+str(basah);
-	print "SEDANG : "+str(sedang);
-	print "KERING : "+str(kering);
+	# print "SOIL = %d" % (soil);
+	# print "BASAH  : "+str(basah);
+	# print "SEDANG : "+str(sedang);
+	# print "KERING : "+str(kering);
 
-	# print "SUHU = %d" % (suhu);
-	# print "DINGIN : "+str(dingin);
-	# print "SEJUK  : "+str(sejuk);
-	# print "PANAS  : "+str(panas);
+	# # print "SUHU = %d" % (suhu);
+	# # print "DINGIN : "+str(dingin);
+	# # print "SEJUK  : "+str(sejuk);
+	# # print "PANAS  : "+str(panas);
 
-	print "HUJAN";
-	print "HUJAN  	 : "+str(hujan);
-	print "TDK_HUJAN : "+str(tdk_hujan);
+	# print "HUJAN";
+	# print "HUJAN  	 : "+str(hujan);
+	# print "TDK_HUJAN : "+str(tdk_hujan);
 
-	# print "CURRENT WEATHER";
-	# print "CERAH  : "+str(w_cerah);
-	# print "MENDUNG: "+str(w_mendung);
-	# print "HUJAN  : "+str(w_hujan);
+	# # print "CURRENT WEATHER";
+	# # print "CERAH  : "+str(w_cerah);
+	# # print "MENDUNG: "+str(w_mendung);
+	# # print "HUJAN  : "+str(w_hujan);
 
-	print "FORECAST 1";
-	print "CERAH  : "+str(f_cerah);
-	print "MENDUNG: "+str(f_mendung);
-	print "HUJAN  : "+str(f_hujan);
+	# print "FORECAST 1";
+	# print "CERAH  : "+str(f_cerah);
+	# print "MENDUNG: "+str(f_mendung);
+	# print "HUJAN  : "+str(f_hujan);
 
-	print "FORECAST 2";
-	print "CERAH  : "+str(f2_cerah);
-	print "MENDUNG: "+str(f2_mendung);
-	print "HUJAN  : "+str(f2_hujan);
+	# print "FORECAST 2";
+	# print "CERAH  : "+str(f2_cerah);
+	# print "MENDUNG: "+str(f2_mendung);
+	# print "HUJAN  : "+str(f2_hujan);
 
 
 	#Inferensi
@@ -227,18 +227,18 @@ def calculate(soil,rain,forecast,forecast2):
 	# print "FUZZY OUTPUT";
 	for i in range(54):
 		if nkRendah[i]>0:
-			print "Rule "+str(i+1)+ " Rendah : "+str(nkRendah[i]);
+			# print "Rule "+str(i+1)+ " Rendah : "+str(nkRendah[i]);
 			if nkRendah[i]>rendah:
 				rendah=nkRendah[i];
 		if nkTinggi[i]>0:
-			print "Rule "+str(i+1)+ " Tinggi : "+str(nkTinggi[i]);
+			# print "Rule "+str(i+1)+ " Tinggi : "+str(nkTinggi[i]);
 			if nkTinggi[i]>tinggi:
 				tinggi=nkTinggi[i];
 
-	if rendah>0:
-		print "Rendah("+str(rendah)+")";
-	if tinggi>0:
-		print "Tinggi("+str(tinggi)+")";
+	# if rendah>0:
+	# 	print "Rendah("+str(rendah)+")";
+	# if tinggi>0:
+	# 	print "Tinggi("+str(tinggi)+")";
 
 
 	#DEFUZIFIKASI
