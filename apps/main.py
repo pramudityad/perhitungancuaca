@@ -2,13 +2,13 @@ import urllib2, urllib, json
 import functions.openweather as OW
 import datetime, time
 from datetime import timedelta
-import functions.RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import functions.database as DB
 import functions.fuzzy_v2 as fuzzy;
 import functions.dataserial as DS;
 import functions.wunderground as WU;
 import functions.hisab as hisab;
-# import functions.read_spi as SPI
+import functions.read_spi as SPI
 import websocket
 import thread
 import math
