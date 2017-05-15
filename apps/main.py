@@ -13,12 +13,13 @@ import websocket
 import thread
 import math
 
-
+pinSiram = 26
+pinPupuk = 21
 GPIO.setmode(GPIO.BCM) ## Use board pin numbering
-GPIO.setup(26, GPIO.OUT) ## Setup GPIO Pin 7 to OUT
-GPIO.output(26,False)
-GPIO.setup(21, GPIO.OUT) ## Setup GPIO Pin 7 to OUT
-GPIO.output(21,False)
+GPIO.setup(pinSiram, GPIO.OUT) ## Setup GPIO Pin 7 to OUT
+GPIO.output(pinSiram,False)
+GPIO.setup(pinPupuk, GPIO.OUT) ## Setup GPIO Pin 7 to OUT
+GPIO.output(pinPupuk,False)
 
 timeRequest = 'N/A';
 str_ow_data = 'N/A';
@@ -40,6 +41,16 @@ light       = None;
 sensor_status = None;
 statePenyiram = False;
 statePemupuk  = False;
+requestStatus = False;
+readySiram 	  = False;
+readyPupuk   = False;
+timeSiram 	  = 0;
+timePupuk 	  = 0;
+overrideSiram = False;
+overridePupuk = False;
+delaySecond = 1;
+maxTimeSiram = 1;
+maxTimePupuk = 1;
 
 ow_hujan_code   = {500,501,502,503,504,511,520,521,522,531,300,301,302,310,311,312,313,314,321}
 ow_mendung_code = {803,804}
@@ -57,30 +68,33 @@ terbit = hisab.terbit(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
 terbenam = hisab.terbenam(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
 
 def requestData():
-    now = datetime.datetime.now();
-    timeRequest = now.strftime('%Y-%m-%d %H:%M:%S');
-    print 'Request Data';
-    try:
-        global str_ow_data;
-        global str_wu_data;
-        global location;
-        global latitude;
-        global longitude;
-        global timeForcast;
-        global weather;
-        global code;
+	now = datetime.datetime.now();
+	timeRequest = now.strftime('%Y-%m-%d %H:%M:%S');
+	print 'Request Data';
+	try:
+		global str_ow_data;
+		global str_wu_data;
+		global location;
+		global latitude;
+		global longitude;
+		global timeForcast;
+		global weather;
+		global code;
+		global requestStatus
 
-        str_ow_data = OW.getForecast(DB.getLatitude(),DB.getLongitude());
-        str_wu_data = WU.getForecast(DB.getLatitude(),DB.getLongitude());
-        location    = OW.getCityName(str_ow_data);
-        latitude    = str(OW.getCityLatitude(str_ow_data));
-        longitude   = str(OW.getCityLongitude(str_ow_data));
-        timeForcast = str(OW.getForecastNext(str_ow_data)['dt_txt']);
-        weather     = str(OW.getForecastNext(str_ow_data)['weather'][0]['description']);
-        code        = str(OW.getForecastNext(str_ow_data)['weather'][0]['id']);
-        print 'Request Success';
-    except Exception as e:
-        print 'Error Connection';
+		str_ow_data = OW.getForecast(DB.getLatitude(),DB.getLongitude());
+		str_wu_data = WU.getForecast(DB.getLatitude(),DB.getLongitude());
+		location    = OW.getCityName(str_ow_data);
+		latitude    = str(OW.getCityLatitude(str_ow_data));
+		longitude   = str(OW.getCityLongitude(str_ow_data));
+		timeForcast = str(OW.getForecastNext(str_ow_data)['dt_txt']);
+		weather     = str(OW.getForecastNext(str_ow_data)['weather'][0]['description']);
+		code        = str(OW.getForecastNext(str_ow_data)['weather'][0]['id']);
+		requestStatus = True;
+		print 'Request Success';
+	except Exception as e:
+		requestStatus = False;
+		print 'Error Connection'
 
 def cekOwCode():
     print "CEK OW CODE"
@@ -315,7 +329,9 @@ def cekWuCode():
 
 
 print "Start"
-requestData();
+while (requestStatus == False):
+	requestData();
+	time.sleep(1);
 cekOwCode();
 cekWuCode();
 #print str_ow_data;
@@ -329,31 +345,27 @@ cekWuCode();
 # print "Nilai Kelayakan : " + str(fuzzy.calculate(soil,300,ow_code,wu_code)); #calculate(soil,suhu,hujan,weather,wsp1,wsp2)
 
 def on_message(ws, message):
-    global statePenyiram
-    global statePemupuk
+    global overrideSiram
+    global overridePupuk
+    global timeSiram
+    global timePupuk
     try:
         data = json.loads(message)
         if data['status']==True:
             if data['data']['code'] == 1:
                 if data['data']['value'] == 1:
-                    print "LED ON"
-                    GPIO.output(26,True)
-                    statePenyiram = True
+                    overrideSiram = True
                 elif data['data']['value'] == 0:
-                    print "LED OFF"
-                    GPIO.output(26,False)
-                    statePenyiram = False
+                    overrideSiram= False
+                    timeSiram = 0
                 else:
                     print "Value Error"
             elif data['data']['code'] == 2:
                 if data['data']['value'] == 1:
-                    print "LED ON"
-                    GPIO.output(21,True)
-                    statePemupuk = True
+                    overridePupuk = True
                 elif data['data']['value'] == 0:
-                    print "LED OFF"
-                    GPIO.output(21,False)
-                    statePemupuk = False
+                    overridePupuk = False
+                    timePupuk = 0
                 else:
                     print "Value Error"
     except Exception as e:
@@ -376,6 +388,14 @@ def on_open(ws):
         global statePemupuk
         global lastSoil
         global lastRain
+        global readySiram
+        global readyPupuk
+        global timeSiram
+        global timePupuk
+        global maxTimeSiram
+        global maxTimePupuk
+        global overrideSiram
+        global overridePupuk
         while True:
             now = datetime.datetime.now()
             timeRequest = now.strftime('%Y-%m-%d %H:%M:%S');
@@ -409,31 +429,63 @@ def on_open(ws):
             
             # soil = 2
             # rain = 1
+            
             NK = fuzzy.calculate(soil,rain,ow_code,wu_code)
-            # print "Nilai Kelayakan : " + str(NK)
-            # print "F1 : " + str(ow_code)
-            # print "F1 : " + ow_desc
-            # print "---------------"
-            # print "F2 : " + str(wu_code)
-            # print "F2 : " + wu_desc
-            # print "---------------"
-            # print "Terbit : " + str(int(terbit))+":"+str(int((terbit%1)*60))
-            # print "Terbenam : " + str(int(terbenam))+":"+str(int((terbenam%1)*60))
-            # print "---------------"
-            # print "Soil :" + str(soil)
-            # print "Raindrop : " + str(rain)
+            print "Nilai Kelayakan : " + str(NK)
+            print "F1 : " + str(ow_code)
+            print "F1 : " + ow_desc
+            print "---------------"
+            print "F2 : " + str(wu_code)
+            print "F2 : " + wu_desc
+            print "---------------"
+            print "Terbit : " + str(int(terbit))+":"+str(int((terbit%1)*60))
+            print "Terbenam : " + str(int(terbenam))+":"+str(int((terbenam%1)*60))
+            print "---------------"
+            print "Soil :" + str(soil)
+            print "Raindrop : " + str(rain)
             strTerbit   = str(int(math.floor(terbit)))+":"+str(int((terbit%1)*60))
             strTerbenam = str(int(math.floor(terbenam)))+":"+str(int((terbenam%1)*60))
+            
             if(now.hour==0 and now.minute==0 and now.second==1):
-                DB.addSunTime([strTerbit,strTerbenam])
-
+				DB.addSunTime([strTerbit,strTerbenam])
+				
             if((math.floor(terbit) == now.hour and int((terbit%1)*60) == now.minute) or (math.floor(terbenam) == now.hour and int((terbenam%1)*60) == now.minute)):
-                    GPIO.output(26,True)
-                    statePenyiram = True
-                    if(now.second > 50):
-                        GPIO.output(26,False)
-                        statePenyiram = False
-
+				plant = DB.getPlant()
+				umur = now - plant[4]
+				nedded = DB.getAir(umur.days,plant[2])
+				air	  = nedded['air']
+				pupuk = nedded['pupuk']
+				readyPupuk = True
+				if(NK>65):
+					readySiram = True
+					timeSiram = air * DB.getPerLiter()
+					maxTimeSiram = timeSiram
+                    #GPIO.output(26,True)
+                    #statePenyiram = True
+                    #if(now.second > 50):
+                        #GPIO.output(26,False)
+                        #statePenyiram = False
+                        
+            if(overrideSiram == True):
+				plant = DB.getPlant()
+				umur = now - plant[4]
+				nedded = DB.getAir(umur.days,plant[2])
+				air	  = nedded['air']
+				pupuk = nedded['pupuk']
+				readySiram = True
+				timeSiram = air * DB.getPerLiter()
+				maxTimeSiram = timeSiram
+				overrideSiram = False
+				
+            if(readySiram == True):
+				timeSiram = timeSiram-delaySecond
+				GPIO.output(pinSiram,True)
+				statePenyiram = True
+				print timeSiram
+				if(timeSiram < 0):
+					readySiram=False
+					GPIO.output(pinSiram,False)
+					statePenyiram = False
             # KIRIM DATA
             sensors = {}
             sensors['soil'] = soil
@@ -447,13 +499,23 @@ def on_open(ws):
             suntime = {}
             suntime['sunrise'] = strTerbit
             suntime['sunset']  = strTerbenam
+            siramTime = {}
+            siramTime['max'] = maxTimeSiram
+            siramTime['value'] = timeSiram
+            pupukTime = {}
+            pupukTime['max'] = maxTimePupuk
+            pupukTime['value'] = timePupuk
+            pumpTime = {}
+            pumpTime['penyiraman']=siramTime 
+            pumpTime['pemupukan']=pupukTime
             res = {}
             res['sensors'] = sensors
             res['actuators'] = actuators
             res['forecast'] = forecast
             res['suntime'] = suntime
             res['fuzzy_output'] = NK
-            time.sleep(1);
+            res['pump_time'] = pumpTime
+            time.sleep(delaySecond);
             ws.send(json.dumps(res))
     thread.start_new_thread(run, ())
 if __name__ == "__main__":

@@ -14,4 +14,6 @@ fi
 
 #start semua program
 printf '%s\tStart Application\n' "$(date +'%T %A %d %B %Y')" >>/home/pi/TA/perhitungancuaca/apps/restartlog
-python /home/pi/TA/perhitungancuaca/apps/main.py &
+cd /home/pi/TA/perhitungancuaca/apps/
+rm -f /home/pi/TA/perhitungancuaca/apps/nohub.out
+nohup python /home/pi/TA/perhitungancuaca/apps/main.py &

@@ -164,3 +164,56 @@ def addSunTime(data):
 		db.rollback()
 		status = False;
 	return status;
+
+def getPlant():
+	val = None
+	cur = db.cursor()
+	sql = "SELECT * FROM setting WHERE parameter = 'plants_id' ORDER BY id DESC LIMIT 1"
+	try:
+		cur.execute(sql)
+		for row in cur.fetchall():
+			val = row
+		db.commit();
+	except Exception as e:
+		db.rollback()
+	return val;
+
+def getPlantDetail(data):
+	val = ""
+	cur = db.cursor()
+	sql = "SELECT * FROM tanaman WHERE id = 1 AND deleted_at IS NULL"
+	try:
+		cur.execute(sql)
+		for row in cur.fetchall():
+			val = row
+		db.commit();
+	except Exception as e:
+		db.rollback()
+	return val;
+
+def getAir(umur, id_tanaman):
+	val = {}
+	cur = db.cursor()
+	sql = "SELECT * FROM karakteristik WHERE id_tanaman = "+str(id_tanaman)+" AND umur > "+str(umur)+" AND deleted_at IS NULL ORDER BY umur ASC LIMIT 1"
+	try:
+		cur.execute(sql)
+		for row in cur.fetchall():
+			val['air'] = row[3]
+			val['pupuk'] = row[4]
+		db.commit();
+	except Exception as e:
+		db.rollback()
+	return val;
+
+def getPerLiter():
+	val = None
+	cur = db.cursor()
+	sql = "SELECT value FROM setting WHERE parameter = 'per_liter' ORDER BY id DESC LIMIT 1"
+	try:
+		cur.execute(sql)
+		for row in cur.fetchall():
+			val = row[0]
+		db.commit();
+	except Exception as e:
+		db.rollback()
+	return float(val);

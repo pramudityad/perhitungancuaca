@@ -20,15 +20,15 @@ def calculate(soil,rain,forecast,forecast2):
 
 	#inisialisasi batas
 	l_kering = 0;
-	u_kering = 100;
-	l_sedang = 300;
-	u_sedang = 400;
-	l_basah	 = 600;
+	u_kering = 50;
+	l_sedang = 100;
+	u_sedang = 250;
+	l_basah	 = 500;
 	u_basah  = 1024;
 
 	l_tdkhujan = 0;
 	u_tdkhujan = 200;
-	l_hujan	 = 500;
+	l_hujan	 = 400;
 	u_hujan	 = 1024;
 
 	# hitung linguistik
@@ -70,35 +70,35 @@ def calculate(soil,rain,forecast,forecast2):
 		f2_hujan 	= 1;
 	
 	#print linguistik
-	# print "FUZZYFIKASI";
-	# print "SOIL = %d" % (soil);
-	# print "BASAH  : "+str(basah);
-	# print "SEDANG : "+str(sedang);
-	# print "KERING : "+str(kering);
+	print "FUZZYFIKASI";
+	print "SOIL = %d" % (soil);
+	print "BASAH  : "+str(basah);
+	print "SEDANG : "+str(sedang);
+	print "KERING : "+str(kering);
 
 	# # print "SUHU = %d" % (suhu);
 	# # print "DINGIN : "+str(dingin);
 	# # print "SEJUK  : "+str(sejuk);
 	# # print "PANAS  : "+str(panas);
 
-	# print "HUJAN";
-	# print "HUJAN  	 : "+str(hujan);
-	# print "TDK_HUJAN : "+str(tdk_hujan);
+	print "HUJAN";
+	print "HUJAN  	 : "+str(hujan);
+	print "TDK_HUJAN : "+str(tdk_hujan);
 
 	# # print "CURRENT WEATHER";
 	# # print "CERAH  : "+str(w_cerah);
 	# # print "MENDUNG: "+str(w_mendung);
 	# # print "HUJAN  : "+str(w_hujan);
 
-	# print "FORECAST 1";
-	# print "CERAH  : "+str(f_cerah);
-	# print "MENDUNG: "+str(f_mendung);
-	# print "HUJAN  : "+str(f_hujan);
+	print "FORECAST 1";
+	print "CERAH  : "+str(f_cerah);
+	print "MENDUNG: "+str(f_mendung);
+	print "HUJAN  : "+str(f_hujan);
 
-	# print "FORECAST 2";
-	# print "CERAH  : "+str(f2_cerah);
-	# print "MENDUNG: "+str(f2_mendung);
-	# print "HUJAN  : "+str(f2_hujan);
+	print "FORECAST 2";
+	print "CERAH  : "+str(f2_cerah);
+	print "MENDUNG: "+str(f2_mendung);
+	print "HUJAN  : "+str(f2_hujan);
 
 
 	#Inferensi
@@ -224,26 +224,26 @@ def calculate(soil,rain,forecast,forecast2):
 	
 	#nkRendah.append(5);
 	#nkRendah.insert(1,6);
-	# print "FUZZY OUTPUT";
+	print "FUZZY OUTPUT";
 	for i in range(54):
 		if nkRendah[i]>0:
-			# print "Rule "+str(i+1)+ " Rendah : "+str(nkRendah[i]);
+			print "Rule "+str(i+1)+ " Rendah : "+str(nkRendah[i]);
 			if nkRendah[i]>rendah:
 				rendah=nkRendah[i];
 		if nkTinggi[i]>0:
-			# print "Rule "+str(i+1)+ " Tinggi : "+str(nkTinggi[i]);
+			print "Rule "+str(i+1)+ " Tinggi : "+str(nkTinggi[i]);
 			if nkTinggi[i]>tinggi:
 				tinggi=nkTinggi[i];
 
-	# if rendah>0:
-	# 	print "Rendah("+str(rendah)+")";
-	# if tinggi>0:
-	# 	print "Tinggi("+str(tinggi)+")";
+	if rendah>0:
+	 	print "Rendah("+str(rendah)+")";
+	if tinggi>0:
+	 	print "Tinggi("+str(tinggi)+")";
 
 
 	#DEFUZIFIKASI
 	#batas
-	# print "DEFUZZYFIKASI";
+	print "DEFUZZYFIKASI";
 	b_rendah = 50;
 	b_tinggi = 80;
 	m1 = 0;
@@ -278,7 +278,7 @@ def calculate(soil,rain,forecast,forecast2):
 		y.append(val);
 		mamdani_pembilang = mamdani_pembilang + (count*val);
 		mamdani_penyebut  = mamdani_penyebut + val;
-		# print str(count) + ":" + str(y[i]);
+		print str(count) + ":" + str(y[i]);
 		i += 1;
 	mamdani = mamdani_pembilang/mamdani_penyebut;
 	#print "Nilai Kelayakan : "+str(mamdani);
