@@ -13,13 +13,23 @@ import websocket
 import thread
 import math
 
-pinSiram = 26
-pinPupuk = 21
-GPIO.setmode(GPIO.BCM) ## Use board pin numbering
-GPIO.setup(pinSiram, GPIO.OUT) ## Setup GPIO Pin 7 to OUT
+pinSiram = 37
+pinPupuk = 40
+stepPin1 = 29 #x
+dirPin1  = 31
+stepPin2 = 32 #y
+dirPin2  = 36
+
+GPIO.setmode(GPIO.BOARD) ## Use board pin numbering
+GPIO.setup(pinSiram, GPIO.OUT)
 GPIO.output(pinSiram,False)
-GPIO.setup(pinPupuk, GPIO.OUT) ## Setup GPIO Pin 7 to OUT
+GPIO.setup(pinPupuk, GPIO.OUT)
 GPIO.output(pinPupuk,False)
+GPIO.setup(stepPin1,GPIO.OUT)
+GPIO.setup(dirPin1,GPIO.OUT)
+GPIO.setup(stepPin2,GPIO.OUT)
+GPIO.setup(dirPin2,GPIO.OUT)
+
 
 timeRequest = 'N/A';
 str_ow_data = 'N/A';
@@ -51,6 +61,17 @@ overridePupuk = False;
 delaySecond = 1;
 maxTimeSiram = 1;
 maxTimePupuk = 1;
+stepsInFullRound = 400;
+posX=[0,600,600];
+posY=[[0,800,700],[0,700,800],[0,800,700]];
+totalX = 0;
+totalY = 0;
+exitLoop = False;
+currentX = 0;
+currentY = 0;
+lastY = 0;
+lastX = 0;
+motorState = False;
 
 ow_hujan_code   = {500,501,502,503,504,511,520,521,522,531,300,301,302,310,311,312,313,314,321}
 ow_mendung_code = {803,804}
@@ -328,6 +349,89 @@ def cekWuCode():
     #         wu_desc = wu_desc_temp
 
 
+def delayMicroseconds(n):
+	time.sleep(n/1000000.0)
+
+def holdHalfCycle(speedRPS):
+	holdTime_us = (1.0/stepsInFullRound / speedRPS / 2.0 * 1e6)
+	overflowCount = (int)(holdTime_us / 65535)
+	for i in range(0,overflowCount):
+		delayMicroseconds(65535)
+	delayMicroseconds(holdTime_us)
+    
+def run(runForward, speedRPS, stepCount):
+    global stepPin1
+    global dirPin1
+    global stepPin2
+    global dirPin2
+    GPIO.output(dirPin1, runForward)
+    GPIO.output(dirPin2, runForward)
+    for i in range(0,stepCount):
+        GPIO.output(stepPin1,True)
+        #GPIO.output(stepPin2,True)
+        holdHalfCycle(speedRPS)
+        GPIO.output(stepPin1,False)
+        #GPIO.output(stepPin2,False)
+        holdHalfCycle(speedRPS)
+        
+def run2(runForward, speedRPS, stepCount):
+    global stepPin2
+    global dirPin2
+    GPIO.output(dirPin2, runForward)
+    for i in range(0,stepCount):
+        GPIO.output(stepPin2,True)
+        holdHalfCycle(speedRPS)
+        GPIO.output(stepPin2,False)
+        holdHalfCycle(speedRPS)
+
+def startMotor():
+	global posX
+	global posY
+	global totalX
+	global totalY
+	global currentX
+	global currentY
+	global readyPupuk
+	global motorState
+	global lastY
+	global lastX
+	global timePupuk
+	if(currentX<3):
+		if(currentX != lastX):
+			lastX = currentX
+			totalX = totalX+posX[currentX]
+			print "X = "+str(posX[currentX])
+			run(True,1,posX[currentX])
+		if (currentY<3):
+			totalY = totalY + posY[currentX][currentY]
+			lastY = totalY
+			stateForward = True
+			if(currentX==1):
+				stateForward = False
+			print str(stateForward)+" "+str(posY[currentX][currentY])
+			run2(stateForward,1,posY[currentX][currentY])
+			currentY = currentY + 1
+			if(currentY == 3):
+				currentX = currentX+1
+				currentY = 0
+				totalY = 0
+	else:
+		timePupuk = 0
+		print "Pemupukan Selesai"
+		if(lastX == 1):
+			lastY = 1500 - lastY
+		print "Total Y = "+str(lastY)
+		run2(False,1,lastY)
+		print "Total X = "+str(totalX)
+		run(False,1,totalX)
+		readyPupuk = False
+		motorState = False
+		currentY = 0
+		currentX = 0
+		totalX = 0
+		lastX = 0
+		DB.addPumpLog('Pompa Pemupukan','OFF')
+		
 print "Start"
 while (requestStatus == False):
 	requestData();
@@ -349,6 +453,8 @@ def on_message(ws, message):
     global overridePupuk
     global timeSiram
     global timePupuk
+    global exitLoop
+    global currentX
     try:
         data = json.loads(message)
         if data['status']==True:
@@ -366,6 +472,7 @@ def on_message(ws, message):
                 elif data['data']['value'] == 0:
                     overridePupuk = False
                     timePupuk = 0
+                    currentX = 3
                 else:
                     print "Value Error"
     except Exception as e:
@@ -396,6 +503,8 @@ def on_open(ws):
         global maxTimePupuk
         global overrideSiram
         global overridePupuk
+        global motorState
+        global currentX
         while True:
             now = datetime.datetime.now()
             timeRequest = now.strftime('%Y-%m-%d %H:%M:%S');
@@ -471,11 +580,24 @@ def on_open(ws):
 				umur = now - plant[4]
 				nedded = DB.getAir(umur.days,plant[2])
 				air	  = nedded['air']
-				pupuk = nedded['pupuk']
 				readySiram = True
 				timeSiram = air * DB.getPerLiter()
 				maxTimeSiram = timeSiram
 				overrideSiram = False
+				DB.addPumpLog('Pompa Penyiraman','ON')
+				
+            if(overridePupuk == True):
+				plant = DB.getPlant()
+				umur = now - plant[4]
+				nedded = DB.getAir(umur.days,plant[2])
+				pupuk = nedded['pupuk']
+				readyPupuk = True
+				timePupuk = pupuk * DB.getPerLiter()
+				maxTimePupuk = timePupuk
+				overridePupuk= False
+				motorState = True
+				currentX = 0
+				DB.addPumpLog('Pompa Pemupukan','ON')
 				
             if(readySiram == True):
 				timeSiram = timeSiram-delaySecond
@@ -486,6 +608,22 @@ def on_open(ws):
 					readySiram=False
 					GPIO.output(pinSiram,False)
 					statePenyiram = False
+					DB.addPumpLog('Pompa Penyiraman','OFF')
+            
+            if(motorState == True and readySiram == False):
+				startMotor()
+				motorState = False
+            if(readyPupuk == True and readySiram == False):
+				timePupuk = timePupuk - delaySecond
+				GPIO.output(pinPupuk,True)
+				statePemupuk = True
+				print timePupuk
+				if(timePupuk <0):
+					timePupuk = pupuk * DB.getPerLiter()
+					motorState = True
+					GPIO.output(pinPupuk,False)
+					statePemupuk = False
+				
             # KIRIM DATA
             sensors = {}
             sensors['soil'] = soil

@@ -217,3 +217,17 @@ def getPerLiter():
 	except Exception as e:
 		db.rollback()
 	return float(val);
+	
+def addPumpLog(device,status):
+	cur = db.cursor()
+	myTime  	= datetime.datetime.now();
+	currentTime	= myTime.strftime('%Y-%m-%d %H:%M:%S');
+	sql = "INSERT INTO pump(device,status,created_at) VALUES ('"+str(device)+"','"+str(status)+"','"+currentTime+"')"
+	try:
+		cur.execute(sql)
+		db.commit();
+		status = True;
+	except Exception as e:
+		db.rollback()
+		status = False;
+	return status;
