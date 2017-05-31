@@ -2,6 +2,7 @@ import urllib2, urllib, json
 import functions.openweather as OW
 import datetime, time
 from datetime import timedelta
+from calendar import monthrange
 import RPi.GPIO as GPIO
 import functions.database as DB
 import functions.fuzzy_v2 as fuzzy;
@@ -13,12 +14,12 @@ import websocket
 import thread
 import math
 
-pinSiram = 37
-pinPupuk = 40
+pinSiram = 38
+pinPupuk = 37
 stepPin1 = 29 #x
 dirPin1  = 31
-stepPin2 = 32 #y
-dirPin2  = 36
+stepPin2 = 33 #y
+dirPin2  = 35
 
 GPIO.setmode(GPIO.BOARD) ## Use board pin numbering
 GPIO.setup(pinSiram, GPIO.OUT)
@@ -52,10 +53,10 @@ sensor_status = None;
 statePenyiram = False;
 statePemupuk  = False;
 requestStatus = False;
-readySiram 	  = False;
+readySiram        = False;
 readyPupuk   = False;
-timeSiram 	  = 0;
-timePupuk 	  = 0;
+timeSiram         = 0;
+timePupuk         = 0;
 overrideSiram = False;
 overridePupuk = False;
 delaySecond = 1;
@@ -89,33 +90,33 @@ terbit = hisab.terbit(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
 terbenam = hisab.terbenam(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
 
 def requestData():
-	now = datetime.datetime.now();
-	timeRequest = now.strftime('%Y-%m-%d %H:%M:%S');
-	print 'Request Data';
-	try:
-		global str_ow_data;
-		global str_wu_data;
-		global location;
-		global latitude;
-		global longitude;
-		global timeForcast;
-		global weather;
-		global code;
-		global requestStatus
+        now = datetime.datetime.now()
+        timeRequest = now.strftime('%Y-%m-%d %H:%M:%S')
+        print 'Request Data'
+        try:
+                global str_ow_data;
+                global str_wu_data;
+                global location;
+                global latitude;
+                global longitude;
+                global timeForcast;
+                global weather;
+                global code;
+                global requestStatus
 
-		str_ow_data = OW.getForecast(DB.getLatitude(),DB.getLongitude());
-		str_wu_data = WU.getForecast(DB.getLatitude(),DB.getLongitude());
-		location    = OW.getCityName(str_ow_data);
-		latitude    = str(OW.getCityLatitude(str_ow_data));
-		longitude   = str(OW.getCityLongitude(str_ow_data));
-		timeForcast = str(OW.getForecastNext(str_ow_data)['dt_txt']);
-		weather     = str(OW.getForecastNext(str_ow_data)['weather'][0]['description']);
-		code        = str(OW.getForecastNext(str_ow_data)['weather'][0]['id']);
-		requestStatus = True;
-		print 'Request Success';
-	except Exception as e:
-		requestStatus = False;
-		print 'Error Connection'
+                str_ow_data = OW.getForecast(DB.getLatitude(),DB.getLongitude());
+                str_wu_data = WU.getForecast(DB.getLatitude(),DB.getLongitude());
+                location    = OW.getCityName(str_ow_data);
+                latitude    = str(OW.getCityLatitude(str_ow_data));
+                longitude   = str(OW.getCityLongitude(str_ow_data));
+                timeForcast = str(OW.getForecastNext(str_ow_data)['dt_txt']);
+                weather     = str(OW.getForecastNext(str_ow_data)['weather'][0]['description']);
+                code        = str(OW.getForecastNext(str_ow_data)['weather'][0]['id']);
+                requestStatus = True;
+                print 'Request Success';
+        except Exception as e:
+                requestStatus = False;
+                print 'Error Connection'
 
 def cekOwCode():
     print "CEK OW CODE"
@@ -186,7 +187,11 @@ def cekOwCode():
 
         for i in range(0,hour2,3):
             myTime = datetime.datetime.now()
-            myTime = myTime.replace(hour=i, day=myTime.day+1)
+            maxday = monthrange(myTime.year,myTime.month)[1]
+            if myTime.day+1 > maxday:
+                myTime = myTime.replace(hour=i, day=1, month=myTime.month+1)
+            else:
+                myTime = myTime.replace(hour=i, day=myTime.day+1)
             timeRequest = myTime.strftime('%Y-%m-%d %H:00:00');
             for dt in ow_cerah_code:
                 if(OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id'] == dt):
@@ -300,6 +305,11 @@ def cekWuCode():
 
         for i in range(0,hour2,1):
             myTime = datetime.datetime.now()
+            maxday = monthrange(myTime.year,myTime.month)[1]
+            if myTime.day+1 > maxday:
+                myTime = myTime.replace(hour=i, day=1, month=myTime.month+1)
+            else:
+                myTime = myTime.replace(hour=i, day=myTime.day+1)
             myTime = myTime.replace(hour=i,day=myTime.day+1)
             timeRequest = myTime.strftime('%Y-%m-%d %H:00:00');
             for dt in wu_cerah_code:
@@ -350,14 +360,14 @@ def cekWuCode():
 
 
 def delayMicroseconds(n):
-	time.sleep(n/1000000.0)
+        time.sleep(n/1000000.0)
 
 def holdHalfCycle(speedRPS):
-	holdTime_us = (1.0/stepsInFullRound / speedRPS / 2.0 * 1e6)
-	overflowCount = (int)(holdTime_us / 65535)
-	for i in range(0,overflowCount):
-		delayMicroseconds(65535)
-	delayMicroseconds(holdTime_us)
+        holdTime_us = (1.0/stepsInFullRound / speedRPS / 2.0 * 1e6)
+        overflowCount = (int)(holdTime_us / 65535)
+        for i in range(0,overflowCount):
+                delayMicroseconds(65535)
+        delayMicroseconds(holdTime_us)
     
 def run(runForward, speedRPS, stepCount):
     global stepPin1
@@ -385,57 +395,57 @@ def run2(runForward, speedRPS, stepCount):
         holdHalfCycle(speedRPS)
 
 def startMotor():
-	global posX
-	global posY
-	global totalX
-	global totalY
-	global currentX
-	global currentY
-	global readyPupuk
-	global motorState
-	global lastY
-	global lastX
-	global timePupuk
-	if(currentX<3):
-		if(currentX != lastX):
-			lastX = currentX
-			totalX = totalX+posX[currentX]
-			print "X = "+str(posX[currentX])
-			run(True,1,posX[currentX])
-		if (currentY<3):
-			totalY = totalY + posY[currentX][currentY]
-			lastY = totalY
-			stateForward = True
-			if(currentX==1):
-				stateForward = False
-			print str(stateForward)+" "+str(posY[currentX][currentY])
-			run2(stateForward,1,posY[currentX][currentY])
-			currentY = currentY + 1
-			if(currentY == 3):
-				currentX = currentX+1
-				currentY = 0
-				totalY = 0
-	else:
-		timePupuk = 0
-		print "Pemupukan Selesai"
-		if(lastX == 1):
-			lastY = 1500 - lastY
-		print "Total Y = "+str(lastY)
-		run2(False,1,lastY)
-		print "Total X = "+str(totalX)
-		run(False,1,totalX)
-		readyPupuk = False
-		motorState = False
-		currentY = 0
-		currentX = 0
-		totalX = 0
-		lastX = 0
-		DB.addPumpLog('Pompa Pemupukan','OFF')
-		
+        global posX
+        global posY
+        global totalX
+        global totalY
+        global currentX
+        global currentY
+        global readyPupuk
+        global motorState
+        global lastY
+        global lastX
+        global timePupuk
+        if(currentX<3):
+                if(currentX != lastX):
+                        lastX = currentX
+                        totalX = totalX+posX[currentX]
+                        print "X = "+str(posX[currentX])
+                        run(True,1,posX[currentX])
+                if (currentY<3):
+                        totalY = totalY + posY[currentX][currentY]
+                        lastY = totalY
+                        stateForward = True
+                        if(currentX==1):
+                                stateForward = False
+                        print str(stateForward)+" "+str(posY[currentX][currentY])
+                        run2(stateForward,1,posY[currentX][currentY])
+                        currentY = currentY + 1
+                        if(currentY == 3):
+                                currentX = currentX+1
+                                currentY = 0
+                                totalY = 0
+        else:
+                timePupuk = 0
+                print "Pemupukan Selesai"
+                if(lastX == 1):
+                        lastY = 1500 - lastY
+                print "Total Y = "+str(lastY)
+                run2(False,1,lastY)
+                print "Total X = "+str(totalX)
+                run(False,1,totalX)
+                readyPupuk = False
+                motorState = False
+                currentY = 0
+                currentX = 0
+                totalX = 0
+                lastX = 0
+                DB.addPumpLog('Pompa Pemupukan','OFF')
+                
 print "Start"
 while (requestStatus == False):
-	requestData();
-	time.sleep(1);
+        requestData();
+        time.sleep(1);
 cekOwCode();
 cekWuCode();
 #print str_ow_data;
@@ -484,6 +494,7 @@ def on_error(ws, error):
 
 def on_close(ws):
     print "### closed ###"
+    GPIO.cleanup();
 
 def on_open(ws):
     def run(*args):
@@ -511,7 +522,7 @@ def on_open(ws):
             terbit = hisab.terbit(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
             terbenam = hisab.terbenam(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
             #print now.year, now.hour, now.minute, now.second
-            # print timeRequest
+            print timeRequest
             if(now.hour%1==0 and now.minute%30.0==0 and now.second==0):
                 requestData()
                 cekOwCode()
@@ -556,19 +567,19 @@ def on_open(ws):
             strTerbenam = str(int(math.floor(terbenam)))+":"+str(int((terbenam%1)*60))
             
             if(now.hour==0 and now.minute==0 and now.second==1):
-				DB.addSunTime([strTerbit,strTerbenam])
-				
+                                DB.addSunTime([strTerbit,strTerbenam])
+                                
             if((math.floor(terbit) == now.hour and int((terbit%1)*60) == now.minute) or (math.floor(terbenam) == now.hour and int((terbenam%1)*60) == now.minute)):
-				plant = DB.getPlant()
-				umur = now - plant[4]
-				nedded = DB.getAir(umur.days,plant[2])
-				air	  = nedded['air']
-				pupuk = nedded['pupuk']
-				readyPupuk = True
-				if(NK>65):
-					readySiram = True
-					timeSiram = air * DB.getPerLiter()
-					maxTimeSiram = timeSiram
+                                plant = DB.getPlant()
+                                umur = now - plant[4]
+                                nedded = DB.getAir(umur.days,plant[2])
+                                air       = nedded['air']
+                                pupuk = nedded['pupuk']
+                                readyPupuk = True
+                                if(NK>65):
+                                        readySiram = True
+                                        timeSiram = air * DB.getPerLiter()
+                                        maxTimeSiram = timeSiram
                     #GPIO.output(26,True)
                     #statePenyiram = True
                     #if(now.second > 50):
@@ -576,54 +587,55 @@ def on_open(ws):
                         #statePenyiram = False
                         
             if(overrideSiram == True):
-				plant = DB.getPlant()
-				umur = now - plant[4]
-				nedded = DB.getAir(umur.days,plant[2])
-				air	  = nedded['air']
-				readySiram = True
-				timeSiram = air * DB.getPerLiter()
-				maxTimeSiram = timeSiram
-				overrideSiram = False
-				DB.addPumpLog('Pompa Penyiraman','ON')
-				
+                                plant = DB.getPlant()
+                                umur = now - plant[4]
+                                nedded = DB.getAir(umur.days,plant[2])
+                                print nedded
+                                air = nedded['air']
+                                readySiram = True
+                                timeSiram = air * DB.getPerLiter()
+                                maxTimeSiram = timeSiram
+                                overrideSiram = False
+                                DB.addPumpLog('Pompa Penyiraman','ON')
+                                
             if(overridePupuk == True):
-				plant = DB.getPlant()
-				umur = now - plant[4]
-				nedded = DB.getAir(umur.days,plant[2])
-				pupuk = nedded['pupuk']
-				readyPupuk = True
-				timePupuk = pupuk * DB.getPerLiter()
-				maxTimePupuk = timePupuk
-				overridePupuk= False
-				motorState = True
-				currentX = 0
-				DB.addPumpLog('Pompa Pemupukan','ON')
-				
+                                plant = DB.getPlant()
+                                umur = now - plant[4]
+                                nedded = DB.getAir(umur.days,plant[2])
+                                pupuk = nedded['pupuk']
+                                readyPupuk = True
+                                timePupuk = pupuk * DB.getPerLiter()
+                                maxTimePupuk = timePupuk
+                                overridePupuk= False
+                                motorState = True
+                                currentX = 0
+                                DB.addPumpLog('Pompa Pemupukan','ON')
+                                
             if(readySiram == True):
-				timeSiram = timeSiram-delaySecond
-				GPIO.output(pinSiram,True)
-				statePenyiram = True
-				print timeSiram
-				if(timeSiram < 0):
-					readySiram=False
-					GPIO.output(pinSiram,False)
-					statePenyiram = False
-					DB.addPumpLog('Pompa Penyiraman','OFF')
+                                timeSiram = timeSiram-delaySecond
+                                GPIO.output(pinSiram,True)
+                                statePenyiram = True
+                                print timeSiram
+                                if(timeSiram < 0):
+                                        readySiram=False
+                                        GPIO.output(pinSiram,False)
+                                        statePenyiram = False
+                                        DB.addPumpLog('Pompa Penyiraman','OFF')
             
             if(motorState == True and readySiram == False):
-				startMotor()
-				motorState = False
+                                startMotor()
+                                motorState = False
             if(readyPupuk == True and readySiram == False):
-				timePupuk = timePupuk - delaySecond
-				GPIO.output(pinPupuk,True)
-				statePemupuk = True
-				print timePupuk
-				if(timePupuk <0):
-					timePupuk = pupuk * DB.getPerLiter()
-					motorState = True
-					GPIO.output(pinPupuk,False)
-					statePemupuk = False
-				
+                                timePupuk = timePupuk - delaySecond
+                                GPIO.output(pinPupuk,True)
+                                statePemupuk = True
+                                print timePupuk
+                                if(timePupuk <0):
+                                        timePupuk = pupuk * DB.getPerLiter()
+                                        motorState = True
+                                        GPIO.output(pinPupuk,False)
+                                        statePemupuk = False
+                                
             # KIRIM DATA
             sensors = {}
             sensors['soil'] = soil
