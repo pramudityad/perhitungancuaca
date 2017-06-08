@@ -440,7 +440,7 @@ def startMotor():
                 currentX = 0
                 totalX = 0
                 lastX = 0
-                DB.addPumpLog('Pompa Pemupukan','OFF')
+                #DB.addPumpLog('Pompa Pemupukan','OFF')
                 
 print "Start"
 while (requestStatus == False):
@@ -516,11 +516,14 @@ def on_open(ws):
         global overridePupuk
         global motorState
         global currentX
+        c_i = 0
         while True:
             now = datetime.datetime.now()
             timeRequest = now.strftime('%Y-%m-%d %H:%M:%S');
             terbit = hisab.terbit(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
             terbenam = hisab.terbenam(DB.getTimezone(),DB.getLatitude(),DB.getLongitude(),0)
+            strTerbit   = str(int(math.floor(terbit)))+":"+str(int((terbit%1)*60))
+            strTerbenam = str(int(math.floor(terbenam)))+":"+str(int((terbenam%1)*60))
             #print now.year, now.hour, now.minute, now.second
             print timeRequest
             if(now.hour%1==0 and now.minute%30.0==0 and now.second==0):
@@ -532,6 +535,8 @@ def on_open(ws):
                 soil = DB.getLastSoil();
                 if(now.minute==0 and now.second==0):
                     timeRequest = now.strftime('%Y-%m-%d %H:00:00');
+                    if(now.hour == 0):
+                            DB.addSunTime([strTerbit,strTerbenam])
                     code = WU.getForcastByTime(str_wu_data, str(now.hour))['fctcode']
                     weather = WU.getForcastByTime(str_wu_data, str(now.hour))['condition']
                     wsp = "wunderground"
@@ -563,11 +568,6 @@ def on_open(ws):
             print "---------------"
             print "Soil :" + str(soil)
             print "Raindrop : " + str(rain)
-            strTerbit   = str(int(math.floor(terbit)))+":"+str(int((terbit%1)*60))
-            strTerbenam = str(int(math.floor(terbenam)))+":"+str(int((terbenam%1)*60))
-            
-            if(now.hour==0 and now.minute==0 and now.second==1):
-                                DB.addSunTime([strTerbit,strTerbenam])
                                 
             if((math.floor(terbit) == now.hour and int((terbit%1)*60) == now.minute) or (math.floor(terbenam) == now.hour and int((terbenam%1)*60) == now.minute)):
                                 plant = DB.getPlant()
@@ -580,6 +580,7 @@ def on_open(ws):
                                         readySiram = True
                                         timeSiram = air * DB.getPerLiter()
                                         maxTimeSiram = timeSiram
+                                        DB.addPumpLog('Pompa Penyiraman','ON')
                     #GPIO.output(26,True)
                     #statePenyiram = True
                     #if(now.second > 50):
@@ -609,7 +610,7 @@ def on_open(ws):
                                 overridePupuk= False
                                 motorState = True
                                 currentX = 0
-                                DB.addPumpLog('Pompa Pemupukan','ON')
+                                #DB.addPumpLog('Pompa Pemupukan','ON')
                                 
             if(readySiram == True):
                                 timeSiram = timeSiram-delaySecond
@@ -626,6 +627,9 @@ def on_open(ws):
                                 startMotor()
                                 motorState = False
             if(readyPupuk == True and readySiram == False):
+                                if(c_i == 0):
+                                        DB.addPumpLog('Pompa Pemupukan', 'ON')
+                                c_i = c_i + 1
                                 timePupuk = timePupuk - delaySecond
                                 GPIO.output(pinPupuk,True)
                                 statePemupuk = True
@@ -635,6 +639,8 @@ def on_open(ws):
                                         motorState = True
                                         GPIO.output(pinPupuk,False)
                                         statePemupuk = False
+                                        c_i = 0
+                                        DB.addPumpLog('Pompa Pemupukan','OFF')
                                 
             # KIRIM DATA
             sensors = {}

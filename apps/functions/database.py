@@ -7,7 +7,7 @@ from decimal import Decimal
 db = MySQLdb.connect(host="localhost",
                      user="root",
                      passwd="raspberry",
-                     db="gfa");
+                     db="gfa_v2");
 def getDb():
     cur = db.cursor()
     cur.execute("SELECT * FROM soil")
