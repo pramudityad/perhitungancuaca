@@ -43,8 +43,9 @@ def hitungMatahari(TZ,LA,LO,H):
 
 	a = math.degrees(math.atan(Y/X))
 	# print a
-
-	if Y <= 0 :
+        if X < 0 :
+                alpha = a + 180
+	elif Y < 0 :
 		alpha = a + 360
 	else:
 		alpha = a

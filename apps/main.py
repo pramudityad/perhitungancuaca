@@ -140,7 +140,11 @@ def cekOwCode():
             myTime = datetime.datetime.now()
             myTime = myTime.replace(hour=i)
             if(now.hour>terbenam):
-                myTime = myTime.replace(hour=i,day=myTime.day+1)
+                maxday = monthrange(myTime.year,myTime.month)[1]
+                if(myTime.day+1 > maxday):
+                        myTime = myTime.replace(hour=i,day=1,month=myTime.month+1)
+                else:
+                        myTime = myTime.replace(hour=i,day=myTime.day+1)
             timeRequest = myTime.strftime('%Y-%m-%d %H:00:00');
             for dt in ow_cerah_code:
                 if(OW.getForcastByTime(str_ow_data, timeRequest)['weather'][0]['id'] == dt):
@@ -261,7 +265,12 @@ def cekWuCode():
             myTime = datetime.datetime.now()
             myTime = myTime.replace(hour=i)
             if(now.hour>terbenam):
-                myTime = myTime.replace(hour=i,day=myTime.day+1)
+                maxday = monthrange(myTime.year,myTime.month)[1]
+                if(myTime.day+1 > maxday):
+                        myTime = myTime.replace(hour=i,day=1,month=myTime.month+1)
+                else:
+                        myTime = myTime.replace(hour=i,day=myTime.day+1)
+                #myTime = myTime.replace(hour=i,day=myTime.day+1)
             timeRequest = myTime.strftime('%Y-%m-%d %H:00:00');
             for dt in wu_cerah_code:
                 if(int(WU.getForcastByTime(str_wu_data, str(myTime.hour))['fctcode']) == dt):
