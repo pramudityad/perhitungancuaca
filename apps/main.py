@@ -46,8 +46,8 @@ lastRain    = DB.getLastRaindrop();
 
 #Sensor
 str_sensor  = None;
-soil        = None;
-rain        = None;
+soil        = 0;
+rain        = 0;
 light       = None;
 sensor_status = None;
 statePenyiram = False;
@@ -614,7 +614,7 @@ def on_open(ws):
                                 nedded = DB.getAir(umur.days,plant[2])
                                 pupuk = nedded['pupuk']
                                 readyPupuk = True
-                                timePupuk = pupuk * DB.getPerLiter()
+                                timePupuk = pupuk * DB.getPerMl()*10
                                 maxTimePupuk = timePupuk
                                 overridePupuk= False
                                 motorState = True
@@ -644,7 +644,7 @@ def on_open(ws):
                                 statePemupuk = True
                                 print timePupuk
                                 if(timePupuk <0):
-                                        timePupuk = pupuk * DB.getPerLiter()
+                                        timePupuk = pupuk * DB.getPerMl() * 10
                                         motorState = True
                                         GPIO.output(pinPupuk,False)
                                         statePemupuk = False

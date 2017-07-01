@@ -217,6 +217,19 @@ def getPerLiter():
 	except Exception as e:
 		db.rollback()
 	return float(val);
+    
+def getPerMl():
+	val = None
+	cur = db.cursor()
+	sql = "SELECT value FROM setting WHERE parameter = 'per_ml' ORDER BY id DESC LIMIT 1"
+	try:
+		cur.execute(sql)
+		for row in cur.fetchall():
+			val = row[0]
+		db.commit();
+	except Exception as e:
+		db.rollback()
+	return float(val);
 	
 def addPumpLog(device,status):
 	cur = db.cursor()
