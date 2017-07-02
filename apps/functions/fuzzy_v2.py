@@ -21,8 +21,8 @@ def calculate(soil,rain,forecast,forecast2):
 	#inisialisasi batas
 	l_kering = 0;
 	u_kering = 50;
-	l_sedang = 100;
-	u_sedang = 250;
+	l_sedang = 200;
+	u_sedang = 350;
 	l_basah	 = 500;
 	u_basah  = 1024;
 
